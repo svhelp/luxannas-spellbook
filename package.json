@@ -1,0 +1,26 @@
+{
+  "name": "luxannas-spellbook",
+  "version": "0.1.0",
+  "description": "A tool for League of Legends spells and items calculations.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev-server": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/index.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "luxannas-spellbook"
+  },
+  "keywords": [
+    "lol",
+    "league",
+    "spells"
+  ],
+  "author": "sv_help",
+  "license": "ISC",
+  "devDependencies": {
+    "tsc-watch": "^6.0.4",
+    "typescript": "^5.4.2"
+  }
+}
