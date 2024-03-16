@@ -4,6 +4,7 @@
 /tmp
 /out-tsc
 /dist
+/src/test-data
 
 # Runtime data
 pids
