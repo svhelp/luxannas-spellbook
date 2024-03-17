@@ -1,6 +1,7 @@
-import * as data from './test-data/diana.json'
+import { processTestData } from './test-data-processor'
+import * as data from './test-data/champions/diana/diana.bin.json'
 
-const level = 1
+const level = 5
 const bonusHP = 0
 const MP = 18
 
@@ -94,3 +95,5 @@ console.log("Spell calculations")
 for (const spellCalculation of spellCalculations){
     console.log(`${spellCalculation.name}: ${spellCalculation.value} (${spellCalculation.formula.join(" + ")})`)
 }
+
+processTestData()
