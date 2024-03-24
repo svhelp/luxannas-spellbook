@@ -21,7 +21,11 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.11.28",
+    "@types/xxhashjs": "^0.2.4",
     "tsc-watch": "^6.0.4",
     "typescript": "^5.4.2"
+  },
+  "dependencies": {
+    "xxhashjs": "^0.2.2"
   }
 }
