@@ -24,27 +24,28 @@ export type FormulaPartItem =
 
 // {f3cbe7b2} used only for Ksante Q skill, investigate
 
-type AbilityResourceByCoefficientCalculationPart = {
+export type AbilityResourceByCoefficientCalculationPart = {
     __type: "AbilityResourceByCoefficientCalculationPart"
     mCoefficient: number
     mStatFormula?: number
+    // AbilityResource ?
 }
 
-type BuffCounterByCoefficientCalculationPart = {
+export type BuffCounterByCoefficientCalculationPart = {
     __type: "BuffCounterByCoefficientCalculationPart"
     mCoefficient: number
     mBuffName: string // hashed value
     mScalingTagKey: string // not sure if needed
 }
 
-type BuffCounterByNamedDataValueCalculationPart = {
+export type BuffCounterByNamedDataValueCalculationPart = {
     __type: "BuffCounterByNamedDataValueCalculationPart"
     mCoefficient: number
     mBuffName: string // hashed value
     mDataValue: string // hashed value possible
 }
 
-type ByCharLevelBreakpointsCalculationPart = {
+export type ByCharLevelBreakpointsCalculationPart = {
     __type: "ByCharLevelBreakpointsCalculationPart"
     mLevel1Value: number
     '02deb550'?: number
@@ -56,12 +57,12 @@ type Breakpoint = {[key: string]: number} & { // always hashed field name TODO: 
     mLevel: number
 }
 
-type ByCharLevelFormulaCalculationPart = {
+export type ByCharLevelFormulaCalculationPart = {
     __type: "ByCharLevelFormulaCalculationPart"
     mValues: number[]
 }
 
-type ByCharLevelInterpolationCalculationPart = {
+export type ByCharLevelInterpolationCalculationPart = {
     __type: "ByCharLevelInterpolationCalculationPart"
     mStartValue: number
     mEndValue: number
@@ -69,56 +70,56 @@ type ByCharLevelInterpolationCalculationPart = {
 }
 
 // hashed name: {803dae4c}
-type ClampBySubpartCalculationPart = {
+export type ClampBySubpartCalculationPart = {
     __type: "{803dae4c}"
     mCeiling: number // null possible
     mFloor: number
     mSubparts: FormulaPartItem[]
 }
 
-type EffectValueCalculationPart = {
+export type EffectValueCalculationPart = {
     __type: "EffectValueCalculationPart"
     mEffectIndex: number
 }
 
-type NamedDataValueCalculationPart = {
+export type NamedDataValueCalculationPart = {
     __type: "NamedDataValueCalculationPart"
     mDataValue: string // hashed value possible
 }
 
-type NumberCalculationPart = {
+export type NumberCalculationPart = {
     __type: "NumberCalculationPart"
     mNumber: number
 }
 
-type ProductOfSubPartsCalculationPart = { // recursive nesting possible
+export type ProductOfSubPartsCalculationPart = { // recursive nesting possible
     __type: "ProductOfSubPartsCalculationPart"
     mPart1: FormulaPartItem
     mPart2: FormulaPartItem
 }
 
-type StatByCoefficientCalculationPart = {
+export type StatByCoefficientCalculationPart = {
     __type: "StatByCoefficientCalculationPart"
     mStat?: ChampionStat
     mStatFormula?: ChampionStatFormula
     mCoefficient: number
 }
 
-type StatByNamedDataValueCalculationPart = {
+export type StatByNamedDataValueCalculationPart = {
     __type: "StatByNamedDataValueCalculationPart"
     mStat?: ChampionStat
     mStatFormula?: ChampionStatFormula
     mDataValue: string // hashed value possible
 }
 
-type StatBySubPartCalculationPart = {
+export type StatBySubPartCalculationPart = {
     __type: "StatBySubPartCalculationPart"
     mStat?: ChampionStat
     mStatFormula?: ChampionStatFormula
     mSubpart: FormulaPartItem
 }
 
-type SumOfSubPartsCalculationPart = {
+export type SumOfSubPartsCalculationPart = {
     __type: "SumOfSubPartsCalculationPart"
     mSubparts: FormulaPartItem[]
 }
