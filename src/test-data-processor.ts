@@ -1,5 +1,5 @@
-import { RootChampionData } from 'domain/RootChampionData'
-import { SpellData } from 'domain/SpellData'
+import { RootChampionData } from 'domain/jsonSchema/RootChampionData'
+import { SpellData } from 'domain/jsonSchema/SpellData'
 import fs from 'fs'
 import XXH from 'xxhashjs'
 

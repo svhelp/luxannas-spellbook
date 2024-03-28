@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
+    "test": "jest",
     "start": "node dist/index.js",
     "dev-server": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/index.js\""
   },
@@ -20,8 +21,10 @@
   "author": "sv_help",
   "license": "ISC",
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
     "@types/node": "^20.11.28",
     "@types/xxhashjs": "^0.2.4",
+    "ts-jest": "^29.1.2",
     "tsc-watch": "^6.0.4",
     "typescript": "^5.4.2"
   },
