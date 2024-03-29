@@ -1,8 +1,8 @@
 import { CalculationContext } from "domain/CalculationContext";
 import { CalculationPart } from "domain/CalculationPart";
-import { ByCharLevelFormulaCalculationPart } from "domain/jsonSchema/FormulaPartItem";
+import { ByCharLevelInterpolationCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 
-export const byCharLevelInterpolationCalculationPart = (inputData: ByCharLevelFormulaCalculationPart): CalculationPart => {
+export const byCharLevelInterpolationCalculationPart = (inputData: ByCharLevelInterpolationCalculationPart): CalculationPart => {
     return {
         getValue: (context: CalculationContext) => {
             throw new Error("Not implemented")
