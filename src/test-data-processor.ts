@@ -1,40 +1,20 @@
-import { RootChampionData } from 'domain/jsonSchema/RootChampionData'
-import { SpellData } from 'domain/jsonSchema/SpellData'
+import { ChampionData } from 'domain/ChampionData'
 import fs from 'fs'
+import { localDataFetcher } from './service/dataFetcher/localDataFetcher'
 import XXH from 'xxhashjs'
+import * as dianaData from './test-data/champions/diana/diana.bin.json'
 
 const basePath = './src/test-data/champions'
 
 const formulaPartType: string[] = []
 
-const processFile = (path: string, data: {[key: string]: any}) => {
-    const logError = (errorMessage: string) => console.log(`${path} ${errorMessage.toUpperCase()}`)
+const processFile = (data: ChampionData) => {
+    const logError = (errorMessage: string) => console.log(`${data.rootChampionData.mCharacterName} ${errorMessage.toUpperCase()}`)
 
-    const rootChampionDataKey = Object.keys(data).find(key => /Characters\/\w+\/CharacterRecords\/Root/.test(key))
-
-    if (!rootChampionDataKey) {
-        logError("root champion data not found")
-        return
-    }
-
-    const rootChampionData: RootChampionData = data[rootChampionDataKey]
-    const passiveSpellKey = rootChampionData.mCharacterPassiveSpell
-    const passiveSpellData = data[passiveSpellKey]
-    const spellsData: SpellData[] = rootChampionData.spellNames.map((spellName: string) => {
-        const keyRegex = new RegExp(`Characters/\\w+/Spells/${spellName}$`)
-        const spellDataKeys = Object.keys(data).filter(key => keyRegex.test(key))
-
-        if (spellDataKeys.length !== 1) {
-            logError(`${keyRegex} spell key extraction error`)
-        }
-
-        return data[spellDataKeys[0]]
-    })
-
-    for (const spellData of spellsData) {
-        const effectAmount = spellData.mSpell.mEffectAmount
-        const dataValues = spellData.mSpell.mDataValues
-        const spellCalculations = spellData.mSpell.mSpellCalculations
+    for (const spellData of data.spellsData) {
+        const effectAmount = spellData.mEffectAmount
+        const dataValues = spellData.mDataValues
+        const spellCalculations = spellData.mSpellCalculations
         
         if (!spellCalculations) {
             continue
@@ -48,12 +28,17 @@ const processFile = (path: string, data: {[key: string]: any}) => {
             for (const calculationPart of spellCalculations[spellCalculationName].mFormulaParts) {
                 const partType = calculationPart.__type.trim()
 
+                if (partType == "BuffCounterByCoefficientCalculationPart") {
+                    //console.log(spellData)
+                }
+
                 if (formulaPartType.includes(partType)) {
                     continue
                 }
 
                 formulaPartType.push(partType)
-                console.log(partType)
+                
+                // console.log(partType)
             }
         }
     }
@@ -64,16 +49,107 @@ export const processTestData = () => {
     console.log(XXH.h64('ClampBySubpartCalculationPart'.toLowerCase(), 0x0000).toString(16))
 
     for (const champDir of fs.readdirSync(basePath)) {
-        const fileNames = fs.readdirSync(`${basePath}\\${champDir}`)
+        const championData = localDataFetcher.fetchChampionData(champDir)
 
-        if (fileNames.length !== 1) {
-            continue
+        processFile(championData)
+    }
+}
+
+export const processDianaSpell = () => {
+    const level = 5
+    const bonusHP = 0
+    const MP = 18
+
+    const data = dianaData
+
+    const skillData = data["Characters/Diana/Spells/DianaOrbsAbility/DianaOrbs"]
+
+    const dataValues = skillData["mSpell"]["mDataValues"].map(dataValue => ({
+        name: dataValue.mName,
+        value: dataValue.mValues[level]
+    }))
+
+    console.log("Data values")
+    for (const dataValue of dataValues){
+        console.log(`${dataValue.name}: ${dataValue.value}`)
+    }
+    console.log("\n")
+
+    const calculationsData = skillData["mSpell"]["mSpellCalculations"]
+    const calculationNames = Object.keys(calculationsData)
+    const spellCalculations: {
+        name: string
+        formula:number[]
+        value: number
+    }[] = []
+
+    for (const calcName of calculationNames) {
+        const result = {
+            name: calcName,
+            formula: [] as number[],
+            value: 0
         }
 
-        const filePath = `${basePath}\\${champDir}\\${fileNames[0]}`
-        const fileContent = fs.readFileSync(filePath, 'utf8')
-        const fileObject = JSON.parse(fileContent)
+        const calculationData = calculationsData[calcName as keyof typeof calculationsData]
+        const calculationType = calculationData["__type"]
 
-        processFile(filePath, fileObject)
+        if (calculationType === "GameCalculation") {
+            if (!("mFormulaParts" in calculationData)) {
+                continue
+            }
+
+            const formulaParts = calculationData["mFormulaParts"]
+        
+            for (const formulaPart of formulaParts) {
+                if (formulaPart["__type"] === "NamedDataValueCalculationPart") {
+                    const dataValue = dataValues.find(x => x.name === formulaPart.mDataValue)
+                    
+                    result.formula.push(dataValue.value)
+                    result.value += dataValue.value
+                }
+        
+                if (formulaPart["__type"] === "StatByNamedDataValueCalculationPart") {
+                    const dataValue = dataValues.find(x => x.name === formulaPart.mDataValue)
+                
+                    result.formula.push(dataValue.value)
+
+                    let statValue = 0
+                    const statId = "mStat" in formulaPart
+                        ? formulaPart.mStat
+                        : 0
+
+                    switch (statId) {
+                        case 0: {
+                            statValue = MP;
+                            break;
+                        }
+                        case 11: {
+                            statValue = bonusHP;
+                            break;
+                        }
+                    }
+                    
+                    result.value += dataValue.value * statValue
+                }
+            }
+        }
+
+        if (calculationType === "GameCalculationModified") {
+            if (!("mMultiplier" in calculationData) || !("mModifiedGameCalculation" in calculationData)) {
+                continue
+            }
+
+            const modifiedData = spellCalculations.find(x => x.name === calculationData.mModifiedGameCalculation)
+            
+            result.formula = modifiedData.formula.map(x => x * calculationData.mMultiplier.mNumber)
+            result.value = modifiedData.value * calculationData.mMultiplier.mNumber
+        }
+
+        spellCalculations.push(result)
+    }
+
+    console.log("Spell calculations")
+    for (const spellCalculation of spellCalculations){
+        console.log(`${spellCalculation.name}: ${spellCalculation.value} (${spellCalculation.formula.join(" + ")})`)
     }
 }

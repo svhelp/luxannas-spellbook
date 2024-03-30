@@ -1,33 +1,33 @@
 import { FormulaPartItem } from "./FormulaPartItem"
 
-export interface SpellData {
+export type SpellData = {
     mSpell: Spell
+    __type: "SpellObject"
 }
 
-export interface Spell {
+export type Spell = {
     mEffectAmount?: EffectAmountItem[]
-    mDataValues?: EffectAmountItem[]
+    mDataValues?: DataValueItem[]
     mSpellCalculations?: {
         [key: string]: SpellCalculation
     }
+    __type: "SpellDataResource"
 }
 
-interface EffectAmountItem extends ITypedValue {
+type EffectAmountItem = {
     value?: number[]
+    __type: "SpellEffectAmount"
 }
 
-interface EffectAmountItem extends ITypedValue {
+type DataValueItem = {
     mName: string
     mValues: number[]
+    __type: "SpellDataValue"
 }
 
-interface ITypedValue {
-    __type: string
-}
-
-interface SpellCalculation {
-    __type: "GameCalculation" | "GameCalculationModified" | "GameCalculationConditional" // to investigate differencies
+type SpellCalculation = {
     mDisplayAsPercent?: boolean
     mFormulaParts: FormulaPartItem[]
     mMultiplier?: any
+    __type: "GameCalculation" | "GameCalculationModified" | "GameCalculationConditional" // to investigate differencies
 }
