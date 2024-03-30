@@ -7,7 +7,7 @@ const basePath = 'src/test-data/champions'
 
 const fetchChampionData = (name: string) => {
     const expectedFileName = `${name}.bin.json`
-    const filePath = `${basePath}\\${name}\\${expectedFileName}`
+    const filePath = `${basePath}/${name}/${expectedFileName}`
 
     if (!fs.existsSync(filePath)) {
         throw new Error(`Champion data not found for ${name}`)

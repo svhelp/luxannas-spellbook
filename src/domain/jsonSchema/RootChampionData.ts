@@ -1,4 +1,4 @@
-import { AbilityResourceType } from "./AbilityResourceType"
+import { ResourceType } from "domain/common/ResourceType"
 
 export type RootChampionData = {
     mCharacterName: string
@@ -28,9 +28,9 @@ export type RootChampionData = {
 }
 
 export type AbilityResource = {
-    arType: AbilityResourceType
-    arBase: number
-    arPerLevel: number
+    arType?: ResourceType
+    arBase?: number
+    arPerLevel?: number
     arBaseStaticRegen: number
     arRegenPerLevel: number
     arIncrements: number

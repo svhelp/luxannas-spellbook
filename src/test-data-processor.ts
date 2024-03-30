@@ -3,10 +3,14 @@ import fs from 'fs'
 import { localDataFetcher } from './service/dataFetcher/localDataFetcher'
 import XXH from 'xxhashjs'
 import * as dianaData from './test-data/champions/diana/diana.bin.json'
+import { playerContext } from './service/playerContext'
 
 const basePath = './src/test-data/champions'
 
 const formulaPartType: string[] = []
+const resourceTypes: {[key: string]: string[]} = {
+
+}
 
 const processFile = (data: ChampionData) => {
     const logError = (errorMessage: string) => console.log(`${data.rootChampionData.mCharacterName} ${errorMessage.toUpperCase()}`)
@@ -49,10 +53,31 @@ export const processTestData = () => {
     console.log(XXH.h64('ClampBySubpartCalculationPart'.toLowerCase(), 0x0000).toString(16))
 
     for (const champDir of fs.readdirSync(basePath)) {
+        const context = playerContext(champDir, true)
+
+        const stats = context.getStats()
+        const resourceType = stats.resourceType?.toString() ?? "none"
+
+        if (!Object.keys(resourceTypes).includes(resourceType)) {
+            resourceTypes[resourceType] = []
+        }
+
+        resourceTypes[resourceType].push(champDir)
+
+        if (champDir == "diana") {
+            context.setSpellLevels([0, 1, 0, 0, 0])
+            context.setStats({
+                abilityPower: 18
+            })
+        }
+        //console.log(context.getStats())
+
         const championData = localDataFetcher.fetchChampionData(champDir)
 
         processFile(championData)
     }
+
+    //console.log(resourceTypes)
 }
 
 export const processDianaSpell = () => {

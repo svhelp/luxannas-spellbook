@@ -16,17 +16,33 @@ function __setMockFiles(newMockFiles) {
     if (!mockFiles[dir]) {
       mockFiles[dir] = [];
     }
-    mockFiles[dir].push(path.basename(file));
+    mockFiles[dir][path.basename(file)] = newMockFiles[file];
   }
 }
 
 // A custom version of `readdirSync` that reads from the special mocked out
 // file list set via __setMockFiles
 function readdirSync(directoryPath) {
-  return mockFiles[directoryPath] || [];
+  return Object.keys(mockFiles[directoryPath]) || [];
+}
+
+function existsSync(file) {
+  const dirname = path.dirname(file);
+  const fileName = path.basename(file);
+
+  return Object.keys(mockFiles).includes(dirname) && Object.keys(mockFiles[dirname]).includes(fileName);
+}
+
+function readFileSync(file, encoding) {
+  const dirname = path.dirname(file);
+  const fileName = path.basename(file);
+
+  return mockFiles[dirname][fileName];
 }
 
 fs.__setMockFiles = __setMockFiles;
+fs.existsSync = existsSync;
 fs.readdirSync = readdirSync;
+fs.readFileSync = readFileSync;
 
 module.exports = fs;
