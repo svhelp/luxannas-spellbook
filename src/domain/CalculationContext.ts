@@ -1,5 +1,11 @@
+import { Spell } from "./jsonSchema/SpellData"
 import { ChampionStats } from "./riotApiSchema/ChampionStats"
 
 export type CalculationContext = {
-    stats: ChampionStats
+    championLevel: number
+    spellLevel: number
+    
+    currentStats: ChampionStats
+    initStats: ChampionStats
+    spellData: Spell
 }

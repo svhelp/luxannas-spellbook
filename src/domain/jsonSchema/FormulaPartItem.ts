@@ -27,8 +27,7 @@ export type FormulaPartItem =
 export type AbilityResourceByCoefficientCalculationPart = {
     __type: "AbilityResourceByCoefficientCalculationPart"
     mCoefficient: number
-    mStatFormula?: number
-    // AbilityResource ?
+    mStatFormula?: ChampionStatFormula
 }
 
 export type BuffCounterByCoefficientCalculationPart = {
@@ -40,7 +39,6 @@ export type BuffCounterByCoefficientCalculationPart = {
 
 export type BuffCounterByNamedDataValueCalculationPart = {
     __type: "BuffCounterByNamedDataValueCalculationPart"
-    mCoefficient: number
     mBuffName: string // hashed value
     mDataValue: string // hashed value possible
 }

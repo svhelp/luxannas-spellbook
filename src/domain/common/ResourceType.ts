@@ -1,4 +1,4 @@
-export enum ResourceType { //to add
+export const enum ResourceType { //to add
     Mana,
     Energy,
     Unknown, 

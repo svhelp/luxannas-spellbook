@@ -1,4 +1,4 @@
-export enum ChampionStatFormula {
+export const enum ChampionStatFormula {
     Base,
     Total,
     Bonus,
