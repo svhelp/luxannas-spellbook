@@ -1,0 +1,1 @@
+export { spellCalculation } from './spellCalculation'

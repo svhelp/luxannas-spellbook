@@ -1,4 +1,4 @@
-export enum ChampionStat {
+export const enum ChampionStat {
     AbilityPower,
     Armor,
     Attack,

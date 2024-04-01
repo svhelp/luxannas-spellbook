@@ -14,6 +14,13 @@ export type Spell = {
     __type: "SpellDataResource"
 }
 
+export type SpellCalculation = {
+    mDisplayAsPercent?: boolean
+    mFormulaParts: FormulaPartItem[]
+    mMultiplier?: any
+    __type: "GameCalculation" | "GameCalculationModified" | "GameCalculationConditional" // to investigate differencies
+}
+
 type EffectAmountItem = {
     value?: number[]
     __type: "SpellEffectAmount"
@@ -23,11 +30,4 @@ type DataValueItem = {
     mName: string
     mValues: number[]
     __type: "SpellDataValue"
-}
-
-type SpellCalculation = {
-    mDisplayAsPercent?: boolean
-    mFormulaParts: FormulaPartItem[]
-    mMultiplier?: any
-    __type: "GameCalculation" | "GameCalculationModified" | "GameCalculationConditional" // to investigate differencies
 }

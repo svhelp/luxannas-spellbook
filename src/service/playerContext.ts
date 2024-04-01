@@ -1,6 +1,8 @@
 import { ChampionStats } from "domain/riotApiSchema/ChampionStats"
 import { localDataFetcher } from "./dataFetcher/localDataFetcher"
 import { ChampionData } from "domain/ChampionData"
+import { spellCalculation } from "../calculation"
+import { CalculationContext } from "domain/CalculationContext"
 
 export const playerContext = (name: string, isLocal?: boolean) => {
     if (!isLocal) {
@@ -22,6 +24,53 @@ export const playerContext = (name: string, isLocal?: boolean) => {
 
     ]
 
+    const spells = championData.spellsData.map(spell => {
+        const calculations = []
+
+        for (const calculationName in spell.mSpellCalculations) {
+            if (spell.mSpellCalculations[calculationName].__type != "GameCalculation") {
+                continue
+            }
+
+            const calculation = spellCalculation(spell.mSpellCalculations[calculationName])
+
+            calculations.push({
+                name: calculationName,
+                calculation
+            })
+        }
+
+        return {
+            calculations
+        };
+    })
+
+    const getContext = (spellIndex: number): CalculationContext => {
+        return {
+            championLevel: level,
+            spellLevel: spellLevels[spellIndex],
+            
+            currentStats: stats,
+            initStats: initStats(championData),
+            spellData: championData.spellsData[spellIndex]
+        }
+    }
+
+    const getSpells = () => {
+        let index = 0
+
+        for (const spell of spells) {
+            const context = getContext(index);
+
+            for (const calculation of spell.calculations) {
+                console.log(`${calculation.name}: ${calculation.calculation.getValue(context)} (${calculation.calculation.getString(context)})`)
+            }
+
+            index++
+            console.log("\n")
+        }
+    }
+
     const setStats = (data: Partial<ChampionStats>) => {
         stats = { ...stats, ...data }
     }
@@ -36,6 +85,7 @@ export const playerContext = (name: string, isLocal?: boolean) => {
 
     return {
         getStats: () => stats,
+        getSpells,
 
         setStats,
         setSpellLevels
@@ -44,7 +94,7 @@ export const playerContext = (name: string, isLocal?: boolean) => {
 
 const initStats = (championData: ChampionData): ChampionStats => ({
     abilityHaste: 0,
-    abilityPower: 0,
+    abilityPower: 1,
     //cooldownReduction: number to verify
 
     attackDamage: championData.rootChampionData.baseDamage,
