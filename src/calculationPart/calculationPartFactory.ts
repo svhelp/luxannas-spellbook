@@ -15,6 +15,7 @@ import { statByCoefficientCalculationPart } from "./implementation/statByCoeffic
 import { statByNamedDataValueCalculationPart } from "./implementation/statByNamedDataValueCalculationPart";
 import { statBySubPartCalculationPart } from "./implementation/statBySubPartCalculationPart";
 import { sumOfSubPartsCalculationPart } from "./implementation/sumOfSubPartsCalculationPart";
+import { cooldownMultiplierCalculationPart } from "./implementation/cooldownMultiplierCalculationPart";
 
 export const parseCalculationPart = (inputData: FormulaPartItem): CalculationPart => {
     const calculationType = inputData.__type
@@ -39,7 +40,12 @@ export const parseCalculationPart = (inputData: FormulaPartItem): CalculationPar
             return byCharLevelFormulaCalculationPart(inputData)
         }
         case "{803dae4c}": {
-            return clampBySubpartCalculationPart(inputData)
+            const subparts = inputData.mSubparts.map(x => parseCalculationPart(x))
+
+            return clampBySubpartCalculationPart(inputData, subparts)
+        }
+        case "CooldownMultiplierCalculationPart": {
+            return cooldownMultiplierCalculationPart(inputData)
         }
         case "EffectValueCalculationPart": {
             return effectValueCalculationPart(inputData)
@@ -51,7 +57,10 @@ export const parseCalculationPart = (inputData: FormulaPartItem): CalculationPar
             return numberCalculationPart(inputData)
         }
         case "ProductOfSubPartsCalculationPart": {
-            return productOfSubPartsCalculationPart(inputData)
+            const part1 = parseCalculationPart(inputData.mPart1)
+            const part2 = parseCalculationPart(inputData.mPart2)
+
+            return productOfSubPartsCalculationPart(part1, part2)
         }
         case "StatByCoefficientCalculationPart": {
             return statByCoefficientCalculationPart(inputData)
@@ -60,10 +69,14 @@ export const parseCalculationPart = (inputData: FormulaPartItem): CalculationPar
             return statByNamedDataValueCalculationPart(inputData)
         }
         case "StatBySubPartCalculationPart": {
-            return statBySubPartCalculationPart(inputData)
+            const subpart = parseCalculationPart(inputData.mSubpart)
+
+            return statBySubPartCalculationPart(inputData, subpart)
         }
         case "SumOfSubPartsCalculationPart": {
-            return sumOfSubPartsCalculationPart(inputData)
+            const subparts = inputData.mSubparts.map(x => parseCalculationPart(x))
+
+            return sumOfSubPartsCalculationPart(subparts)
         }
         default: {
             throw new Error(`Unknown calculation part type: ${calculationType}`)

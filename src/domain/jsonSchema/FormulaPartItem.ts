@@ -9,7 +9,7 @@ export type FormulaPartItem =
     ByCharLevelInterpolationCalculationPart |
     ByCharLevelFormulaCalculationPart |
     ClampBySubpartCalculationPart |
-    //CooldownMultiplierCalculationPart |
+    CooldownMultiplierCalculationPart |
     //CustomReductionMultiplierCalculationPart |
     EffectValueCalculationPart |
     //ItemsByRarityWithCoefficient |
@@ -45,14 +45,16 @@ export type BuffCounterByNamedDataValueCalculationPart = {
 
 export type ByCharLevelBreakpointsCalculationPart = {
     __type: "ByCharLevelBreakpointsCalculationPart"
-    mLevel1Value: number
-    '02deb550'?: number
+    mLevel1Value?: number
+    '{02deb550}'?: number
     mBreakpoints?: Breakpoint[]
 }
 
-type Breakpoint = {[key: string]: number} & { // always hashed field name TODO: explore
+export type Breakpoint = {
     __type: 'Breakpoint'
-    mLevel: number
+    mLevel?: number
+    '{57fdc438}'?: number // TODO: explore
+    '{d5fd07ed}'?: number // TODO: explore
 }
 
 export type ByCharLevelFormulaCalculationPart = {
@@ -73,6 +75,10 @@ export type ClampBySubpartCalculationPart = {
     mCeiling: number // null possible
     mFloor: number
     mSubparts: FormulaPartItem[]
+}
+
+export type CooldownMultiplierCalculationPart = {
+    __type: "CooldownMultiplierCalculationPart"
 }
 
 export type EffectValueCalculationPart = {

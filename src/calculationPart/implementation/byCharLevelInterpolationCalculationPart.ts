@@ -3,12 +3,14 @@ import { CalculationPart } from "domain/CalculationPart";
 import { ByCharLevelInterpolationCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 
 export const byCharLevelInterpolationCalculationPart = (inputData: ByCharLevelInterpolationCalculationPart): CalculationPart => {
+
+    const start = inputData.mStartValue
+    const end = inputData.mEndValue
+
+    const getValue = (context: CalculationContext) => start + (end - start) * context.championLevel / 18
+
     return {
-        getValue: (context: CalculationContext) => {
-            throw new Error("Not implemented")
-        },
-        getString: (context: CalculationContext) => {
-            throw new Error("Not implemented")
-        }
+        getValue,
+        getString: (context: CalculationContext) => getValue(context).toString()
     };
 };
