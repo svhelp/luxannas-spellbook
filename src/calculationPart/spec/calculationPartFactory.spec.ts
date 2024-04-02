@@ -55,7 +55,7 @@ describe('calculationPartFactory', () => {
                 __type: partType,
             }
 
-            parseCalculationPart(partMock as any)
+            parseCalculationPart(undefined, partMock as any)
 
             expect(expectedInitializer).toHaveBeenCalled()
         })
@@ -66,6 +66,6 @@ describe('calculationPartFactory', () => {
             __type: "WrongPartMockType"
         } as const
 
-        expect(() => parseCalculationPart(wrongPartMock as any)).toThrow("Unknown calculation part type: WrongPartMockType")
+        expect(() => parseCalculationPart(undefined, wrongPartMock as any)).toThrow("Unknown calculation part type: WrongPartMockType")
     })
 })

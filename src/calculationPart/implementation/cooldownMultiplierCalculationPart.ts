@@ -4,6 +4,7 @@ import { CooldownMultiplierCalculationPart } from "domain/jsonSchema/FormulaPart
 
 export const cooldownMultiplierCalculationPart = (inputData: CooldownMultiplierCalculationPart): CalculationPart => {
     return {
+        type: "CooldownMultiplierCalculationPart",
         getValue: (context: CalculationContext) => 1, // to implement
         getString: (context: CalculationContext) => ""
     };

@@ -9,6 +9,7 @@ export const abilityResourceByCoefficientCalculationPart = (inputData: AbilityRe
     const formula = inputData.mStatFormula
 
     return {
+        type: "AbilityResourceByCoefficientCalculationPart",
         getValue: (context: CalculationContext) => {
             return coefficient * getStat(context, "resourceMax", formula)
         },

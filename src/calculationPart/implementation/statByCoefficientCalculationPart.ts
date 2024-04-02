@@ -12,6 +12,7 @@ export const statByCoefficientCalculationPart = (inputData: StatByCoefficientCal
     const coefficient = inputData.mCoefficient
 
     return {
+        type: "StatByCoefficientCalculationPart",
         getValue: (context: CalculationContext) => {
             return getPercent(coefficient) * getStat(context, statName, formula)
         },

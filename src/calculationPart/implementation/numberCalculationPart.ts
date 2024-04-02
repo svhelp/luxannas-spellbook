@@ -7,6 +7,7 @@ export const numberCalculationPart = (inputData: NumberCalculationPart): Calcula
     const value = inputData.mNumber
 
     return {
+        type: "NumberCalculationPart",
         getValue: (context: CalculationContext) => value,
         getString: (context: CalculationContext) => value.toString()
     };

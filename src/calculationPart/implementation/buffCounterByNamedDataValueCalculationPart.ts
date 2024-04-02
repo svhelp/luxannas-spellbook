@@ -2,20 +2,21 @@ import { CalculationContext } from "domain/CalculationContext";
 import { CalculationPart } from "domain/CalculationPart";
 import { BuffCounterByNamedDataValueCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { getPercent } from "./utils/getPercent";
-import { getDataValue } from "./utils/getDataValue";
+import { Spell } from "domain/jsonSchema/SpellData";
 
-export const buffCounterByNamedDataValueCalculationPart = (inputData: BuffCounterByNamedDataValueCalculationPart): CalculationPart => {
+export const buffCounterByNamedDataValueCalculationPart = (inputData: BuffCounterByNamedDataValueCalculationPart, spellData: Spell): CalculationPart => {
     
-    const dataValue = inputData.mDataValue
+    const dataValues = spellData.mDataValues.find(x => x.mName === inputData.mDataValue).mValues
     const buff = inputData.mBuffName
 
     const getValue = (context: CalculationContext) => {
-        const value = getDataValue(context.spellData, dataValue, context.spellLevel)
+        const value = dataValues[context.spellLevel]
 
         return getPercent(value)
     }
 
     return {
+        type: "BuffCounterByNamedDataValueCalculationPart",
         getValue,
         getString: (context: CalculationContext) => `${getValue(context)}% ${buff}`
     };

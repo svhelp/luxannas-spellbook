@@ -35,6 +35,7 @@ export const byCharLevelBreakpointsCalculationPart = (inputData: ByCharLevelBrea
     }
 
     return {
+        type: "ByCharLevelBreakpointsCalculationPart",
         getValue,
         getString: (context: CalculationContext) => getValue(context).toString()
     };

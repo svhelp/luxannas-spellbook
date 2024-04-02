@@ -16,8 +16,9 @@ import { statByNamedDataValueCalculationPart } from "./implementation/statByName
 import { statBySubPartCalculationPart } from "./implementation/statBySubPartCalculationPart";
 import { sumOfSubPartsCalculationPart } from "./implementation/sumOfSubPartsCalculationPart";
 import { cooldownMultiplierCalculationPart } from "./implementation/cooldownMultiplierCalculationPart";
+import { Spell } from "domain/jsonSchema/SpellData";
 
-export const parseCalculationPart = (inputData: FormulaPartItem): CalculationPart => {
+export const parseCalculationPart = (spell: Spell, inputData: FormulaPartItem): CalculationPart => {
     const calculationType = inputData.__type
 
     switch (calculationType) {
@@ -28,7 +29,7 @@ export const parseCalculationPart = (inputData: FormulaPartItem): CalculationPar
             return buffCounterByCoefficientCalculationPart(inputData)
         }
         case "BuffCounterByNamedDataValueCalculationPart": {
-            return buffCounterByNamedDataValueCalculationPart(inputData)
+            return buffCounterByNamedDataValueCalculationPart(inputData, spell)
         }
         case "ByCharLevelBreakpointsCalculationPart": {
             return byCharLevelBreakpointsCalculationPart(inputData)
@@ -40,7 +41,7 @@ export const parseCalculationPart = (inputData: FormulaPartItem): CalculationPar
             return byCharLevelFormulaCalculationPart(inputData)
         }
         case "{803dae4c}": {
-            const subparts = inputData.mSubparts.map(x => parseCalculationPart(x))
+            const subparts = inputData.mSubparts.map(x => parseCalculationPart(spell, x))
 
             return clampBySubpartCalculationPart(inputData, subparts)
         }
@@ -48,17 +49,17 @@ export const parseCalculationPart = (inputData: FormulaPartItem): CalculationPar
             return cooldownMultiplierCalculationPart(inputData)
         }
         case "EffectValueCalculationPart": {
-            return effectValueCalculationPart(inputData)
+            return effectValueCalculationPart(inputData, spell)
         }
         case "NamedDataValueCalculationPart": {
-            return namedDataValueCalculationPart(inputData)
+            return namedDataValueCalculationPart(inputData, spell)
         }
         case "NumberCalculationPart": {
             return numberCalculationPart(inputData)
         }
         case "ProductOfSubPartsCalculationPart": {
-            const part1 = parseCalculationPart(inputData.mPart1)
-            const part2 = parseCalculationPart(inputData.mPart2)
+            const part1 = parseCalculationPart(spell, inputData.mPart1)
+            const part2 = parseCalculationPart(spell, inputData.mPart2)
 
             return productOfSubPartsCalculationPart(part1, part2)
         }
@@ -66,15 +67,15 @@ export const parseCalculationPart = (inputData: FormulaPartItem): CalculationPar
             return statByCoefficientCalculationPart(inputData)
         }
         case "StatByNamedDataValueCalculationPart": {
-            return statByNamedDataValueCalculationPart(inputData)
+            return statByNamedDataValueCalculationPart(inputData, spell)
         }
         case "StatBySubPartCalculationPart": {
-            const subpart = parseCalculationPart(inputData.mSubpart)
+            const subpart = parseCalculationPart(spell, inputData.mSubpart)
 
             return statBySubPartCalculationPart(inputData, subpart)
         }
         case "SumOfSubPartsCalculationPart": {
-            const subparts = inputData.mSubparts.map(x => parseCalculationPart(x))
+            const subparts = inputData.mSubparts.map(x => parseCalculationPart(spell, x))
 
             return sumOfSubPartsCalculationPart(subparts)
         }

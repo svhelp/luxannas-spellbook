@@ -1,9 +1,9 @@
 import { parseCalculationPart } from "../calculationPart";
 import { CalculationContext } from "domain/CalculationContext";
-import { SpellCalculation } from "domain/jsonSchema/SpellData";
+import { Spell, SpellCalculation } from "domain/jsonSchema/SpellData";
 
-export const spellCalculation = (calculationData: SpellCalculation) => {
-    const parts = calculationData.mFormulaParts.map(parseCalculationPart)
+export const spellCalculation = (spell: Spell, calculationData: SpellCalculation) => {
+    const parts = calculationData.mFormulaParts.map(x => parseCalculationPart(spell, x))
     
     return {
         getValue: (context: CalculationContext) => {

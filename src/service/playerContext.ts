@@ -32,7 +32,7 @@ export const playerContext = (name: string, isLocal?: boolean) => {
                 continue
             }
 
-            const calculation = spellCalculation(spell.mSpellCalculations[calculationName])
+            const calculation = spellCalculation(spell, spell.mSpellCalculations[calculationName])
 
             calculations.push({
                 name: calculationName,
@@ -52,7 +52,6 @@ export const playerContext = (name: string, isLocal?: boolean) => {
             
             currentStats: stats,
             initStats: initStats(championData),
-            spellData: championData.spellsData[spellIndex]
         }
     }
 

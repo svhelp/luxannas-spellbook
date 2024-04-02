@@ -7,6 +7,7 @@ export const byCharLevelFormulaCalculationPart = (inputData: ByCharLevelFormulaC
     const values = inputData.mValues
 
     return {
+        type: "ByCharLevelFormulaCalculationPart",
         getValue: (context: CalculationContext) => values[context.championLevel],
         getString: (context: CalculationContext) => values[context.championLevel].toString()
     };

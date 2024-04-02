@@ -1,28 +1,10 @@
 import { describe, expect, it } from "@jest/globals"
 import { getPercent } from "../getPercent"
-import { getDataValue } from "../getDataValue"
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula"
-import { Spell } from "domain/jsonSchema/SpellData"
 import { CalculationContext } from "domain/CalculationContext"
 import { ResourceType } from "domain/common/ResourceType"
 import { ChampionStats } from "domain/riotApiSchema/ChampionStats"
 import { getStat } from "../getStat"
-
-const spellMock: Spell = {
-    mDataValues: [
-        {
-            mName: "Name1Mock",
-            mValues: [ 0, 1, 2, 3, 4 ],
-            __type: "SpellDataValue"
-        },
-        {
-            mName: "Name2Mock",
-            mValues: [ 0, 5, 6, 7, 8 ],
-            __type: "SpellDataValue"
-        }
-    ],
-    __type: "SpellDataResource"
-}
 
 const initStatsMock: ChampionStats = {
     abilityHaste: 0,
@@ -78,23 +60,9 @@ const contextMock: CalculationContext = {
     
     currentStats: currentStatsMock,
     initStats: initStatsMock,
-    spellData: undefined
 }
 
-describe("Calculation utils", () => {
-    describe.each([
-        [ "Name1Mock", 1, 1 ],
-        [ "Name1Mock", 3, 3 ],
-        [ "Name2Mock", 1, 5 ],
-        [ "Name2Mock", 4, 8 ],
-    ])("getDataValue should extract spell data value", (dataValueName, spellLevel, expectedOutput) => {
-        it(`Should return ${expectedOutput} for ${dataValueName} DataValue level ${spellLevel}`, () => {
-            const result = getDataValue(spellMock, dataValueName, spellLevel)
-
-            expect(result).toEqual(expectedOutput)
-        })
-    })
-    
+describe("Calculation utils", () => {    
     describe("getPercent", () => {
         describe.each([
             [ 0.001, 0.1 ],

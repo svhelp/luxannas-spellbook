@@ -10,6 +10,7 @@ export const clampBySubpartCalculationPart = (inputData: ClampBySubpartCalculati
     const clamp = (value: number) => Math.min(Math.max(value, floor), ceiling)
 
     return {
+        type: "ClampBySubpartCalculationPart",
         getValue: (context: CalculationContext) => clamp(subparts.reduce((accumulator, currentValue) => accumulator * currentValue.getValue(context), 1)),
         getString: (context: CalculationContext) => subparts.map(x => x.getString(context)).join(" * ")
     };

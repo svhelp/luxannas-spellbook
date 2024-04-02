@@ -11,6 +11,7 @@ export const statBySubPartCalculationPart = (inputData: StatBySubPartCalculation
     const formula = inputData.mStatFormula
 
     return {
+        type: "StatBySubPartCalculationPart",
         getValue: (context: CalculationContext) => {
             return subpart.getValue(context) * getStat(context, statName, formula)
         },
