@@ -4,25 +4,16 @@ import { EffectValueCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { getPercent } from "./utils/getPercent";
 import { Spell } from "domain/jsonSchema/SpellData";
 
+const percentThreshold = 5 // why 5
+
 export const effectValueCalculationPart = (inputData: EffectValueCalculationPart, spellData: Spell): CalculationPart => {
 
     const effectValues = spellData.mEffectAmount[inputData.mEffectIndex].value
 
-    const getValue = (context: CalculationContext) => {
-        // if (context.spellData.mEffectAmount.length < effectIndex + 1) {
-        //     return 0
-        // }
-
-        return effectValues[context.spellLevel]
-    }
-
     return {
         type: "EffectValueCalculationPart",
-        getValue,
-        getString: (context: CalculationContext) => {
-            const value = getValue(context)
-
-            return getPercent(value, 3).toString() // why 3
-        }
+        getValue: (context: CalculationContext) => effectValues[context.spellLevel],
+        getString: (context: CalculationContext) =>
+            getPercent(effectValues[context.spellLevel], percentThreshold).toString()
     };
 };
