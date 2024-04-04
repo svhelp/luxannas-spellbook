@@ -34,7 +34,7 @@ export type BuffCounterByCoefficientCalculationPart = {
     __type: "BuffCounterByCoefficientCalculationPart"
     mCoefficient: number
     mBuffName: string // hashed value
-    mScalingTagKey: string // not sure if needed
+    mScalingTagKey?: string // not sure if needed
 }
 
 export type BuffCounterByNamedDataValueCalculationPart = {
