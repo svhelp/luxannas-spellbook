@@ -1,4 +1,4 @@
-import { FormulaPartItem } from "./FormulaPartItem"
+import { SpellCalculation } from "./SpellCalculation"
 
 export type SpellData = {
     mSpell: Spell
@@ -13,14 +13,6 @@ export type Spell = {
         [key: string]: SpellCalculation
     }
     __type: "SpellDataResource"
-}
-
-export type SpellCalculation = {
-    mDisplayAsPercent?: boolean
-    mFormulaParts: FormulaPartItem[]
-    mMultiplier?: any
-    mPrecision?: number
-    __type: "GameCalculation" | "GameCalculationModified" | "GameCalculationConditional" // to investigate differencies
 }
 
 type EffectAmountItem = {

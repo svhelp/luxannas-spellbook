@@ -25,16 +25,26 @@ export const playerContext = (name: string, isLocal?: boolean) => {
     ]
 
     const spells = championData.spellsData.map(spell => {
-        const name = spell.mClientData.mTooltipData.mObjectName
+        const spellName = spell.mClientData.mTooltipData.mObjectName
         const calculations = []
 
         for (const calculationName in spell.mSpellCalculations) {
-            if (spell.mSpellCalculations[calculationName].__type != "GameCalculation") {
+            const calculationData = spell.mSpellCalculations[calculationName]
+
+            if (calculationData.__type != "GameCalculation") {
+
+                if ("GameCalculationModified" === calculationData.__type) {
+                    console.log(name)
+                    console.log(spellName)
+                    console.log(calculationName)
+                    console.log(calculationData)
+                }
+
                 continue
             }
 
-            const calculation = spellCalculation(spell, spell.mSpellCalculations[calculationName])
-
+            const calculation = spellCalculation(spell, calculationData)
+    
             calculations.push({
                 name: calculationName,
                 calculation
@@ -42,7 +52,7 @@ export const playerContext = (name: string, isLocal?: boolean) => {
         }
 
         return {
-            name,
+            name: spellName,
             calculations
         };
     })
