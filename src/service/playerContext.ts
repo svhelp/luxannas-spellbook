@@ -25,6 +25,7 @@ export const playerContext = (name: string, isLocal?: boolean) => {
     ]
 
     const spells = championData.spellsData.map(spell => {
+        const name = spell.mClientData.mTooltipData.mObjectName
         const calculations = []
 
         for (const calculationName in spell.mSpellCalculations) {
@@ -41,6 +42,7 @@ export const playerContext = (name: string, isLocal?: boolean) => {
         }
 
         return {
+            name,
             calculations
         };
     })
@@ -83,6 +85,7 @@ export const playerContext = (name: string, isLocal?: boolean) => {
     }
 
     return {
+        getName: () => name,
         getStats: () => stats,
         getSpells,
 

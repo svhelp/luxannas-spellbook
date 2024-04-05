@@ -5,6 +5,7 @@ import { Spell } from "domain/jsonSchema/SpellData";
 import { CalculationContext } from "domain/CalculationContext";
 
 const spellMock: Spell = {
+    mClientData: undefined,
     mEffectAmount: [
         {
             value: [ 0, 1, 2, 3, 4, 5 ],

@@ -6,6 +6,7 @@ export type SpellData = {
 }
 
 export type Spell = {
+    mClientData: SpellClientData
     mEffectAmount?: EffectAmountItem[]
     mDataValues?: DataValueItem[]
     mSpellCalculations?: {
@@ -18,6 +19,7 @@ export type SpellCalculation = {
     mDisplayAsPercent?: boolean
     mFormulaParts: FormulaPartItem[]
     mMultiplier?: any
+    mPrecision?: number
     __type: "GameCalculation" | "GameCalculationModified" | "GameCalculationConditional" // to investigate differencies
 }
 
@@ -29,6 +31,14 @@ type EffectAmountItem = {
 type DataValueItem = {
     mName: string
     mHashedName?: string
-    mValues: number[]
+    mValues?: number[]
     __type: "SpellDataValue"
+}
+
+type SpellClientData = {
+    mTooltipData: TooltipData
+}
+
+type TooltipData = {
+    mObjectName: string
 }

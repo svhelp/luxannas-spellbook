@@ -5,6 +5,7 @@ import { namedDataValueCalculationPart } from "../namedDataValueCalculationPart"
 import { CalculationContext } from "domain/CalculationContext";
 
 const spellMock: Spell = {
+    mClientData: undefined,
     mDataValues: [
         {
             mName: "DataValueMock1",

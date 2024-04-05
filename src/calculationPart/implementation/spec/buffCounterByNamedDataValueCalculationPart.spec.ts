@@ -4,6 +4,7 @@ import { buffCounterByNamedDataValueCalculationPart } from "../buffCounterByName
 import { Spell } from "domain/jsonSchema/SpellData";
 
 const spellMock: Spell = {
+    mClientData: undefined,
     mDataValues: [
         {
             mName: "DataValueMock1",
