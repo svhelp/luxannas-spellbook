@@ -17,6 +17,8 @@ import { statBySubPartCalculationPart } from "./implementation/statBySubPartCalc
 import { sumOfSubPartsCalculationPart } from "./implementation/sumOfSubPartsCalculationPart";
 import { cooldownMultiplierCalculationPart } from "./implementation/cooldownMultiplierCalculationPart";
 import { Spell } from "domain/jsonSchema/SpellData";
+import { ksanteQSkillPart } from "./implementation/ksanteQSkillPart";
+import { udyrCalculationPart } from "./implementation/udyrCalculationPart";
 
 export const parseCalculationPart = (spell: Spell, inputData: FormulaPartItem): CalculationPart => {
     const calculationType = inputData.__type
@@ -79,7 +81,16 @@ export const parseCalculationPart = (spell: Spell, inputData: FormulaPartItem): 
 
             return sumOfSubPartsCalculationPart(subparts)
         }
+        case "{f3cbe7b2}": {
+            return ksanteQSkillPart()
+        }
+        case "{ea2ab5ca}": {
+            return udyrCalculationPart();
+        }
         default: {
+
+            console.log(inputData)
+
             throw new Error(`Unknown calculation part type: ${calculationType}`)
         }
     }

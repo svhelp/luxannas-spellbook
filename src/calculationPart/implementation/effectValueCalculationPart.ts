@@ -8,7 +8,7 @@ const percentThreshold = 5 // why 5
 
 export const effectValueCalculationPart = (inputData: EffectValueCalculationPart, spellData: Spell): CalculationPart => {
 
-    const effectValues = spellData.mEffectAmount[inputData.mEffectIndex].value
+    const effectValues = spellData.mEffectAmount?.[inputData.mEffectIndex]?.value ?? [ 0, 0, 0, 0, 0 ]
 
     return {
         type: "EffectValueCalculationPart",

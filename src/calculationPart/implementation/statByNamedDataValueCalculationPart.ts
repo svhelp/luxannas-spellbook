@@ -6,10 +6,11 @@ import { getPercent } from "./utils/getPercent";
 import { ChampionStatName } from "./utils/ChampionStatName";
 import { ChampionStat } from "domain/jsonSchema/ChampionStat";
 import { Spell } from "domain/jsonSchema/SpellData";
+import { getDataValue } from "./utils/getDataValue";
 
 export const statByNamedDataValueCalculationPart = (inputData: StatByNamedDataValueCalculationPart, spellData: Spell): CalculationPart => {
     
-    const dataValues = spellData.mDataValues.find(x => x.mName === inputData.mDataValue).mValues
+    const dataValues = getDataValue(spellData, inputData.mDataValue)
     const statName = ChampionStatName[inputData.mStat ?? ChampionStat.AbilityPower]
     const formula = inputData.mStatFormula
 

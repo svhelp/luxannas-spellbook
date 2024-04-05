@@ -25,6 +25,7 @@ const spellMock: Spell = {
     __type: "SpellDataResource"
 }
 
+// TODO: Add case sensitive test
 describe("namedDataValueCalculationPart", () => {
     it("Should return calculation part name", () => {
         const inputMock: NamedDataValueCalculationPart = {

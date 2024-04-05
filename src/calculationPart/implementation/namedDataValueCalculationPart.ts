@@ -3,12 +3,13 @@ import { CalculationPart } from "domain/CalculationPart";
 import { NamedDataValueCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { getPercent } from "./utils/getPercent";
 import { Spell } from "domain/jsonSchema/SpellData";
+import { getDataValue } from "./utils/getDataValue";
 
 const percentThreshold = 5 // why 5
 
 export const namedDataValueCalculationPart = (inputData: NamedDataValueCalculationPart, spellData: Spell): CalculationPart => {
-    
-    const dataValues = spellData.mDataValues.find(x => x.mName === inputData.mDataValue).mValues
+
+    const dataValues = getDataValue(spellData, inputData.mDataValue)
 
     return {
         type: "NamedDataValueCalculationPart",

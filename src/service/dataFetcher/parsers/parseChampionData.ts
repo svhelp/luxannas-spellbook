@@ -1,3 +1,4 @@
+import fnv from 'fnv-plus'
 import { ChampionData } from "domain/ChampionData";
 import { RootChampionData } from "domain/jsonSchema/RootChampionData";
 import { Spell, SpellData } from "domain/jsonSchema/SpellData";
@@ -31,6 +32,10 @@ export const parseChampionData = (json: {[key: string]: any}): ChampionData => {
 
         const spellDataKey = spellDataKeys[0]
         const spellObject: SpellData = json[spellDataKey]
+
+        for (const dataValue of spellObject.mSpell.mDataValues ?? []) {
+            dataValue.mHashedName = `{${fnv.hash(dataValue.mName.toLowerCase(), 32).hex()}}`
+        }
 
         return spellObject.mSpell
     })

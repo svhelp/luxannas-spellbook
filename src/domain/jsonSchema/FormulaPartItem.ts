@@ -20,9 +20,9 @@ export type FormulaPartItem =
     StatByNamedDataValueCalculationPart |
     StatBySubPartCalculationPart |
     //SubPartScaledProportionalToStat |
-    SumOfSubPartsCalculationPart
-
-// {f3cbe7b2} used only for Ksante Q skill, investigate
+    SumOfSubPartsCalculationPart |
+    KsanteQCalculationPart |
+    UdyrCalculationPart
 
 export type AbilityResourceByCoefficientCalculationPart = {
     __type: "AbilityResourceByCoefficientCalculationPart"
@@ -126,4 +126,17 @@ export type StatBySubPartCalculationPart = {
 export type SumOfSubPartsCalculationPart = {
     __type: "SumOfSubPartsCalculationPart"
     mSubparts: FormulaPartItem[]
+}
+
+// {f3cbe7b2} used only for Ksante Q skill, investigate
+export type KsanteQCalculationPart = {
+    __type: "{f3cbe7b2}"
+    '{88536426}'?: string
+}
+
+// {ea2ab5ca} used only for Udyr skill, investigate
+export type UdyrCalculationPart = {
+    __type: "{ea2ab5ca}"
+    Coefficient: number
+    buffName: string // hashed value
 }

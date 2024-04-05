@@ -28,6 +28,7 @@ type EffectAmountItem = {
 
 type DataValueItem = {
     mName: string
+    mHashedName?: string
     mValues: number[]
     __type: "SpellDataValue"
 }
