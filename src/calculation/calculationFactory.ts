@@ -5,12 +5,12 @@ import { gameCalculation } from "./implementation/gameCalculation";
 import { gameCalculationModified } from "./implementation/gameCalculationModified";
 import { gameCalculationConditional } from "./implementation/gameCalculationConditional";
 
-export const calculationFactory = (spell: Spell, calculationData: SpellCalculation): CalculationPart => {
+export const calculationFactory = (spell: Spell, calculationData: SpellCalculation, championName: string): CalculationPart => {
     const calculationType = calculationData.__type
 
     switch(calculationType) {
         case "GameCalculation":
-            return gameCalculation(spell, calculationData)
+            return gameCalculation(spell, calculationData, championName)
         case "GameCalculationModified":
             return gameCalculationModified(spell, calculationData)
         case "GameCalculationConditional":

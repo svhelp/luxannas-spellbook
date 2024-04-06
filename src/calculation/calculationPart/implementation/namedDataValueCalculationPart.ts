@@ -3,7 +3,7 @@ import { CalculationPart } from "domain/CalculationPart";
 import { NamedDataValueCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { getPercent } from "./utils/getPercent";
 import { Spell } from "domain/jsonSchema/SpellData";
-import { getDataValue } from "./utils/getDataValue";
+import { getDataValue } from "./utils";
 
 const percentThreshold = 5 // why 5
 
@@ -14,7 +14,7 @@ export const namedDataValueCalculationPart = (inputData: NamedDataValueCalculati
     return {
         type: "NamedDataValueCalculationPart",
         getValue: (context: CalculationContext) => dataValues[context.spellLevel],
-        getString: (context: CalculationContext) =>
-            getPercent(dataValues[context.spellLevel], percentThreshold).toString()
+        getString: (context: CalculationContext) => dataValues[context.spellLevel].toString()
+            //getPercent(dataValues[context.spellLevel], percentThreshold).toString()
     };
 };

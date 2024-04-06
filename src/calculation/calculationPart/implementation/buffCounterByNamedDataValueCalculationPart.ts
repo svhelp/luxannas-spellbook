@@ -18,7 +18,7 @@ export const buffCounterByNamedDataValueCalculationPart = (inputData: BuffCounte
 
     return {
         type: "BuffCounterByNamedDataValueCalculationPart",
-        getValue,
+        getValue: (context: CalculationContext) => dataValues[context.spellLevel],
         getString: (context: CalculationContext) => `${getValue(context)}% ${buff}`
     };
 };

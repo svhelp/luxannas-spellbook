@@ -1,32 +1,11 @@
+import "./mock";
 import { describe, expect, it } from "@jest/globals";
 import { NamedDataValueCalculationPart } from "domain/jsonSchema/FormulaPartItem";
-import { Spell } from "domain/jsonSchema/SpellData";
 import { namedDataValueCalculationPart } from "../namedDataValueCalculationPart";
 import { CalculationContext } from "domain/CalculationContext";
+import { spellMock } from "./constants";
+import { getDataValue } from "../utils";
 
-const spellMock: Spell = {
-    mClientData: undefined,
-    mDataValues: [
-        {
-            mName: "DataValueMock1",
-            mValues: [ 0, 1, 2, 3, 4, 5 ],
-            __type: "SpellDataValue"
-        },
-        {
-            mName: "DataValueMock2",
-            mValues: [ 6, 7, 8, 9, 10, 11 ],
-            __type: "SpellDataValue"
-        },
-        {
-            mName: "DataValueMock3",
-            mValues: [ 0, .01, .05, .1, .2, .5],
-            __type: "SpellDataValue"
-        },
-    ],
-    __type: "SpellDataResource"
-}
-
-// TODO: Add case sensitive test
 describe("namedDataValueCalculationPart", () => {
     it("Should return calculation part name", () => {
         const inputMock: NamedDataValueCalculationPart = {
@@ -37,6 +16,17 @@ describe("namedDataValueCalculationPart", () => {
         const result = namedDataValueCalculationPart(inputMock, spellMock).type
 
         expect(result).toEqual("NamedDataValueCalculationPart")
+    })
+
+    it("getDataValue should be called with input data", () => {
+        const inputMock: NamedDataValueCalculationPart = {
+            __type: "NamedDataValueCalculationPart",
+            mDataValue: "DataValueMock1"
+        }
+
+        namedDataValueCalculationPart(inputMock, spellMock)
+
+        expect(getDataValue).toBeCalledWith(spellMock, inputMock.mDataValue)
     })
 
     describe("Should return value", () => {
@@ -65,10 +55,27 @@ describe("namedDataValueCalculationPart", () => {
     })
     
     describe("Should return string value", () => {
-        // it.each([
-        //     []
-        // ])('mNumber: $mNumber', () => {
+        it.each([
+            [ "DataValueMock1", 2, "2" ],
+            [ "DataValueMock1", 4, "4" ],
+            [ "DataValueMock3", 2, "0.05" ],
+        ])('dateValue: $dateValue, skillLevel: $skillLevel', (dateValue, skillLevel, expectedValue) => {
+            const inputMock: NamedDataValueCalculationPart = {
+                __type: "NamedDataValueCalculationPart",
+                mDataValue: dateValue
+            }
 
-        // })
+            const contextMock: CalculationContext = {
+                championLevel: 1,
+                spellLevel: skillLevel,
+                
+                currentStats: undefined,
+                initStats: undefined
+            }
+    
+            const result = namedDataValueCalculationPart(inputMock, spellMock).getString(contextMock)
+    
+            expect(result).toEqual(expectedValue)
+        })
     })
 })

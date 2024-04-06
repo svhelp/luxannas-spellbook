@@ -3,6 +3,7 @@ import { localDataFetcher } from "./dataFetcher/localDataFetcher"
 import { ChampionData } from "domain/ChampionData"
 import { calculationFactory } from "../calculation"
 import { CalculationContext } from "domain/CalculationContext"
+import { Spell } from "domain/jsonSchema/SpellData"
 
 export const playerContext = (name: string, isLocal?: boolean) => {
     if (!isLocal) {
@@ -24,38 +25,9 @@ export const playerContext = (name: string, isLocal?: boolean) => {
 
     ]
 
-    const spells = championData.spellsData.map(spell => {
-        const spellName = spell.mClientData.mTooltipData.mObjectName
-        const calculations = []
+    //const passive = initSpell(championData.passiveSpellData, name)
 
-        for (const calculationName in spell.mSpellCalculations) {
-            const calculationData = spell.mSpellCalculations[calculationName]
-
-            if (calculationData.__type != "GameCalculation") {
-
-                if ("GameCalculationModified" === calculationData.__type) {
-                    console.log(name)
-                    console.log(spellName)
-                    console.log(calculationName)
-                    console.log(calculationData)
-                }
-
-                continue
-            }
-
-            const calculation = calculationFactory(spell, calculationData)
-    
-            calculations.push({
-                name: calculationName,
-                calculation
-            })
-        }
-
-        return {
-            name: spellName,
-            calculations
-        };
-    })
+    const spells = championData.spellsData.map(spell => initSpell(spell, name))
 
     const getContext = (spellIndex: number): CalculationContext => {
         return {
@@ -68,6 +40,13 @@ export const playerContext = (name: string, isLocal?: boolean) => {
     }
 
     const getSpells = () => {
+        // const context = getContext(0);
+        // for (const calculation of passive.calculations) {
+        //     console.log(`${calculation.name}: ${calculation.calculation.getValue(context)} (${calculation.calculation.getString(context)})`)
+        // }
+
+        // console.log("\n")
+
         let index = 0
 
         for (const spell of spells) {
@@ -102,6 +81,39 @@ export const playerContext = (name: string, isLocal?: boolean) => {
         setStats,
         setSpellLevels
     }
+}
+
+const initSpell = (spellData: Spell, name: string) => {
+    const spellName = spellData.mClientData.mTooltipData.mObjectName
+    const calculations = []
+
+    for (const calculationName in spellData.mSpellCalculations) {
+        const calculationData = spellData.mSpellCalculations[calculationName]
+
+        if (calculationData.__type != "GameCalculation") {
+
+            // if ("GameCalculationModified" === calculationData.__type) {
+            //     console.log(name)
+            //     console.log(spellName)
+            //     console.log(calculationName)
+            //     console.log(calculationData)
+            // }
+
+            continue
+        }
+
+        const calculation = calculationFactory(spellData, calculationData, name)
+
+        calculations.push({
+            name: calculationName,
+            calculation
+        })
+    }
+
+    return {
+        name: spellName,
+        calculations
+    };
 }
 
 const initStats = (championData: ChampionData): ChampionStats => ({

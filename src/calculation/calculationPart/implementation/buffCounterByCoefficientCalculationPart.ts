@@ -10,7 +10,7 @@ export const buffCounterByCoefficientCalculationPart = (inputData: BuffCounterBy
 
     return {
         type: "BuffCounterByCoefficientCalculationPart",
-        getValue: (context: CalculationContext) => getPercent(coefficient),
+        getValue: (context: CalculationContext) => coefficient,
         getString: (context: CalculationContext) => `${getPercent(coefficient)}% ${buff}`
     };
 };
