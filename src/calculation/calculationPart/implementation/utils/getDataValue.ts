@@ -9,5 +9,5 @@ export const getDataValue = (spell: Spell, dataName: string) => {
         throw new Error(`Data value '${dataName}' not found`)
     }
 
-    return dataValue.mValues
+    return dataValue.mValues ?? [ 1, 1, 1, 1, 1 ]
 }

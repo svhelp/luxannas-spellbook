@@ -3,10 +3,11 @@ import { CalculationContext } from "domain/CalculationContext";
 import { GameCalculation } from "domain/jsonSchema/SpellCalculation";
 import { Spell } from "domain/jsonSchema/SpellData";
 
-export const spellCalculation = (spell: Spell, calculationData: GameCalculation) => {
+export const gameCalculation = (spell: Spell, calculationData: GameCalculation) => {
     const parts = calculationData.mFormulaParts.map(x => parseCalculationPart(spell, x))
     
     return {
+        type: "GameCalculation",
         getValue: (context: CalculationContext) => {
             return parts.reduce((acc, item) => acc + item.getValue(context), 0)
         },

@@ -1,1 +1,1 @@
-export { spellCalculation } from './spellCalculation'
+export { calculationFactory } from './calculationFactory'

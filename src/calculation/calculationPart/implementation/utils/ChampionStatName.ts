@@ -1,5 +1,5 @@
-import { ChampionStat } from "../../../domain/jsonSchema/ChampionStat";
-import { ChampionStats } from "../../../domain/riotApiSchema/ChampionStats";
+import { ChampionStat } from "../../../../domain/jsonSchema/ChampionStat";
+import { ChampionStats } from "../../../../domain/riotApiSchema/ChampionStats";
 
 export const ChampionStatName: {[key: number]: keyof ChampionStats} = {
     [ChampionStat.AbilityPower]: "abilityPower",

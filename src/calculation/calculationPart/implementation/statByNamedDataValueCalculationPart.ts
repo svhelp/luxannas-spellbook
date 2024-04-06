@@ -14,6 +14,13 @@ export const statByNamedDataValueCalculationPart = (inputData: StatByNamedDataVa
     const statName = ChampionStatName[inputData.mStat ?? ChampionStat.AbilityPower]
     const formula = inputData.mStatFormula
 
+    for (let i = 1; i < 5; i++) {
+        if (dataValues[i] > 2) {
+            // console.log(spellData.mClientData.mTooltipData.mObjectName)
+            // console.log(dataValues[i])
+        }
+    }
+
     const getValue = (context: CalculationContext) => {
         const value = dataValues[context.spellLevel]
 

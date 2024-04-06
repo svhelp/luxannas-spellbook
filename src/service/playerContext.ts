@@ -1,7 +1,7 @@
 import { ChampionStats } from "domain/riotApiSchema/ChampionStats"
 import { localDataFetcher } from "./dataFetcher/localDataFetcher"
 import { ChampionData } from "domain/ChampionData"
-import { spellCalculation } from "../calculation"
+import { calculationFactory } from "../calculation"
 import { CalculationContext } from "domain/CalculationContext"
 
 export const playerContext = (name: string, isLocal?: boolean) => {
@@ -43,7 +43,7 @@ export const playerContext = (name: string, isLocal?: boolean) => {
                 continue
             }
 
-            const calculation = spellCalculation(spell, calculationData)
+            const calculation = calculationFactory(spell, calculationData)
     
             calculations.push({
                 name: calculationName,
