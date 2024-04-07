@@ -68,7 +68,7 @@ describe("statByNamedDataValueCalculationPart", () => {
 
         statByNamedDataValueCalculationPart(inputMock, spellMock).getValue(contextMock)
 
-        expect(getStat).toBeCalledWith(contextMock, "abilityPower", undefined)
+        expect(getStat).toBeCalledWith(contextMock, "abilityPower", ChampionStatFormula.Total)
     })
 
     describe("Should return value", () => {
@@ -99,9 +99,9 @@ describe("statByNamedDataValueCalculationPart", () => {
     
     describe("Should return string value", () => {
         it.each([
-            [ "DataValueMock1", ChampionStat.AbilityPower, 2, "200% @abilityPower@"  ],
-            [ "DataValueMock3", ChampionStat.MaxHealth, 1, "1% @maxHealth@"  ],
-            [ "DataValueMock3", undefined, 3, "10% @abilityPower@"  ],
+            [ "DataValueMock1", ChampionStat.AbilityPower, 2, "200% @total@ @abilityPower@"  ],
+            [ "DataValueMock3", ChampionStat.MaxHealth, 1, "1% @total@ @maxHealth@"  ],
+            [ "DataValueMock3", undefined, 3, "10% @total@ @abilityPower@"  ],
         ])('mDataValue: $mDataValue, mStat: $mStat, spellLevel: $spellLevel', (mDataValue, mStat, spellLevel, expectedResult) => {
             const inputMock: StatByNamedDataValueCalculationPart = {
                 __type: "StatByNamedDataValueCalculationPart",

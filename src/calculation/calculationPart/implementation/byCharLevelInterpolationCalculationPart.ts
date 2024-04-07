@@ -7,11 +7,9 @@ export const byCharLevelInterpolationCalculationPart = (inputData: ByCharLevelIn
     const start = inputData.mStartValue
     const end = inputData.mEndValue
 
-    const getValue = (context: CalculationContext) => start + (end - start) * context.championLevel / 18
-
     return {
         type: "ByCharLevelInterpolationCalculationPart",
-        getValue,
-        getString: (context: CalculationContext) => getValue(context).toString()
+        getValue: (context: CalculationContext) => start + (end - start) * (context.championLevel - 1) / 18,
+        getString: (context: CalculationContext) => `${start} - ${end} @level@`
     };
 };

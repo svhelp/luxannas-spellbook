@@ -13,19 +13,23 @@ describe("cooldownMultiplierCalculationPart", () => {
         expect(result).toEqual("CooldownMultiplierCalculationPart")
     })
 
-    describe("Should return value", () => {
-        // it.each([
-        //     []
-        // ])('mNumber: $mNumber', () => {
+    it("Should return default value", () => {
+        const inputMock: CooldownMultiplierCalculationPart = {
+            __type: "CooldownMultiplierCalculationPart",
+        }
 
-        // })
+        const result = cooldownMultiplierCalculationPart(inputMock).getValue(undefined)
+
+        expect(result).toEqual(1)
     })
     
-    describe("Should return string value", () => {
-        // it.each([
-        //     []
-        // ])('mNumber: $mNumber', () => {
+    it("Should return empty string value", () => {
+        const inputMock: CooldownMultiplierCalculationPart = {
+            __type: "CooldownMultiplierCalculationPart",
+        }
 
-        // })
+        const result = cooldownMultiplierCalculationPart(inputMock).getString(undefined)
+
+        expect(result).toEqual("")
     })
 })

@@ -17,11 +17,11 @@ export const byCharLevelBreakpointsCalculationPart = (inputData: ByCharLevelBrea
     const scale = inputData['{02deb550}']
         ?? getBreakpoinValue(breakpoints.find(x => !x.mLevel) ?? defaultBreakpoint)
 
-    const getValue = (context: CalculationContext) => {
+    const getValue = (championLevel: number) => {
         let result = initValue
         let levelStep = scale
 
-        for (let i = 1; i < context.championLevel; i++) {
+        for (let i = 2; i <= championLevel; i++) {
             const newBreakpoint = breakpoints.find(x => x.mLevel === i)
 
             if (newBreakpoint) {
@@ -36,7 +36,7 @@ export const byCharLevelBreakpointsCalculationPart = (inputData: ByCharLevelBrea
 
     return {
         type: "ByCharLevelBreakpointsCalculationPart",
-        getValue,
-        getString: (context: CalculationContext) => getValue(context).toString()
+        getValue: (context: CalculationContext) => getValue(context.championLevel),
+        getString: (context: CalculationContext) => `${initValue} - ${getValue(18)} @level@`
     };
 };

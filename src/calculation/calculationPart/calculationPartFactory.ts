@@ -20,8 +20,16 @@ import { Spell } from "domain/jsonSchema/SpellData";
 import { ksanteQSkillPart } from "./implementation/ksanteQSkillPart";
 import { udyrCalculationPart } from "./implementation/udyrCalculationPart";
 
-export const parseCalculationPart = (spell: Spell, inputData: FormulaPartItem): CalculationPart => {
+export const parseCalculationPart = (spell: Spell, inputData: FormulaPartItem, championName: string): CalculationPart => {
     const calculationType = inputData.__type
+
+    if (calculationType === "CooldownMultiplierCalculationPart") {
+        console.log(championName)
+    }
+
+    if (championName == "senna") {
+        // console.log(calculation.type)
+    }
 
     switch (calculationType) {
         case "AbilityResourceByCoefficientCalculationPart": {
@@ -43,7 +51,7 @@ export const parseCalculationPart = (spell: Spell, inputData: FormulaPartItem): 
             return byCharLevelFormulaCalculationPart(inputData)
         }
         case "{803dae4c}": {
-            const subparts = inputData.mSubparts.map(x => parseCalculationPart(spell, x))
+            const subparts = inputData.mSubparts.map(x => parseCalculationPart(spell, x, championName))
 
             return clampBySubpartCalculationPart(inputData, subparts)
         }
@@ -60,8 +68,8 @@ export const parseCalculationPart = (spell: Spell, inputData: FormulaPartItem): 
             return numberCalculationPart(inputData)
         }
         case "ProductOfSubPartsCalculationPart": {
-            const part1 = parseCalculationPart(spell, inputData.mPart1)
-            const part2 = parseCalculationPart(spell, inputData.mPart2)
+            const part1 = parseCalculationPart(spell, inputData.mPart1, championName)
+            const part2 = parseCalculationPart(spell, inputData.mPart2, championName)
 
             return productOfSubPartsCalculationPart(part1, part2)
         }
@@ -72,12 +80,12 @@ export const parseCalculationPart = (spell: Spell, inputData: FormulaPartItem): 
             return statByNamedDataValueCalculationPart(inputData, spell)
         }
         case "StatBySubPartCalculationPart": {
-            const subpart = parseCalculationPart(spell, inputData.mSubpart)
+            const subpart = parseCalculationPart(spell, inputData.mSubpart, championName)
 
             return statBySubPartCalculationPart(inputData, subpart)
         }
         case "SumOfSubPartsCalculationPart": {
-            const subparts = inputData.mSubparts.map(x => parseCalculationPart(spell, x))
+            const subparts = inputData.mSubparts.map(x => parseCalculationPart(spell, x, championName))
 
             return sumOfSubPartsCalculationPart(subparts)
         }

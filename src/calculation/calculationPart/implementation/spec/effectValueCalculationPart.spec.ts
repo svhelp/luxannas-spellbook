@@ -28,7 +28,7 @@ describe("effectValueCalculationPart", () => {
     it("Should use default value if 'mEffectAmount' not found", () => {
         const inputMock: EffectValueCalculationPart = {
             __type: "EffectValueCalculationPart",
-            mEffectIndex: 4
+            mEffectIndex: 5
         }
 
         const result = effectValueCalculationPart(inputMock, spellMock).getValue(defaultContextMock)
@@ -39,7 +39,7 @@ describe("effectValueCalculationPart", () => {
     it("Should use default value if 'mEffectAmount' has no values", () => {
         const inputMock: EffectValueCalculationPart = {
             __type: "EffectValueCalculationPart",
-            mEffectIndex: 3
+            mEffectIndex: 4
         }
 
         const result = effectValueCalculationPart(inputMock, spellMock).getValue(defaultContextMock)
@@ -49,9 +49,9 @@ describe("effectValueCalculationPart", () => {
 
     describe("Should return value", () => {
         it.each([
-            [ 0, 2, 2 ],
-            [ 1, 4, 10 ],
-            [ 2, 2, .05 ],
+            [ 1, 2, 2 ],
+            [ 2, 4, 10 ],
+            [ 3, 2, .05 ],
         ])('effectIndex: $effectIndex, skillLevel: $skillLevel', (effectIndex, skillLevel, expectedValue) => {
             const inputMock: EffectValueCalculationPart = {
                 __type: "EffectValueCalculationPart",
@@ -74,9 +74,9 @@ describe("effectValueCalculationPart", () => {
     
     describe("Should return string value", () => {
         it.each([
-            [ 0, 2, "200%" ],
-            [ 1, 4, "10" ],
-            [ 2, 2, "5%" ],
+            [ 1, 2, "200%" ],
+            [ 2, 4, "10" ],
+            [ 3, 2, "5%" ],
         ])('effectIndex: $effectIndex, skillLevel: $skillLevel', (effectIndex, skillLevel, expectedValue) => {
             const inputMock: EffectValueCalculationPart = {
                 __type: "EffectValueCalculationPart",

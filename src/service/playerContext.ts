@@ -78,6 +78,7 @@ export const playerContext = (name: string, isLocal?: boolean) => {
         getStats: () => stats,
         getSpells,
 
+        setLevel: (value: number) => { level = value },
         setStats,
         setSpellLevels
     }
@@ -118,7 +119,7 @@ const initSpell = (spellData: Spell, name: string) => {
 
 const initStats = (championData: ChampionData): ChampionStats => ({
     abilityHaste: 0,
-    abilityPower: 1,
+    abilityPower: 0,
     //cooldownReduction: number to verify
 
     attackDamage: championData.rootChampionData.baseDamage,

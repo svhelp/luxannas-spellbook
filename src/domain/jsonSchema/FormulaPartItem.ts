@@ -34,13 +34,15 @@ export type BuffCounterByCoefficientCalculationPart = {
     __type: "BuffCounterByCoefficientCalculationPart"
     mCoefficient: number
     mBuffName: string // hashed value
+    mIconKey?: string
     mScalingTagKey?: string // not sure if needed
 }
 
 export type BuffCounterByNamedDataValueCalculationPart = {
     __type: "BuffCounterByNamedDataValueCalculationPart"
     mBuffName: string // hashed value
-    mDataValue: string // hashed value possible
+    mIconKey?: string
+    mDataValue: string
 }
 
 export type ByCharLevelBreakpointsCalculationPart = {

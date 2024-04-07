@@ -57,7 +57,7 @@ describe("statByCoefficientCalculationPart", () => {
 
         statByCoefficientCalculationPart(inputMock).getValue(contextMock)
 
-        expect(getStat).toBeCalledWith(contextMock, "abilityPower", undefined)
+        expect(getStat).toBeCalledWith(contextMock, "abilityPower", ChampionStatFormula.Total)
     })
 
     describe("Should return value", () => {
@@ -88,9 +88,9 @@ describe("statByCoefficientCalculationPart", () => {
     
     describe("Should return string value", () => {
         it.each([
-            [ 0.25, undefined, "25% @abilityPower@" ],
-            [ 0.5, ChampionStat.AbilityPower, "50% @abilityPower@" ],
-            [ 0.5, ChampionStat.MaxHealth, "50% @maxHealth@" ],
+            [ 0.25, undefined, "25% @total@ @abilityPower@" ],
+            [ 0.5, ChampionStat.AbilityPower, "50% @total@ @abilityPower@" ],
+            [ 0.5, ChampionStat.MaxHealth, "50% @total@ @maxHealth@" ],
         ])('mCoefficient: $mCoefficient, mStat: $mStat', (mCoefficient, mStat, expectedResult) => {
             const inputMock: StatByCoefficientCalculationPart = {
                 __type: "StatByCoefficientCalculationPart",
