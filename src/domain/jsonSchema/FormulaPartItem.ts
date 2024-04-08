@@ -55,8 +55,10 @@ export type ByCharLevelBreakpointsCalculationPart = {
 export type Breakpoint = {
     __type: 'Breakpoint'
     mLevel?: number
-    '{57fdc438}'?: number // TODO: explore
-    '{d5fd07ed}'?: number // TODO: explore
+    // constant addition starting mLevel
+    '{57fdc438}'?: number
+    // single-time addition on mLevel
+    '{d5fd07ed}'?: number
 }
 
 export type ByCharLevelFormulaCalculationPart = {
@@ -68,7 +70,7 @@ export type ByCharLevelInterpolationCalculationPart = {
     __type: "ByCharLevelInterpolationCalculationPart"
     mStartValue: number
     mEndValue: number
-    'a331f6bf'?: number // not sure what is it
+    '{a331f6bf}'?: number // not sure what is it
 }
 
 // hashed name: {803dae4c}
@@ -77,10 +79,6 @@ export type ClampBySubpartCalculationPart = {
     mCeiling: number // null possible
     mFloor: number
     mSubparts: FormulaPartItem[]
-}
-
-export type CooldownMultiplierCalculationPart = {
-    __type: "CooldownMultiplierCalculationPart"
 }
 
 export type EffectValueCalculationPart = {
@@ -95,10 +93,10 @@ export type NamedDataValueCalculationPart = {
 
 export type NumberCalculationPart = {
     __type: "NumberCalculationPart"
-    mNumber: number
+    mNumber?: number // the value is null for KSante
 }
 
-export type ProductOfSubPartsCalculationPart = { // recursive nesting possible
+export type ProductOfSubPartsCalculationPart = {
     __type: "ProductOfSubPartsCalculationPart"
     mPart1: FormulaPartItem
     mPart2: FormulaPartItem
@@ -130,13 +128,17 @@ export type SumOfSubPartsCalculationPart = {
     mSubparts: FormulaPartItem[]
 }
 
-// {f3cbe7b2} used only for Ksante Q skill, investigate
-export type KsanteQCalculationPart = {
-    __type: "{f3cbe7b2}"
-    '{88536426}'?: string
+// Presumably gameplay only parts
+
+export type CooldownMultiplierCalculationPart = {
+    __type: "CooldownMultiplierCalculationPart"
 }
 
-// {ea2ab5ca} used only for Udyr skill, investigate
+export type KsanteQCalculationPart = {
+    __type: "{f3cbe7b2}"
+    '{88536426}': string
+}
+
 export type UdyrCalculationPart = {
     __type: "{ea2ab5ca}"
     Coefficient: number

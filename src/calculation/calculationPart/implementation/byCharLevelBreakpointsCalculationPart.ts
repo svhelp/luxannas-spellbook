@@ -11,24 +11,24 @@ export const byCharLevelBreakpointsCalculationPart = (inputData: ByCharLevelBrea
 
     const initValue = inputData.mLevel1Value ?? 0
     const breakpoints = inputData.mBreakpoints ?? []
-
-    const getBreakpoinValue = (breakpoint: Breakpoint) => breakpoint["{57fdc438}"] ?? breakpoint["{d5fd07ed}"]
-
-    const scale = inputData['{02deb550}']
-        ?? getBreakpoinValue(breakpoints.find(x => !x.mLevel) ?? defaultBreakpoint)
+    const scale = inputData['{02deb550}'] ?? 0
 
     const getValue = (championLevel: number) => {
         let result = initValue
-        let levelStep = scale
+        let lastBreakpoint = defaultBreakpoint
 
         for (let i = 2; i <= championLevel; i++) {
-            const newBreakpoint = breakpoints.find(x => x.mLevel === i)
+            result += scale
+
+            const newBreakpoint = breakpoints.find(x => x.mLevel === i || !x.mLevel && i == 2)
 
             if (newBreakpoint) {
-                levelStep = getBreakpoinValue(newBreakpoint)
+                lastBreakpoint = newBreakpoint
+
+                result += newBreakpoint["{d5fd07ed}"] ?? 0
             }
 
-            result += levelStep
+            result += lastBreakpoint["{57fdc438}"] ?? 0
         }
 
         return result

@@ -15,20 +15,18 @@ import { statByCoefficientCalculationPart } from "./implementation/statByCoeffic
 import { statByNamedDataValueCalculationPart } from "./implementation/statByNamedDataValueCalculationPart";
 import { statBySubPartCalculationPart } from "./implementation/statBySubPartCalculationPart";
 import { sumOfSubPartsCalculationPart } from "./implementation/sumOfSubPartsCalculationPart";
-import { cooldownMultiplierCalculationPart } from "./implementation/cooldownMultiplierCalculationPart";
+import { gameplayCalculationPart } from "./implementation/gameplayCalculationPart";
 import { Spell } from "domain/jsonSchema/SpellData";
-import { ksanteQSkillPart } from "./implementation/ksanteQSkillPart";
-import { udyrCalculationPart } from "./implementation/udyrCalculationPart";
 
 export const parseCalculationPart = (spell: Spell, inputData: FormulaPartItem, championName: string): CalculationPart => {
     const calculationType = inputData.__type
 
-    if (calculationType === "CooldownMultiplierCalculationPart") {
-        console.log(championName)
+    if (calculationType === "ByCharLevelBreakpointsCalculationPart") {
+        //console.log(championName)
     }
 
-    if (championName == "senna") {
-        // console.log(calculation.type)
+    if (championName == "kasnte") {
+        //console.log(calculationType)
     }
 
     switch (calculationType) {
@@ -54,9 +52,6 @@ export const parseCalculationPart = (spell: Spell, inputData: FormulaPartItem, c
             const subparts = inputData.mSubparts.map(x => parseCalculationPart(spell, x, championName))
 
             return clampBySubpartCalculationPart(inputData, subparts)
-        }
-        case "CooldownMultiplierCalculationPart": {
-            return cooldownMultiplierCalculationPart(inputData)
         }
         case "EffectValueCalculationPart": {
             return effectValueCalculationPart(inputData, spell)
@@ -89,11 +84,10 @@ export const parseCalculationPart = (spell: Spell, inputData: FormulaPartItem, c
 
             return sumOfSubPartsCalculationPart(subparts)
         }
-        case "{f3cbe7b2}": {
-            return ksanteQSkillPart()
-        }
-        case "{ea2ab5ca}": {
-            return udyrCalculationPart();
+        case "{ea2ab5ca}":
+        case "{f3cbe7b2}":
+        case "CooldownMultiplierCalculationPart": {
+            return gameplayCalculationPart(inputData)
         }
         default: {
 

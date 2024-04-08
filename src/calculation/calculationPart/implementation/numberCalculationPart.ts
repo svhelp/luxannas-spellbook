@@ -4,7 +4,8 @@ import { NumberCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 
 export const numberCalculationPart = (inputData: NumberCalculationPart): CalculationPart => {
 
-    const value = inputData.mNumber
+    // the value is null for KSante
+    const value = inputData.mNumber ?? 1
 
     return {
         type: "NumberCalculationPart",

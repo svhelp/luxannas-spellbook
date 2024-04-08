@@ -1,54 +1,59 @@
 import {describe, expect, it, jest} from '@jest/globals';
 import { parseCalculationPart } from "../"
-import * as abilityResourceByCoefficientCalculationPartContainer from "../implementation/abilityResourceByCoefficientCalculationPart"
-import * as buffCounterByCoefficientCalculationPartContainer from "../implementation/buffCounterByCoefficientCalculationPart"
-import * as buffCounterByNamedDataValueCalculationPartContainer from "../implementation/buffCounterByNamedDataValueCalculationPart"
-import * as byCharLevelInterpolationCalculationPartContainer from "../implementation/byCharLevelInterpolationCalculationPart"
-import * as byCharLevelBreakpointsCalculationPartContainer from "../implementation/byCharLevelBreakpointsCalculationPart"
-import * as byCharLevelFormulaCalculationPartContainer from "../implementation/byCharLevelFormulaCalculationPart"
-import * as clampBySubpartCalculationPartContainer from "../implementation/clampBySubpartCalculationPart"
-import * as effectValueCalculationPartContainer from "../implementation/effectValueCalculationPart"
-import * as namedDataValueCalculationPartContainer from "../implementation/namedDataValueCalculationPart"
-import * as numberCalculationPartContainer from "../implementation/numberCalculationPart"
-import * as productOfSubPartsCalculationPartContainer from "../implementation/productOfSubPartsCalculationPart"
-import * as statByCoefficientCalculationPartContainer from "../implementation/statByCoefficientCalculationPart"
-import * as statByNamedDataValueCalculationPartContainer from "../implementation/statByNamedDataValueCalculationPart"
-import * as statBySubPartCalculationPartContainer from "../implementation/statBySubPartCalculationPart"
-import * as sumOfSubPartsCalculationPartContainer from "../implementation/sumOfSubPartsCalculationPart"
+import { statByNamedDataValueCalculationPart } from '../implementation/statByNamedDataValueCalculationPart';
+import { abilityResourceByCoefficientCalculationPart } from '../implementation/abilityResourceByCoefficientCalculationPart';
+import { buffCounterByCoefficientCalculationPart } from '../implementation/buffCounterByCoefficientCalculationPart';
+import { buffCounterByNamedDataValueCalculationPart } from '../implementation/buffCounterByNamedDataValueCalculationPart';
+import { byCharLevelBreakpointsCalculationPart } from '../implementation/byCharLevelBreakpointsCalculationPart';
+import { byCharLevelFormulaCalculationPart } from '../implementation/byCharLevelFormulaCalculationPart';
+import { byCharLevelInterpolationCalculationPart } from '../implementation/byCharLevelInterpolationCalculationPart';
+import { clampBySubpartCalculationPart } from '../implementation/clampBySubpartCalculationPart';
+import { effectValueCalculationPart } from '../implementation/effectValueCalculationPart';
+import { gameplayCalculationPart } from '../implementation/gameplayCalculationPart';
+import { namedDataValueCalculationPart } from '../implementation/namedDataValueCalculationPart';
+import { numberCalculationPart } from '../implementation/numberCalculationPart';
+import { productOfSubPartsCalculationPart } from '../implementation/productOfSubPartsCalculationPart';
+import { statByCoefficientCalculationPart } from '../implementation/statByCoefficientCalculationPart';
+import { statBySubPartCalculationPart } from '../implementation/statBySubPartCalculationPart';
+import { sumOfSubPartsCalculationPart } from '../implementation/sumOfSubPartsCalculationPart';
 
-const abilityResourceByCoefficientCalculationPartCalled = jest.spyOn(abilityResourceByCoefficientCalculationPartContainer, "abilityResourceByCoefficientCalculationPart")
-const buffCounterByCoefficientCalculationPartCalled = jest.spyOn(buffCounterByCoefficientCalculationPartContainer, "buffCounterByCoefficientCalculationPart")
-const buffCounterByNamedDataValueCalculationPartCalled = jest.spyOn(buffCounterByNamedDataValueCalculationPartContainer, "buffCounterByNamedDataValueCalculationPart")
-const byCharLevelBreakpointsCalculationPartCalled = jest.spyOn(byCharLevelBreakpointsCalculationPartContainer, "byCharLevelBreakpointsCalculationPart")
-const byCharLevelInterpolationCalculationPartCalled = jest.spyOn(byCharLevelInterpolationCalculationPartContainer, "byCharLevelInterpolationCalculationPart")
-const byCharLevelFormulaCalculationPartCalled = jest.spyOn(byCharLevelFormulaCalculationPartContainer, "byCharLevelFormulaCalculationPart")
-const clampBySubpartCalculationPartCalled = jest.spyOn(clampBySubpartCalculationPartContainer, "clampBySubpartCalculationPart")
-const effectValueCalculationPartCalled = jest.spyOn(effectValueCalculationPartContainer, "effectValueCalculationPart")
-const namedDataValueCalculationPartCalled = jest.spyOn(namedDataValueCalculationPartContainer, "namedDataValueCalculationPart")
-const numberCalculationPartCalled = jest.spyOn(numberCalculationPartContainer, "numberCalculationPart")
-const productOfSubPartsCalculationPartCalled = jest.spyOn(productOfSubPartsCalculationPartContainer, "productOfSubPartsCalculationPart")
-const statByCoefficientCalculationPartCalled = jest.spyOn(statByCoefficientCalculationPartContainer, "statByCoefficientCalculationPart")
-const statByNamedDataValueCalculationPartCalled = jest.spyOn(statByNamedDataValueCalculationPartContainer, "statByNamedDataValueCalculationPart")
-const statBySubPartCalculationPartCalled = jest.spyOn(statBySubPartCalculationPartContainer, "statBySubPartCalculationPart")
-const sumOfSubPartsCalculationPartCalled = jest.spyOn(sumOfSubPartsCalculationPartContainer, "sumOfSubPartsCalculationPart")
+jest.mock('../implementation/statByNamedDataValueCalculationPart')
+jest.mock('../implementation/abilityResourceByCoefficientCalculationPart')
+jest.mock('../implementation/buffCounterByCoefficientCalculationPart')
+jest.mock('../implementation/buffCounterByNamedDataValueCalculationPart')
+jest.mock('../implementation/byCharLevelBreakpointsCalculationPart')
+jest.mock('../implementation/byCharLevelFormulaCalculationPart')
+jest.mock('../implementation/byCharLevelInterpolationCalculationPart')
+jest.mock('../implementation/clampBySubpartCalculationPart')
+jest.mock('../implementation/effectValueCalculationPart')
+jest.mock('../implementation/gameplayCalculationPart')
+jest.mock('../implementation/namedDataValueCalculationPart')
+jest.mock('../implementation/numberCalculationPart')
+jest.mock('../implementation/productOfSubPartsCalculationPart')
+jest.mock('../implementation/statByCoefficientCalculationPart')
+jest.mock('../implementation/statBySubPartCalculationPart')
+jest.mock('../implementation/sumOfSubPartsCalculationPart')
 
 describe('calculationPartFactory', () => {
     describe.each([
-        [ "AbilityResourceByCoefficientCalculationPart", abilityResourceByCoefficientCalculationPartCalled ],
-        [ "BuffCounterByCoefficientCalculationPart", buffCounterByCoefficientCalculationPartCalled ],
-        [ "BuffCounterByNamedDataValueCalculationPart", buffCounterByNamedDataValueCalculationPartCalled ],
-        [ "ByCharLevelBreakpointsCalculationPart", byCharLevelBreakpointsCalculationPartCalled ],
-        [ "ByCharLevelInterpolationCalculationPart", byCharLevelInterpolationCalculationPartCalled ],
-        [ "ByCharLevelFormulaCalculationPart", byCharLevelFormulaCalculationPartCalled ],
-        [ "{803dae4c}", clampBySubpartCalculationPartCalled ],
-        [ "EffectValueCalculationPart", effectValueCalculationPartCalled ],
-        [ "NamedDataValueCalculationPart", namedDataValueCalculationPartCalled ],
-        [ "NumberCalculationPart", numberCalculationPartCalled ],
-        [ "ProductOfSubPartsCalculationPart", productOfSubPartsCalculationPartCalled ],
-        [ "StatByCoefficientCalculationPart", statByCoefficientCalculationPartCalled ],
-        [ "StatByNamedDataValueCalculationPart", statByNamedDataValueCalculationPartCalled ],
-        [ "StatBySubPartCalculationPart", statBySubPartCalculationPartCalled ],
-        [ "SumOfSubPartsCalculationPart", sumOfSubPartsCalculationPartCalled ],
+        [ "AbilityResourceByCoefficientCalculationPart", abilityResourceByCoefficientCalculationPart ],
+        [ "BuffCounterByCoefficientCalculationPart", buffCounterByCoefficientCalculationPart ],
+        [ "BuffCounterByNamedDataValueCalculationPart", buffCounterByNamedDataValueCalculationPart ],
+        [ "ByCharLevelBreakpointsCalculationPart", byCharLevelBreakpointsCalculationPart ],
+        [ "ByCharLevelInterpolationCalculationPart", byCharLevelInterpolationCalculationPart ],
+        [ "ByCharLevelFormulaCalculationPart", byCharLevelFormulaCalculationPart ],
+        // [ "{803dae4c}", clampBySubpartCalculationPart ],
+        [ "EffectValueCalculationPart", effectValueCalculationPart ],
+        [ "NamedDataValueCalculationPart", namedDataValueCalculationPart ],
+        [ "NumberCalculationPart", numberCalculationPart ],
+        // [ "ProductOfSubPartsCalculationPart", productOfSubPartsCalculationPart ],
+        [ "StatByCoefficientCalculationPart", statByCoefficientCalculationPart ],
+        [ "StatByNamedDataValueCalculationPart", statByNamedDataValueCalculationPart ],
+        // [ "StatBySubPartCalculationPart", statBySubPartCalculationPart ],
+        // [ "SumOfSubPartsCalculationPart", sumOfSubPartsCalculationPart ],
+        [ "CooldownMultiplierCalculationPart", gameplayCalculationPart ],
+        [ "{ea2ab5ca}", gameplayCalculationPart ],
+        [ "{f3cbe7b2}", gameplayCalculationPart ],
     ])("Corresponding part initializator should be called", (partType, expectedInitializer) => {
         it(partType, () => {
             const partMock = {

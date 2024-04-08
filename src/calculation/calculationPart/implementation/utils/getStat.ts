@@ -1,8 +1,13 @@
 import { CalculationContext } from "domain/CalculationContext";
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula";
-import { ChampionStats } from "domain/riotApiSchema/ChampionStats";
+import { ChampionStats, NonCountableStats } from "domain/riotApiSchema/ChampionStats";
 
-export const getStat = (context: CalculationContext, statName: keyof ChampionStats, formula?: ChampionStatFormula) => {
+export const getStat = (context: CalculationContext, statName: keyof ChampionStats | keyof NonCountableStats, formula?: ChampionStatFormula) => {
+
+    if ("percentMissingHealth" == statName) {
+        return 1
+    }
+
     if (formula === ChampionStatFormula.Total) {
         return context.currentStats[statName]
     }

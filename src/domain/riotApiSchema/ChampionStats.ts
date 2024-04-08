@@ -36,9 +36,13 @@ export type ChampionStats = {
 
     resourceMax: number
     resourceRegenRate: number
-    resourceType: ResourceType,
+    resourceType: ResourceType
     resourceValue: number
 
     moveSpeed: number
     tenacity: number
+}
+
+export type NonCountableStats = {
+    percentMissingHealth: number
 }

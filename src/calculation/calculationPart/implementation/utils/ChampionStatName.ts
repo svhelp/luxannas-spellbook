@@ -1,7 +1,7 @@
 import { ChampionStat } from "../../../../domain/jsonSchema/ChampionStat";
-import { ChampionStats } from "../../../../domain/riotApiSchema/ChampionStats";
+import { ChampionStats, NonCountableStats } from "../../../../domain/riotApiSchema/ChampionStats";
 
-export const ChampionStatName: {[key: number]: keyof ChampionStats} = {
+export const ChampionStatName: {[key: number]: keyof ChampionStats | keyof NonCountableStats} = {
     [ChampionStat.AbilityPower]: "abilityPower",
     [ChampionStat.Armor]: "armor",
     [ChampionStat.Attack]: "attackDamage",
@@ -15,7 +15,7 @@ export const ChampionStatName: {[key: number]: keyof ChampionStats} = {
     [ChampionStat.AbilityHaste]: "abilityHaste",
     [ChampionStat.MaxHealth]: "maxHealth",
     [ChampionStat.CurrentHealth]: "currentHealth",
-    //[ChampionStat.PercentMissingHealth]: "",
+    [ChampionStat.PercentMissingHealth]: "percentMissingHealth",
     //[ChampionStat.Unknown14]: "",
     [ChampionStat.LifeSteal]: "lifeSteal",
     [ChampionStat.OmniVamp]: "omnivamp",
