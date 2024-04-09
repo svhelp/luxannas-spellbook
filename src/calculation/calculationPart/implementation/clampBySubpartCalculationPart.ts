@@ -7,11 +7,18 @@ export const clampBySubpartCalculationPart = (inputData: ClampBySubpartCalculati
     const floor = inputData.mFloor
     const ceiling = inputData.mCeiling
 
-    const clamp = (value: number) => Math.min(Math.max(value, floor), ceiling)
+    const getValue = (context: CalculationContext) => {
+        const initValue = subparts.reduce((accumulator, currentValue) => accumulator + currentValue.getValue(context), 0)
+
+        const firstThresholdProcessed = floor ? Math.max(initValue, floor) : initValue
+        const secondThresholdProcessed = ceiling ? Math.min(firstThresholdProcessed, ceiling) : firstThresholdProcessed
+
+        return secondThresholdProcessed
+    }
 
     return {
         type: "ClampBySubpartCalculationPart",
-        getValue: (context: CalculationContext) => clamp(subparts.reduce((accumulator, currentValue) => accumulator * currentValue.getValue(context), 1)),
-        getString: (context: CalculationContext) => subparts.map(x => x.getString(context)).join(" * ")
+        getValue,
+        getString: (context: CalculationContext) => `${getValue(context) * 100}%`
     };
 };
