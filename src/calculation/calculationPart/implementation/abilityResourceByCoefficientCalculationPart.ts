@@ -1,12 +1,12 @@
 import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPartProvider } from "domain/CalculationPartProvider";
 import { AbilityResourceByCoefficientCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { getStat } from "./utils";
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula";
 import { ChampionStatFormulaName } from "./utils/ChampionStatFormulaName";
 import { ResourceTypeName } from "./utils/ResourceTypeName";
 
-export const abilityResourceByCoefficientCalculationPart = (inputData: AbilityResourceByCoefficientCalculationPart): CalculationPart => {
+export const abilityResourceByCoefficientCalculationPart = (inputData: AbilityResourceByCoefficientCalculationPart): CalculationPartProvider => {
 
     const coefficient = inputData.mCoefficient
     const formula = inputData.mStatFormula ?? ChampionStatFormula.Base

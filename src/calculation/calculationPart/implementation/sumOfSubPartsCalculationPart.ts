@@ -1,7 +1,7 @@
 import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPartProvider } from "domain/CalculationPartProvider";
 
-export const sumOfSubPartsCalculationPart = (subparts: CalculationPart[]): CalculationPart => {
+export const sumOfSubPartsCalculationPart = (subparts: CalculationPartProvider[]): CalculationPartProvider => {
     return {
         type: "SumOfSubPartsCalculationPart",
         getValue: (context: CalculationContext) => subparts.reduce((accumulator, currentValue) => accumulator + currentValue.getValue(context), 0),

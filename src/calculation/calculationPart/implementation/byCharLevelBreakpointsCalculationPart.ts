@@ -1,5 +1,5 @@
 import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPartProvider } from "domain/CalculationPartProvider";
 import { Breakpoint, ByCharLevelBreakpointsCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 
 const defaultBreakpoint: Breakpoint = {
@@ -7,7 +7,7 @@ const defaultBreakpoint: Breakpoint = {
     __type: 'Breakpoint'
 }
 
-export const byCharLevelBreakpointsCalculationPart = (inputData: ByCharLevelBreakpointsCalculationPart): CalculationPart => {
+export const byCharLevelBreakpointsCalculationPart = (inputData: ByCharLevelBreakpointsCalculationPart): CalculationPartProvider => {
 
     const initValue = inputData.mLevel1Value ?? 0
     const breakpoints = inputData.mBreakpoints ?? []

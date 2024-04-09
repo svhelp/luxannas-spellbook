@@ -1,11 +1,11 @@
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPartProvider } from "domain/CalculationPartProvider";
 import { SpellCalculation } from "domain/jsonSchema/SpellCalculation";
 import { Spell } from "domain/jsonSchema/SpellData";
 import { gameCalculation } from "./implementation/gameCalculation";
 import { gameCalculationModified } from "./implementation/gameCalculationModified";
 import { gameCalculationConditional } from "./implementation/gameCalculationConditional";
 
-export const calculationFactory = (spell: Spell, calculationData: SpellCalculation, championName: string): CalculationPart => {
+export const calculationFactory = (spell: Spell, calculationData: SpellCalculation, championName: string): CalculationPartProvider => {
     const calculationType = calculationData.__type
 
     switch(calculationType) {

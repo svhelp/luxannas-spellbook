@@ -1,8 +1,8 @@
 import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPartProvider } from "domain/CalculationPartProvider";
 import { ClampBySubpartCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 
-export const clampBySubpartCalculationPart = (inputData: ClampBySubpartCalculationPart, subparts: CalculationPart[]): CalculationPart => {
+export const clampBySubpartCalculationPart = (inputData: ClampBySubpartCalculationPart, subparts: CalculationPartProvider[]): CalculationPartProvider => {
 
     const floor = inputData.mFloor
     const ceiling = inputData.mCeiling

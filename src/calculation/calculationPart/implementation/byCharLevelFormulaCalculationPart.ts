@@ -1,8 +1,8 @@
 import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPartProvider } from "domain/CalculationPartProvider";
 import { ByCharLevelFormulaCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 
-export const byCharLevelFormulaCalculationPart = (inputData: ByCharLevelFormulaCalculationPart): CalculationPart => {
+export const byCharLevelFormulaCalculationPart = (inputData: ByCharLevelFormulaCalculationPart): CalculationPartProvider => {
 
     const values = inputData.mValues
 

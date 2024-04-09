@@ -1,5 +1,5 @@
 import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPartProvider } from "domain/CalculationPartProvider";
 import { StatByNamedDataValueCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { ChampionStat } from "domain/jsonSchema/ChampionStat";
 import { Spell } from "domain/jsonSchema/SpellData";
@@ -8,7 +8,7 @@ import { ChampionStatName } from "./utils/ChampionStatName";
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula";
 import { ChampionStatFormulaName } from "./utils/ChampionStatFormulaName";
 
-export const statByNamedDataValueCalculationPart = (inputData: StatByNamedDataValueCalculationPart, spellData: Spell): CalculationPart => {
+export const statByNamedDataValueCalculationPart = (inputData: StatByNamedDataValueCalculationPart, spellData: Spell): CalculationPartProvider => {
     
     const dataValues = getDataValue(spellData, inputData.mDataValue)
     const statName = ChampionStatName[inputData.mStat ?? ChampionStat.AbilityPower]

@@ -1,5 +1,5 @@
 import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPartProvider } from "domain/CalculationPartProvider";
 import { ChampionStatName } from "./utils/ChampionStatName";
 import { StatByCoefficientCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { getStat } from "./utils";
@@ -7,7 +7,7 @@ import { ChampionStat } from "domain/jsonSchema/ChampionStat";
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula";
 import { ChampionStatFormulaName } from "./utils/ChampionStatFormulaName";
 
-export const statByCoefficientCalculationPart = (inputData: StatByCoefficientCalculationPart): CalculationPart => {
+export const statByCoefficientCalculationPart = (inputData: StatByCoefficientCalculationPart): CalculationPartProvider => {
 
     const statName = ChampionStatName[inputData.mStat ?? ChampionStat.AbilityPower]
     const formula = inputData.mStatFormula ?? ChampionStatFormula.Total // default is total (Thresh/Rengar) ???

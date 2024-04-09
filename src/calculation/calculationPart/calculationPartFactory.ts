@@ -1,4 +1,4 @@
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPartProvider } from "domain/CalculationPartProvider";
 import { FormulaPartItem } from "domain/jsonSchema/FormulaPartItem";
 import { abilityResourceByCoefficientCalculationPart } from "./implementation/abilityResourceByCoefficientCalculationPart";
 import { buffCounterByCoefficientCalculationPart } from "./implementation/buffCounterByCoefficientCalculationPart";
@@ -18,14 +18,14 @@ import { sumOfSubPartsCalculationPart } from "./implementation/sumOfSubPartsCalc
 import { gameplayCalculationPart } from "./implementation/gameplayCalculationPart";
 import { Spell } from "domain/jsonSchema/SpellData";
 
-export const parseCalculationPart = (spell: Spell, inputData: FormulaPartItem, championName: string): CalculationPart => {
+export const parseCalculationPart = (spell: Spell, inputData: FormulaPartItem, championName: string): CalculationPartProvider => {
     const calculationType = inputData.__type
 
-    if (calculationType === "ByCharLevelBreakpointsCalculationPart") {
-        //console.log(championName)
+    if (calculationType === "ProductOfSubPartsCalculationPart") {
+        // console.log(championName)
     }
 
-    if (championName == "kasnte") {
+    if (championName == "kaisa") {
         //console.log(calculationType)
     }
 

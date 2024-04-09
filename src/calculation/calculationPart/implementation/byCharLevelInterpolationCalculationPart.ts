@@ -1,8 +1,8 @@
 import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPartProvider } from "domain/CalculationPartProvider";
 import { ByCharLevelInterpolationCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 
-export const byCharLevelInterpolationCalculationPart = (inputData: ByCharLevelInterpolationCalculationPart): CalculationPart => {
+export const byCharLevelInterpolationCalculationPart = (inputData: ByCharLevelInterpolationCalculationPart): CalculationPartProvider => {
 
     const start = inputData.mStartValue
     const end = inputData.mEndValue

@@ -1,10 +1,10 @@
 import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPartProvider } from "domain/CalculationPartProvider";
 import { BuffCounterByNamedDataValueCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { Spell } from "domain/jsonSchema/SpellData";
 import { getDataValue } from "./utils";
 
-export const buffCounterByNamedDataValueCalculationPart = (inputData: BuffCounterByNamedDataValueCalculationPart, spellData: Spell): CalculationPart => {
+export const buffCounterByNamedDataValueCalculationPart = (inputData: BuffCounterByNamedDataValueCalculationPart, spellData: Spell): CalculationPartProvider => {
     
     const dataValues = getDataValue(spellData, inputData.mDataValue)
     const buff = inputData.mBuffName

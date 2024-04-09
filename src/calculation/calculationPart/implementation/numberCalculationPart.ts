@@ -1,8 +1,8 @@
 import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPartProvider } from "domain/CalculationPartProvider";
 import { NumberCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 
-export const numberCalculationPart = (inputData: NumberCalculationPart): CalculationPart => {
+export const numberCalculationPart = (inputData: NumberCalculationPart): CalculationPartProvider => {
 
     // the value is null for KSante
     const value = inputData.mNumber ?? 1

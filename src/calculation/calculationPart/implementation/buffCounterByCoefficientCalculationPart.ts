@@ -1,8 +1,8 @@
 import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPartProvider } from "domain/CalculationPartProvider";
 import { BuffCounterByCoefficientCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 
-export const buffCounterByCoefficientCalculationPart = (inputData: BuffCounterByCoefficientCalculationPart): CalculationPart => {
+export const buffCounterByCoefficientCalculationPart = (inputData: BuffCounterByCoefficientCalculationPart): CalculationPartProvider => {
 
     const coefficient = inputData.mCoefficient
     const buff = inputData.mBuffName
