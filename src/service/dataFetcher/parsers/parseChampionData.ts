@@ -20,6 +20,10 @@ export const parseChampionData = (json: {[key: string]: any}): ChampionData => {
         throw new Error("Passive spell data not found")
     }
 
+    for (const dataValue of passiveSpellObject.mSpell.mDataValues ?? []) {
+        dataValue.mHashedName = `{${fnv.hash(dataValue.mName.toLowerCase(), 32).hex()}}`
+    }
+
     const passiveSpellData = passiveSpellObject.mSpell
 
     const spellsData: Spell[] = rootChampionData.spellNames.map((spellName: string) => {

@@ -25,7 +25,7 @@ export const playerContext = (name: string, isLocal?: boolean) => {
 
     ]
 
-    //const passive = initSpell(championData.passiveSpellData, name)
+    const passive = initSpell(championData.passiveSpellData, name)
 
     const spells = championData.spellsData.map(spell => initSpell(spell, name))
 
@@ -40,12 +40,12 @@ export const playerContext = (name: string, isLocal?: boolean) => {
     }
 
     const getSpells = () => {
-        // const context = getContext(0);
-        // for (const calculation of passive.calculations) {
-        //     console.log(`${calculation.name}: ${calculation.calculation.getValue(context)} (${calculation.calculation.getString(context)})`)
-        // }
+        const context = getContext(0);
+        for (const calculation of passive.calculations) {
+            console.log(`${calculation.name}: ${calculation.calculation.getValue(context)} (${calculation.calculation.getString(context)})`)
+        }
 
-        // console.log("\n")
+        console.log("\n")
 
         let index = 0
 
