@@ -18,6 +18,14 @@ export const abilityResourceByCoefficientCalculationPart = (inputData: AbilityRe
             const resourceType = getStat(context, "resourceType")
 
             return `${(coefficient * 100).toFixed()}% @${ChampionStatFormulaName[formula]}@ @${ResourceTypeName[resourceType]}@`
-        }
+        },
+        getItems: (context: CalculationContext) => [
+            {
+                type: "StatCalculationPart",
+                coefficient,
+                formula,
+                statName: "resourceType"
+            }
+        ]
     };
 };

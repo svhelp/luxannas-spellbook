@@ -16,6 +16,14 @@ export const statByCoefficientCalculationPart = (inputData: StatByCoefficientCal
     return {
         type: "StatByCoefficientCalculationPart",
         getValue: (context: CalculationContext) => coefficient * getStat(context, statName, formula),
-        getString: (context: CalculationContext) => `${(coefficient * 100).toFixed()}% @${ChampionStatFormulaName[formula]}@ @${statName}@`
+        getString: (context: CalculationContext) => `${(coefficient * 100).toFixed()}% @${ChampionStatFormulaName[formula]}@ @${statName}@`,
+        getItems: (context: CalculationContext) => [
+            {
+                type: "StatCalculationPart",
+                coefficient,
+                formula,
+                statName
+            }
+        ]
     };
 };

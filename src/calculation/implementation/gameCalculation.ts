@@ -1,5 +1,6 @@
 import { parseCalculationPart } from "../calculationPart";
 import { CalculationContext } from "domain/CalculationContext";
+import { CalculationPart } from "domain/CalculationPart";
 import { GameCalculation } from "domain/jsonSchema/SpellCalculation";
 import { Spell } from "domain/jsonSchema/SpellData";
 
@@ -13,6 +14,17 @@ export const gameCalculation = (spell: Spell, calculationData: GameCalculation, 
         },
         getString: (context: CalculationContext) => {
             return parts.map(item => item.getString(context)).join(" + ")
-        }
+        },
+        getItems: (context: CalculationContext) => {
+            let items: CalculationPart[] = []
+
+            for (const part of parts) {
+                const partItems = part.getItems(context)
+
+                items = items.concat(partItems)
+            }
+
+            return items
+        },
     };
 }

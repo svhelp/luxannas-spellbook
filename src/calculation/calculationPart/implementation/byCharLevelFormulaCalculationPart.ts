@@ -9,6 +9,14 @@ export const byCharLevelFormulaCalculationPart = (inputData: ByCharLevelFormulaC
     return {
         type: "ByCharLevelFormulaCalculationPart",
         getValue: (context: CalculationContext) => values[context.championLevel],
-        getString: (context: CalculationContext) => `${values[1]} - ${values[18]} @level@`
+        getString: (context: CalculationContext) => `${values[1]} - ${values[18]} @level@`,
+        getItems: (context: CalculationContext) => [
+            {
+                type: "LevelCalculationPart",
+                value: values[context.championLevel],
+                min: values[1],
+                max: values[18]
+            }
+        ]
     };
 };

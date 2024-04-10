@@ -53,7 +53,10 @@ export const playerContext = (name: string, isLocal?: boolean) => {
             const context = getContext(index);
 
             for (const calculation of spell.calculations) {
-                console.log(`${calculation.name}: ${calculation.calculation.getValue(context)} (${calculation.calculation.getString(context)})`)
+                console.log(`${calculation.name}:`)
+                //console.log(`${calculation.calculation.getValue(context)} (${calculation.calculation.getString(context)})`)
+
+                //console.log(calculation.calculation.getItems(context))
             }
 
             index++

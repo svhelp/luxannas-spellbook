@@ -9,6 +9,7 @@ export const gameplayCalculationPart = (inputData: GameplayCalculationPartData):
     return {
         type: "GameplayCalculationPart",
         getValue: (context: CalculationContext) => 1,
-        getString: (context: CalculationContext) => ""
+        getString: (context: CalculationContext) => "",
+        getItems: (context: CalculationContext) => []
     };
 }

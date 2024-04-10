@@ -14,7 +14,12 @@ export const namedDataValueCalculationPart = (inputData: NamedDataValueCalculati
     return {
         type: "NamedDataValueCalculationPart",
         getValue: (context: CalculationContext) => dataValues[context.spellLevel],
-        getString: (context: CalculationContext) => dataValues[context.spellLevel].toString()
-            //getPercent(dataValues[context.spellLevel], percentThreshold).toString()
+        getString: (context: CalculationContext) => dataValues[context.spellLevel].toString(),
+        getItems: (context: CalculationContext) => [
+            {
+                type: "PlainCalculationPart",
+                value: dataValues[context.spellLevel]
+            }
+        ]
     };
 };

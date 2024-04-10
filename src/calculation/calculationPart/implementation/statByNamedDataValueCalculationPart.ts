@@ -17,6 +17,14 @@ export const statByNamedDataValueCalculationPart = (inputData: StatByNamedDataVa
     return {
         type: "StatByNamedDataValueCalculationPart",
         getValue: (context: CalculationContext) => dataValues[context.spellLevel] * getStat(context, statName, formula),
-        getString: (context: CalculationContext) => `${(dataValues[context.spellLevel] * 100).toFixed()}% @${ChampionStatFormulaName[formula]}@ @${statName}@`
+        getString: (context: CalculationContext) => `${(dataValues[context.spellLevel] * 100).toFixed()}% @${ChampionStatFormulaName[formula]}@ @${statName}@`,
+        getItems: (context: CalculationContext) => [
+            {
+                type: "StatCalculationPart",
+                coefficient: dataValues[context.spellLevel],
+                formula,
+                statName
+            }
+        ]
     };
 };

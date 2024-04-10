@@ -1,9 +1,11 @@
 import { ChampionData } from 'domain/ChampionData'
 import fs from 'fs'
 import { localDataFetcher } from './service/dataFetcher/localDataFetcher'
+import fnv from 'fnv-plus'
 import XXH from 'xxhashjs'
 import * as dianaData from './test-data/champions/diana/diana.bin.json'
 import { playerContext } from './service/playerContext'
+import { FormulaPartItem } from 'domain/jsonSchema/FormulaPartItem'
 
 const basePath = './src/test-data/champions'
 
@@ -11,6 +13,52 @@ const formulaPartType: string[] = []
 const resourceTypes: {[key: string]: string[]} = {
 
 }
+
+const itemTypeToLog = "CooldownMultiplierCalculationPart"
+
+const recoursivelyProcessCalcPart = (calculationPart: {[key: string]: any}, types: string[]) => {
+    for (const field in calculationPart) {
+        const subObject = calculationPart[field]
+
+        if (!subObject) {
+            continue
+        }
+
+        if (Array.isArray(subObject)) {
+            for (const item of subObject) {
+                if (typeof item != "object" || !("__type" in item)) {
+                    continue
+                }
+
+                if (item.__type == itemTypeToLog) {
+                    console.log(subObject)
+                }
+
+                if (!types.includes(item.__type)) {
+                    types.push(item.__type)
+                }
+        
+                recoursivelyProcessCalcPart(item, types)
+            }
+        } else {
+            if (typeof subObject != "object" || !("__type" in subObject)) {
+                continue
+            }
+
+            if (subObject.__type == itemTypeToLog) {
+                console.log(subObject)
+            }
+
+            if (!types.includes(subObject.__type)) {
+                types.push(subObject.__type)
+            }
+
+            recoursivelyProcessCalcPart(subObject, types)
+        }
+    }
+}
+
+const types: string[] = []
 
 const processFile = (data: ChampionData) => {
     const logError = (errorMessage: string) => console.log(`${data.rootChampionData.mCharacterName} ${errorMessage.toUpperCase()}`)
@@ -25,15 +73,19 @@ const processFile = (data: ChampionData) => {
         }
 
         for (const spellCalculationName in spellCalculations) {
-            if (!spellCalculations[spellCalculationName].mFormulaParts) {
+            const calculation = spellCalculations[spellCalculationName]
+
+            if (calculation.__type != "GameCalculation" || !calculation.mFormulaParts) {
                 continue
             }
 
-            for (const calculationPart of spellCalculations[spellCalculationName].mFormulaParts) {
+            for (const calculationPart of calculation.mFormulaParts) {
                 const partType = calculationPart.__type.trim()
+                // StatBySubPartCalculationPart
+                if (partType == "{803dae4c}") {
+                    recoursivelyProcessCalcPart(calculationPart, types)
 
-                if (partType == "BuffCounterByCoefficientCalculationPart") {
-                    //console.log(spellData)
+                    //console.log(calculationPart)
                 }
 
                 if (formulaPartType.includes(partType)) {
@@ -46,38 +98,67 @@ const processFile = (data: ChampionData) => {
             }
         }
     }
-
 }
 
+const fields: string[] = []
+
 export const processTestData = () => {
-    console.log(XXH.h64('ClampBySubpartCalculationPart'.toLowerCase(), 0x0000).toString(16))
+    const valuesToHash: string[] = [
+        // 'PassiveAPRatio', "PassiveBADRatio"
+    ]
+
+    for (const valueToHash of valuesToHash) {
+        const hash = fnv.hash(valueToHash.toLowerCase(), 32)
+        console.log(hash.hex())
+
+        // console.log(XXH.h64(valueToHash, 0x0).toString(16))
+        // console.log()
+    }
 
     for (const champDir of fs.readdirSync(basePath)) {
-        const context = playerContext(champDir, true)
 
-        const stats = context.getStats()
-        const resourceType = stats.resourceType?.toString() ?? "none"
-
-        if (!Object.keys(resourceTypes).includes(resourceType)) {
-            resourceTypes[resourceType] = []
+        try {
+            const context = playerContext(champDir, true)
+    
+            const stats = context.getStats()
+            const resourceType = stats.resourceType?.toString() ?? "none"
+    
+            if (!Object.keys(resourceTypes).includes(resourceType)) {
+                resourceTypes[resourceType] = []
+            }
+    
+            resourceTypes[resourceType].push(champDir)
+    
+            if (champDir == "masteryi") {
+                const initStats = context.getStats()
+    
+                context.setLevel(2)
+                context.setSpellLevels([1, 1, 1, 1, 1])
+                context.setStats({
+                    maxHealth: 650,
+                    abilityPower: 0,
+                    attackDamage: 70,
+                    attackSpeed: initStats.attackSpeed + 0.113
+                })
+    
+                // console.log(initStats)
+                // console.log(context.getStats())
+    
+                context.getSpells()
+            }
         }
+        catch (e) {
+            console.log(`*** ERROR PROCESSING ${champDir} data`)
 
-        resourceTypes[resourceType].push(champDir)
-
-        if (champDir == "diana") {
-            context.setSpellLevels([0, 1, 0, 0, 0])
-            context.setStats({
-                abilityPower: 18
-            })
+            throw e
         }
-        //console.log(context.getStats())
 
         const championData = localDataFetcher.fetchChampionData(champDir)
 
         processFile(championData)
     }
 
-    //console.log(resourceTypes)
+    console.log(fields)
 }
 
 export const processDianaSpell = () => {

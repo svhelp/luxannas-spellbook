@@ -13,6 +13,13 @@ export const buffCounterByNamedDataValueCalculationPart = (inputData: BuffCounte
     return {
         type: "BuffCounterByNamedDataValueCalculationPart",
         getValue: (context: CalculationContext) => 0,
-        getString: (context: CalculationContext) => `${(dataValues[context.spellLevel] * 100).toFixed()}% @${icon ?? buff}@`
+        getString: (context: CalculationContext) => `${(dataValues[context.spellLevel] * 100).toFixed()}% @${icon ?? buff}@`,
+        getItems: (context: CalculationContext) => [
+            {
+                type: "BuffCalculationPart",
+                coefficient: dataValues[context.spellLevel],
+                buff: icon ?? buff
+            }
+        ]
     };
 };

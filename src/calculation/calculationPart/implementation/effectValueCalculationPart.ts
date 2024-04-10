@@ -14,6 +14,12 @@ export const effectValueCalculationPart = (inputData: EffectValueCalculationPart
         type: "EffectValueCalculationPart",
         getValue: (context: CalculationContext) => effectValues[context.spellLevel],
         getString: (context: CalculationContext) =>
-            getPercent(effectValues[context.spellLevel], percentThreshold).toString()
+            getPercent(effectValues[context.spellLevel], percentThreshold).toString(),
+        getItems: (context: CalculationContext) => [
+            {
+                type: "PlainCalculationPart",
+                value: effectValues[context.spellLevel]
+            }
+        ]
     };
 };

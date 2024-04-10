@@ -17,6 +17,24 @@ export const statBySubPartCalculationPart = (inputData: StatBySubPartCalculation
         getValue: (context: CalculationContext) => subpart.getValue(context) * getStat(context, statName, formula),
         getString: (context: CalculationContext) => {
             return `${(subpart.getValue(context) * 100).toFixed()}% @${ChampionStatFormulaName[formula]}@ @${statName}@`
+        },
+        getItems: (context: CalculationContext) => {
+            const subItems = subpart.getItems(context)
+
+            if (subItems.length !== 1 || subItems[0].type !== "PlainCalculationPart") {
+                throw new Error("Invalid type of StatBySubPartCalculationPart subpart")
+            }
+
+            const coefficient = subItems[0].value
+
+            return [
+                {
+                    type: "StatCalculationPart",
+                    coefficient,
+                    formula,
+                    statName,
+                }
+            ]
         }
     };
 };

@@ -15,6 +15,11 @@ export const gameCalculationConditional = (spell: Spell, calculationData: GameCa
             //eturn parts.map(item => item.getString(context)).join()
 
             throw new Error("Not implemented")
+        },
+        getItems: (context: CalculationContext) => {
+            //eturn parts.map(item => item.getString(context)).join()
+
+            throw new Error("Not implemented")
         }
     };
 }

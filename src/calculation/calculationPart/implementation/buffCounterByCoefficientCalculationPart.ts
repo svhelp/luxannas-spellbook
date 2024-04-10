@@ -11,6 +11,13 @@ export const buffCounterByCoefficientCalculationPart = (inputData: BuffCounterBy
     return {
         type: "BuffCounterByCoefficientCalculationPart",
         getValue: (context: CalculationContext) => 0,
-        getString: (context: CalculationContext) => `${(coefficient * 100).toFixed()}% @${icon ?? buff}@`
+        getString: (context: CalculationContext) => `${(coefficient * 100).toFixed()}% @${icon ?? buff}@`,
+        getItems: (context: CalculationContext) => [
+            {
+                type: "BuffCalculationPart",
+                coefficient,
+                buff: icon ?? buff
+            }
+        ]
     };
 };
