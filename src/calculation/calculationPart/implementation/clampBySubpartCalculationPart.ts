@@ -1,7 +1,8 @@
 import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPart, SimpleCalculationPart } from "domain/CalculationPart";
 import { CalculationPartProvider } from "domain/CalculationPartProvider";
 import { ClampBySubpartCalculationPart } from "domain/jsonSchema/FormulaPartItem";
+import { mergeCalculationParts } from "./utils/mergeCalculationParts";
 
 export const clampBySubpartCalculationPart = (inputData: ClampBySubpartCalculationPart, subparts: CalculationPartProvider[]): CalculationPartProvider => {
 
@@ -22,29 +23,16 @@ export const clampBySubpartCalculationPart = (inputData: ClampBySubpartCalculati
         getValue,
         getString: (context: CalculationContext) => `${getValue(context) * 100}%`,
         getItems: (context: CalculationContext) => {
-            const items: CalculationPart[] = []
+            const itemsToMerge = subparts.reduce((acc, subpart) => acc.concat(subpart.getItems(context)), [] as CalculationPart[])
 
-            for (const subpart of subparts) {
-                for (const item of subpart.getItems(context)) {
-                    const itemTypeAlreadyExists = items.some(i => i.type === item.type)
-
-                    if (itemTypeAlreadyExists) {
-                        throw new Error("Clamp by the same type subitems is not supported yet.")
-                    }
-
-                    const clampedItem = {
-                        ...item,
-
-                        clamped: true,
-                        floor,
-                        ceiling,
-                    }
-
-                    items.push(clampedItem)
+            return [
+                {
+                    type: "ClampedCalculationPart",
+                    floor,
+                    ceiling,
+                    subparts: mergeCalculationParts(itemsToMerge) as SimpleCalculationPart[]
                 }
-            }
-
-            return items
+            ]
         }
     };
 };

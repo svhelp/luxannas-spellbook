@@ -3,7 +3,7 @@ import { ChampionStats, NonCountableStats } from "./riotApiSchema/ChampionStats"
 
 export type CalculationPart = PlainCalculationPart | StatCalculationPart | BuffCalculationPart | LevelCalculationPart | ClampedCalculationPart
 
-type SimpleCalculationPart = PlainCalculationPart | StatCalculationPart | BuffCalculationPart | LevelCalculationPart
+export type SimpleCalculationPart = PlainCalculationPart | StatCalculationPart | BuffCalculationPart | LevelCalculationPart
 
 export type PlainCalculationPart = {
     type: "PlainCalculationPart"
@@ -30,9 +30,11 @@ export type LevelCalculationPart = {
     max: number
 }
 
-export type ClampedCalculationPart = SimpleCalculationPart & {
-    clamped: boolean
+export type ClampedCalculationPart = {
+    type: "ClampedCalculationPart"
 
     floor: number
     ceiling: number
+
+    subparts: SimpleCalculationPart[]
 }
