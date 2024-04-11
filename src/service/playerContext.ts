@@ -42,10 +42,10 @@ export const playerContext = (name: string, isLocal?: boolean) => {
     const getSpells = () => {
         const context = getContext(0);
         for (const calculation of passive.calculations) {
-            console.log(`${calculation.name}: ${calculation.calculation.getValue(context)} (${calculation.calculation.getString(context)})`)
+            //console.log(`${calculation.name}: ${calculation.calculation.getValue(context)} (${calculation.calculation.getString(context)})`)
         }
 
-        console.log("\n")
+        //console.log("\n")
 
         let index = 0
 
@@ -53,14 +53,23 @@ export const playerContext = (name: string, isLocal?: boolean) => {
             const context = getContext(index);
 
             for (const calculation of spell.calculations) {
-                console.log(`${calculation.name}:`)
+
+                const value = calculation.calculation.getValue(context)
+                const { value: newValue } = calculation.calculation.getItems(context)
+
+                if (value !== newValue) {
+                    console.log(`${name}`)
+                    console.log(`${calculation.name}. old: ${value}, new: ${newValue}`)
+                }
+
+                //console.log(`${calculation.name}:`)
                 //console.log(`${calculation.calculation.getValue(context)} (${calculation.calculation.getString(context)})`)
 
                 //console.log(calculation.calculation.getItems(context))
             }
 
             index++
-            console.log("\n")
+            //console.log("\n")
         }
     }
 

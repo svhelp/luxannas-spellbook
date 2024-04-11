@@ -1,3 +1,4 @@
+import { combineCalculationParts } from "../../utils/combineCalculationParts";
 import { CalculationContext } from "domain/CalculationContext";
 import { CalculationPart, PlainCalculationPart } from "domain/CalculationPart";
 import { CalculationPartProvider } from "domain/CalculationPartProvider";
@@ -19,7 +20,7 @@ const decideOnPartRoles = (subItems1: CalculationPart[], subItems2: CalculationP
         return extractPartRoles(subItems2 as PlainCalculationPart[], subItems1)
     }
 
-    throw new Error("Unable to find a coefficient for a ProductOfSubPartsCalculationPart")
+    return null
 }
 
 export const productOfSubPartsCalculationPart = (part1: CalculationPartProvider, part2: CalculationPartProvider): CalculationPartProvider => {
@@ -31,7 +32,18 @@ export const productOfSubPartsCalculationPart = (part1: CalculationPartProvider,
             const subItems1 = part1.getItems(context)
             const subItems2 = part2.getItems(context)
 
-            const { coefficient, productItems } = decideOnPartRoles(subItems1, subItems2)
+            const partRoles = decideOnPartRoles(subItems1, subItems2)
+
+            if (!partRoles) {
+                return [
+                    {
+                        type: "PlainCalculationPart",
+                        value: combineCalculationParts(context, subItems1).value * combineCalculationParts(context, subItems2).value
+                    }
+                ]
+            }
+
+            const { coefficient, productItems } = partRoles
 
             for (const productItem of productItems) {
                 if (productItem.type === "PlainCalculationPart") {

@@ -6,6 +6,7 @@ import { ChampionStatName } from "./utils/ChampionStatName";
 import { ChampionStat } from "domain/jsonSchema/ChampionStat";
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula";
 import { ChampionStatFormulaName } from "./utils/ChampionStatFormulaName";
+import { combineCalculationParts } from "../../utils/combineCalculationParts";
 
 export const statBySubPartCalculationPart = (inputData: StatBySubPartCalculationPart, subpart: CalculationPartProvider): CalculationPartProvider => {
     
@@ -19,13 +20,9 @@ export const statBySubPartCalculationPart = (inputData: StatBySubPartCalculation
             return `${(subpart.getValue(context) * 100).toFixed()}% @${ChampionStatFormulaName[formula]}@ @${statName}@`
         },
         getItems: (context: CalculationContext) => {
-            const subItems = subpart.getItems(context)
+            const items = subpart.getItems(context)
 
-            if (subItems.length !== 1 || subItems[0].type !== "PlainCalculationPart") {
-                throw new Error("Invalid type of StatBySubPartCalculationPart subpart")
-            }
-
-            const coefficient = subItems[0].value
+            const { value: coefficient } = combineCalculationParts(context, items)
 
             return [
                 {

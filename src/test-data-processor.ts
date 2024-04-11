@@ -129,10 +129,10 @@ export const processTestData = () => {
     
             resourceTypes[resourceType].push(champDir)
     
-            if (champDir == "masteryi") {
+            //if (champDir == "masteryi") {
                 const initStats = context.getStats()
     
-                context.setLevel(2)
+                context.setLevel(4)
                 context.setSpellLevels([1, 1, 1, 1, 1])
                 context.setStats({
                     maxHealth: 650,
@@ -145,7 +145,7 @@ export const processTestData = () => {
                 // console.log(context.getStats())
     
                 context.getSpells()
-            }
+            //}
         }
         catch (e) {
             console.log(`*** ERROR PROCESSING ${champDir} data`)
