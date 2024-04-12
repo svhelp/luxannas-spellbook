@@ -106,7 +106,7 @@ export type StatByCoefficientCalculationPart = {
     __type: "StatByCoefficientCalculationPart"
     mStat?: ChampionStat
     mStatFormula?: ChampionStatFormula
-    mCoefficient: number
+    mCoefficient?: number //Nilah's coefficient is null
 }
 
 export type StatByNamedDataValueCalculationPart = {

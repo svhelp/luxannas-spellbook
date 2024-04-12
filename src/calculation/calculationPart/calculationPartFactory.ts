@@ -22,7 +22,7 @@ export const parseCalculationPart = (spell: Spell, inputData: FormulaPartItem, c
     const calculationType = inputData.__type
 
     if (calculationType === "ProductOfSubPartsCalculationPart") {
-        // console.log(championName)
+        //console.log(championName)
     }
 
     if (championName == "kaisa") {

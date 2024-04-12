@@ -1,9 +1,12 @@
 import { ResourceType } from "../common/ResourceType"
 
-export type ChampionStats = {
+type CalculatedStats = {
+    cooldownReduction: number
+}
+
+export type ChampionStats = CalculatedStats & {
     abilityHaste: number
     abilityPower: number
-    //cooldownReduction: number to verify
 
     attackDamage: number
     attackRange: number

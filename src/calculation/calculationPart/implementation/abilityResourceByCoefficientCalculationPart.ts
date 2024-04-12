@@ -9,7 +9,7 @@ import { ResourceTypeName } from "./utils/ResourceTypeName";
 export const abilityResourceByCoefficientCalculationPart = (inputData: AbilityResourceByCoefficientCalculationPart): CalculationPartProvider => {
 
     const coefficient = inputData.mCoefficient
-    const formula = inputData.mStatFormula ?? ChampionStatFormula.Base
+    const formula = inputData.mStatFormula ?? ChampionStatFormula.Total
 
     return {
         type: "AbilityResourceByCoefficientCalculationPart",
@@ -24,7 +24,7 @@ export const abilityResourceByCoefficientCalculationPart = (inputData: AbilityRe
                 type: "StatCalculationPart",
                 coefficient,
                 formula,
-                statName: "resourceType"
+                statName: "resourceMax"
             }
         ]
     };

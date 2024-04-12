@@ -11,7 +11,7 @@ export const ChampionStatName: {[key: number]: keyof ChampionStats | keyof NonCo
     [ChampionStat.MoveSpeed]: "moveSpeed",
     [ChampionStat.CritChance]: "critChance",
     [ChampionStat.CritDamage]: "critDamage",
-    //[ChampionStat.CooldownReduction]: "",
+    [ChampionStat.CooldownReduction]: "cooldownReduction",
     [ChampionStat.AbilityHaste]: "abilityHaste",
     [ChampionStat.MaxHealth]: "maxHealth",
     [ChampionStat.CurrentHealth]: "currentHealth",

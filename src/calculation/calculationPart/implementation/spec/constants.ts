@@ -44,6 +44,7 @@ export const spellMock: Spell = {
 export const initStatsMock: ChampionStats = {
     abilityHaste: 0,
     abilityPower: 200,
+    cooldownReduction: 0,
 
     attackDamage: 50,
     attackRange: 500,

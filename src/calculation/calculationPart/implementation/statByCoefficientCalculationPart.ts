@@ -10,8 +10,8 @@ import { ChampionStatFormulaName } from "./utils/ChampionStatFormulaName";
 export const statByCoefficientCalculationPart = (inputData: StatByCoefficientCalculationPart): CalculationPartProvider => {
 
     const statName = ChampionStatName[inputData.mStat ?? ChampionStat.AbilityPower]
-    const formula = inputData.mStatFormula ?? ChampionStatFormula.Total // default is total (Thresh/Rengar) ???
-    const coefficient = inputData.mCoefficient
+    const formula = inputData.mStatFormula ?? ChampionStatFormula.Total
+    const coefficient = inputData.mCoefficient ?? 1
 
     return {
         type: "StatByCoefficientCalculationPart",

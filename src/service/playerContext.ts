@@ -55,12 +55,14 @@ export const playerContext = (name: string, isLocal?: boolean) => {
             for (const calculation of spell.calculations) {
 
                 const value = calculation.calculation.getValue(context)
-                const { value: newValue } = calculation.calculation.getItems(context)
+                const { value: newValue, furmula } = calculation.calculation.getItems(context)
 
-                if (value !== newValue) {
+                //if (value !== newValue) {
                     console.log(`${name}`)
                     console.log(`${calculation.name}. old: ${value}, new: ${newValue}`)
-                }
+                    console.log(calculation.calculation.getString(context))
+                    console.log(furmula)
+                //}
 
                 //console.log(`${calculation.name}:`)
                 //console.log(`${calculation.calculation.getValue(context)} (${calculation.calculation.getString(context)})`)
@@ -74,7 +76,14 @@ export const playerContext = (name: string, isLocal?: boolean) => {
     }
 
     const setStats = (data: Partial<ChampionStats>) => {
-        stats = { ...stats, ...data }
+        const haste = data.abilityHaste ?? stats.abilityHaste
+
+        stats = {
+            ...stats,
+            ...data,
+
+            cooldownReduction: -1 * haste / (100 + haste)
+        }
     }
 
     const setSpellLevels = (data: number[]) => {
@@ -132,7 +141,7 @@ const initSpell = (spellData: Spell, name: string) => {
 const initStats = (championData: ChampionData): ChampionStats => ({
     abilityHaste: 0,
     abilityPower: 0,
-    //cooldownReduction: number to verify
+    cooldownReduction: 0,
 
     attackDamage: championData.rootChampionData.baseDamage,
     attackRange: championData.rootChampionData.attackRange,

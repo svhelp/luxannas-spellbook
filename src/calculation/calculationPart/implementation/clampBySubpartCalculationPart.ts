@@ -2,7 +2,7 @@ import { CalculationContext } from "domain/CalculationContext";
 import { CalculationPart, SimpleCalculationPart } from "domain/CalculationPart";
 import { CalculationPartProvider } from "domain/CalculationPartProvider";
 import { ClampBySubpartCalculationPart } from "domain/jsonSchema/FormulaPartItem";
-import { mergeCalculationParts } from "./utils/mergeCalculationParts";
+import { combineCalculationParts } from "../../utils/combineCalculationParts";
 
 export const clampBySubpartCalculationPart = (inputData: ClampBySubpartCalculationPart, subparts: CalculationPartProvider[]): CalculationPartProvider => {
 
@@ -24,13 +24,12 @@ export const clampBySubpartCalculationPart = (inputData: ClampBySubpartCalculati
         getString: (context: CalculationContext) => `${getValue(context) * 100}%`,
         getItems: (context: CalculationContext) => {
             const itemsToMerge = subparts.reduce((acc, subpart) => acc.concat(subpart.getItems(context)), [] as CalculationPart[])
+            const { value } = combineCalculationParts(context, itemsToMerge)
 
             return [
                 {
-                    type: "ClampedCalculationPart",
-                    floor,
-                    ceiling,
-                    subparts: mergeCalculationParts(itemsToMerge) as SimpleCalculationPart[]
+                    type: "PlainCalculationPart",
+                    value
                 }
             ]
         }

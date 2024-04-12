@@ -129,23 +129,25 @@ export const processTestData = () => {
     
             resourceTypes[resourceType].push(champDir)
     
-            //if (champDir == "masteryi") {
+            if (champDir == "jhin") {
                 const initStats = context.getStats()
     
                 context.setLevel(4)
                 context.setSpellLevels([1, 1, 1, 1, 1])
                 context.setStats({
                     maxHealth: 650,
-                    abilityPower: 0,
+                    abilityPower: 25,
+                    abilityHaste: 15,
                     attackDamage: 70,
-                    attackSpeed: initStats.attackSpeed + 0.113
+                    attackSpeed: initStats.attackSpeed + 0.113,
+                    resourceMax: 425
                 })
     
                 // console.log(initStats)
                 // console.log(context.getStats())
     
                 context.getSpells()
-            //}
+            }
         }
         catch (e) {
             console.log(`*** ERROR PROCESSING ${champDir} data`)
