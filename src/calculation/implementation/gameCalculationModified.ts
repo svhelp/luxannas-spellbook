@@ -6,16 +6,6 @@ export const gameCalculationModified = (spell: Spell, calculationData: GameCalcu
     
     return {
         type: "GameCalculationModified",
-        getValue: (context: CalculationContext) => {
-            //return parts.reduce((acc, item) => acc + item.getValue(context), 0)
-
-            throw new Error("Not implemented")
-        },
-        getString: (context: CalculationContext) => {
-            //eturn parts.map(item => item.getString(context)).join()
-
-            throw new Error("Not implemented")
-        },
         getItems: (context: CalculationContext) => {
             //eturn parts.map(item => item.getString(context)).join()
 

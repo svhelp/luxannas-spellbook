@@ -5,8 +5,10 @@ import { statByNamedDataValueCalculationPart } from "../statByNamedDataValueCalc
 import { CalculationContext } from "domain/CalculationContext";
 import { ChampionStat } from "domain/jsonSchema/ChampionStat";
 import { currentStatsMock, initStatsMock, spellMock } from "./constants";
-import { getDataValue, getStat } from "../utils";
+import { getDataValue } from "../utils";
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula";
+import { ChampionStatName } from "../utils/ChampionStatName";
+import { dataValuesMock } from "./mock";
 
 describe("statByNamedDataValueCalculationPart", () => {
     it("Should return calculation part name", () => {
@@ -31,28 +33,7 @@ describe("statByNamedDataValueCalculationPart", () => {
         expect(getDataValue).toBeCalledWith(spellMock, inputMock.mDataValue)
     })
     
-    it("getStat should be called with input data", () => {
-        const inputMock: StatByNamedDataValueCalculationPart = {
-            __type: "StatByNamedDataValueCalculationPart",
-            mDataValue: "DataValueMock1",
-            mStat: ChampionStat.AbilityHaste,
-            mStatFormula: ChampionStatFormula.Bonus
-        }
-
-        const contextMock: CalculationContext = {
-            championLevel: 1,
-            spellLevel: 1,
-            
-            currentStats: currentStatsMock,
-            initStats: initStatsMock
-        }
-
-        statByNamedDataValueCalculationPart(inputMock, spellMock).getValue(contextMock)
-
-        expect(getStat).toBeCalledWith(contextMock, "abilityHaste", ChampionStatFormula.Bonus)
-    })
-    
-    it("Should use AP as default stat", () => {
+    it("Should use default values", () => {
         const inputMock: StatByNamedDataValueCalculationPart = {
             __type: "StatByNamedDataValueCalculationPart",
             mDataValue: "DataValueMock1"
@@ -66,58 +47,51 @@ describe("statByNamedDataValueCalculationPart", () => {
             initStats: initStatsMock
         }
 
-        statByNamedDataValueCalculationPart(inputMock, spellMock).getValue(contextMock)
+        const expectedResult = [
+            {
+                type: "StatCalculationPart",
+                coefficient: dataValuesMock["DataValueMock1"][1],
+                formula: ChampionStatFormula.Total,
+                statName: ChampionStatName[ChampionStat.AbilityPower]
+            }
+        ]
 
-        expect(getStat).toBeCalledWith(contextMock, "abilityPower", ChampionStatFormula.Total)
+        const result = statByNamedDataValueCalculationPart(inputMock, spellMock).getItems(contextMock)
+
+        expect(result).toEqual(expectedResult)
     })
 
-    describe("Should return value", () => {
+    describe("Should return items", () => {
         it.each([
-            [ "DataValueMock1", ChampionStat.AbilityPower, 2, 400  ],
-            [ "DataValueMock3", ChampionStat.MaxHealth, 1, 6  ],
-            [ "DataValueMock3", undefined, 3, 20  ],
-        ])('mDataValue: $mDataValue, mStat: $mStat, spellLevel: $spellLevel', (mDataValue, mStat, spellLevel, expectedResult) => {
+            [ "DataValueMock1", ChampionStat.AbilityHaste, ChampionStatFormula.Base, 2  ],
+            [ "DataValueMock3", ChampionStat.MaxHealth, ChampionStatFormula.Bonus, 1  ],
+            [ "DataValueMock3", ChampionStat.Armor, ChampionStatFormula.Total, 3  ],
+        ])('mDataValue: $mDataValue, mStat: $mStat, mStatFormula: $mStatFormula, spellLevel: $spellLevel', (mDataValue, mStat, mStatFormula, spellLevel) => {
             const inputMock: StatByNamedDataValueCalculationPart = {
                 __type: "StatByNamedDataValueCalculationPart",
                 mDataValue,
-                mStat
+                mStat,
+                mStatFormula
             }
             
             const contextMock: CalculationContext = {
                 championLevel: 1,
-                spellLevel: spellLevel,
+                spellLevel,
                 
                 currentStats: currentStatsMock,
                 initStats: initStatsMock
-            }
-    
-            const result = statByNamedDataValueCalculationPart(inputMock, spellMock).getValue(contextMock)
-    
-            expect(result).toEqual(expectedResult)
-        })
-    })
-    
-    describe("Should return string value", () => {
-        it.each([
-            [ "DataValueMock1", ChampionStat.AbilityPower, 2, "200% @total@ @abilityPower@"  ],
-            [ "DataValueMock3", ChampionStat.MaxHealth, 1, "1% @total@ @maxHealth@"  ],
-            [ "DataValueMock3", undefined, 3, "10% @total@ @abilityPower@"  ],
-        ])('mDataValue: $mDataValue, mStat: $mStat, spellLevel: $spellLevel', (mDataValue, mStat, spellLevel, expectedResult) => {
-            const inputMock: StatByNamedDataValueCalculationPart = {
-                __type: "StatByNamedDataValueCalculationPart",
-                mDataValue,
-                mStat
             }
             
-            const contextMock: CalculationContext = {
-                championLevel: 1,
-                spellLevel: spellLevel,
-                
-                currentStats: currentStatsMock,
-                initStats: initStatsMock
-            }
-
-            const result = statByNamedDataValueCalculationPart(inputMock, spellMock).getString(contextMock)
+            const expectedResult = [
+                {
+                    type: "StatCalculationPart",
+                    coefficient: dataValuesMock[mDataValue][spellLevel],
+                    formula: mStatFormula,
+                    statName: ChampionStatName[mStat]
+                }
+            ]
+    
+            const result = statByNamedDataValueCalculationPart(inputMock, spellMock).getItems(contextMock)
     
             expect(result).toEqual(expectedResult)
         })

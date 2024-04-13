@@ -9,8 +9,6 @@ export const numberCalculationPart = (inputData: NumberCalculationPart): Calcula
 
     return {
         type: "NumberCalculationPart",
-        getValue: (context: CalculationContext) => value,
-        getString: (context: CalculationContext) => value.toString(),
         getItems: (context: CalculationContext) => [
             {
                 type: "PlainCalculationPart",

@@ -5,6 +5,7 @@ import { namedDataValueCalculationPart } from "../namedDataValueCalculationPart"
 import { CalculationContext } from "domain/CalculationContext";
 import { spellMock } from "./constants";
 import { getDataValue } from "../utils";
+import { dataValuesMock } from "./mock";
 
 describe("namedDataValueCalculationPart", () => {
     it("Should return calculation part name", () => {
@@ -29,53 +30,35 @@ describe("namedDataValueCalculationPart", () => {
         expect(getDataValue).toBeCalledWith(spellMock, inputMock.mDataValue)
     })
 
-    describe("Should return value", () => {
+    describe("Should return items", () => {
         it.each([
-            [ "DataValueMock1", 2, 2 ],
-            [ "DataValueMock1", 4, 4 ],
-            [ "DataValueMock3", 2, .05 ],
-        ])('dateValue: $dateValue, skillLevel: $skillLevel', (dateValue, skillLevel, expectedValue) => {
+            [ "DataValueMock1", 2 ],
+            [ "DataValueMock1", 4 ],
+            [ "DataValueMock3", 2 ],
+        ])('mDataValue: $mDataValue, spellLevel: $spellLevel', (mDataValue, spellLevel) => {
             const inputMock: NamedDataValueCalculationPart = {
                 __type: "NamedDataValueCalculationPart",
-                mDataValue: dateValue
+                mDataValue
             }
-
+    
             const contextMock: CalculationContext = {
                 championLevel: 1,
-                spellLevel: skillLevel,
+                spellLevel: spellLevel,
                 
                 currentStats: undefined,
                 initStats: undefined
             }
+        
+            const expectedResult = [
+                {
+                    type: "PlainCalculationPart",
+                    value: dataValuesMock[mDataValue][spellLevel]
+                }
+            ]
     
-            const result = namedDataValueCalculationPart(inputMock, spellMock).getValue(contextMock)
+            const result = namedDataValueCalculationPart(inputMock, spellMock).getItems(contextMock)
     
-            expect(result).toEqual(expectedValue)
-        })
-    })
-    
-    describe("Should return string value", () => {
-        it.each([
-            [ "DataValueMock1", 2, "2" ],
-            [ "DataValueMock1", 4, "4" ],
-            [ "DataValueMock3", 2, "0.05" ],
-        ])('dateValue: $dateValue, skillLevel: $skillLevel', (dateValue, skillLevel, expectedValue) => {
-            const inputMock: NamedDataValueCalculationPart = {
-                __type: "NamedDataValueCalculationPart",
-                mDataValue: dateValue
-            }
-
-            const contextMock: CalculationContext = {
-                championLevel: 1,
-                spellLevel: skillLevel,
-                
-                currentStats: undefined,
-                initStats: undefined
-            }
-    
-            const result = namedDataValueCalculationPart(inputMock, spellMock).getString(contextMock)
-    
-            expect(result).toEqual(expectedValue)
+            expect(result).toEqual(expectedResult)
         })
     })
 })

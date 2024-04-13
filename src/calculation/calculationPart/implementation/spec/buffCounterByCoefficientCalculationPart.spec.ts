@@ -14,38 +14,56 @@ describe("buffCounterByCoefficientCalculationPart", () => {
 
         expect(result).toEqual("BuffCounterByCoefficientCalculationPart")
     })
-
-    describe("Should return value", () => {
+    
+    describe("Should prioritize mIconKey over mBuffName", () => {
         it.each([
-            [ 0, 0 ],
-            [ 1, 0 ]
-        ])('mCoefficient: $mCoefficient', (mCoefficient, expectedResult) => {
+            [ 'BuffNameMock1', 'icon1' ],
+            [ 'BuffNameMock2', undefined ],
+            [ undefined, 'icon3' ],
+        ])('mBuffName: $mBuffName, mIconKey: $mIconKey', (mBuffName, mIconKey) => {
             const inputMock: BuffCounterByCoefficientCalculationPart = {
                 __type: "BuffCounterByCoefficientCalculationPart",
-                mCoefficient,
-                mBuffName: 'BuffNameMock'
+                mCoefficient: 1,
+                mBuffName,
+                mIconKey
             }
+            
+            const expectedResult = [
+                {
+                    type: "BuffCalculationPart",
+                    coefficient: 1,
+                    buff: mIconKey ?? mBuffName
+                }
+            ]
     
-            const result = buffCounterByCoefficientCalculationPart(inputMock).getValue(undefined)
+            const result = buffCounterByCoefficientCalculationPart(inputMock).getItems(undefined)
     
             expect(result).toEqual(expectedResult)
         })
     })
-    
-    describe("Should return string value", () => {
+
+    describe("Should return items", () => {
         it.each([
-            [ .25, 'BuffNameMock1', 'icon1', "25% @icon1@" ],
-            [ .5, 'BuffNameMock2', undefined, "50% @BuffNameMock2@" ],
-            [ 2, 'BuffNameMock3', 'icon3', "200% @icon3@" ],
-        ])('mCoefficient: $mCoefficient, mBuffName: $mBuffName, mIconKey: $mIconKey', (mCoefficient, mBuffName, mIconKey, expectedResult) => {
+            [ .25, 'icon1' ],
+            [ .5, 'icon2' ],
+            [ 2, 'icon3' ],
+        ])('mCoefficient: $mCoefficient, mIconKey: $mIconKey', (mCoefficient, mIconKey) => {
             const inputMock: BuffCounterByCoefficientCalculationPart = {
                 __type: "BuffCounterByCoefficientCalculationPart",
                 mCoefficient,
-                mBuffName,
+                mBuffName: 'BuffNameMock',
                 mIconKey
             }
+            
+            const expectedResult = [
+                {
+                    type: "BuffCalculationPart",
+                    coefficient: mCoefficient,
+                    buff: mIconKey
+                }
+            ]
     
-            const result = buffCounterByCoefficientCalculationPart(inputMock).getString(undefined)
+            const result = buffCounterByCoefficientCalculationPart(inputMock).getItems(undefined)
     
             expect(result).toEqual(expectedResult)
         })

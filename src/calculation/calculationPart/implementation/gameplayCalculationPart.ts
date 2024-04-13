@@ -8,8 +8,6 @@ type GameplayCalculationPartData = CooldownMultiplierCalculationPart | UdyrCalcu
 export const gameplayCalculationPart = (inputData: GameplayCalculationPartData): CalculationPartProvider => {
     return {
         type: "GameplayCalculationPart",
-        getValue: (context: CalculationContext) => 1,
-        getString: (context: CalculationContext) => "",
         getItems: (context: CalculationContext) => []
     };
 }

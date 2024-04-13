@@ -14,37 +14,27 @@ describe("numberCalculationPart", () => {
         expect(result).toEqual("NumberCalculationPart")
     })
 
-    describe("Should return value", () => {
+    describe("Should return items", () => {
         it.each([
-            [ 0, 0 ],
-            [ 0.1, 0.1 ],
-            [ 10, 10 ],
-        ])('mNumber: $mNumber', (mNumber, expectedValue) => {
+            [ 0.01 ],
+            [ 2 ],
+            [ 50 ],
+        ])('mNumber: $mNumber', (mNumber) => {
             const inputMock: NumberCalculationPart = {
                 __type: "NumberCalculationPart",
                 mNumber: mNumber
             }
 
-            const result = numberCalculationPart(inputMock).getValue(undefined)
+            const expectedResult = [
+                {
+                    type: "PlainCalculationPart",
+                    value: mNumber
+                }
+            ]
 
-            expect(result).toEqual(expectedValue)
-        })
-    })
-    
-    describe("Should return string value", () => {
-        it.each([
-            [ 0, '0' ],
-            [ 0.1, '0.1' ],
-            [ 10, '10' ],
-        ])('mNumber: $mNumber', (mNumber, expectedValue) => {
-            const inputMock: NumberCalculationPart = {
-                __type: "NumberCalculationPart",
-                mNumber: mNumber
-            }
+            const result = numberCalculationPart(inputMock).getItems(undefined)
 
-            const result = numberCalculationPart(inputMock).getString(undefined)
-
-            expect(result).toEqual(expectedValue)
+            expect(result).toEqual(expectedResult)
         })
     })
 })

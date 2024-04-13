@@ -11,8 +11,6 @@ const defaultProductItem: PlainCalculationPart = {
 export const productOfSubPartsCalculationPart = (part1: CalculationPartProvider, part2: CalculationPartProvider): CalculationPartProvider => {
     return {
         type: "ProductOfSubPartsCalculationPart",
-        getValue: (context: CalculationContext) => part1.getValue(context) * part2.getValue(context),
-        getString: (context: CalculationContext) => `${part1.getString(context)} * ${part2.getString(context)}`,
         getItems: (context: CalculationContext) => {
             const subItems1 = part1.getItems(context)
             const subItems2 = part2.getItems(context)

@@ -39,7 +39,7 @@ describe("byCharLevelBreakpointsCalculationPart", () => {
         expect(result).toEqual("ByCharLevelBreakpointsCalculationPart")
     })
 
-    it("Default init value should be 0", () => {
+    it("Should use default values", () => {
         const inputMock: ByCharLevelBreakpointsCalculationPart = {
             __type: "ByCharLevelBreakpointsCalculationPart",
         }
@@ -52,89 +52,36 @@ describe("byCharLevelBreakpointsCalculationPart", () => {
             initStats: undefined
         }
 
-        const result = byCharLevelBreakpointsCalculationPart(inputMock).getValue(contextMock)
+        const expectedResult = [
+            {
+                type: "LevelCalculationPart",
+                value: 0,
+                min: 0,
+                max: 0
+            }
+        ]
 
-        expect(result).toEqual(0)
-    })
+        const result = byCharLevelBreakpointsCalculationPart(inputMock).getItems(contextMock)
 
-    describe('Linear progression', () => {
-        describe("Should return value", () => {
-            it.each([
-                [ 5, 1, 1, 5 ],
-                [ 5, 1, 10, 14 ],
-                [ 5, 1, 18, 22 ],
-                [ 10, 5, 1, 10 ],
-                [ 10, 5, 12, 65 ],
-                [ 10, 5, 18, 95 ],
-            ])('mLevel1Value: $mLevel1Value, step: $step, championLevel: $championLevel', (mLevel1Value, step, championLevel, expectedValue) => {
-                const inputMock: ByCharLevelBreakpointsCalculationPart = {
-                    __type: "ByCharLevelBreakpointsCalculationPart",
-                    mLevel1Value,
-                    "{02deb550}": step
-                }
-        
-                const contextMock: CalculationContext = {
-                    championLevel,
-                    spellLevel: 1,
-                    
-                    currentStats: undefined,
-                    initStats: undefined
-                }
-        
-                const result = byCharLevelBreakpointsCalculationPart(inputMock).getValue(contextMock)
-        
-                expect(result).toEqual(expectedValue)
-            })
-        })
-        
-        describe("Should return string value", () => {
-            it.each([
-                [ 5, 1, 1, "5 - 22 @level@" ],
-                [ 5, 1, 5, "5 - 22 @level@" ],
-                [ 5, 1, 18, "5 - 22 @level@" ],
-                [ 10, 5, 1, "10 - 95 @level@" ],
-                [ 10, 5, 15, "10 - 95 @level@" ],
-                [ 10, 5, 18, "10 - 95 @level@" ],
-            ])('mLevel1Value: $mLevel1Value, step: $step, championLevel: $championLevel', (mLevel1Value, step, championLevel, expectedValue) => {
-                const inputMock: ByCharLevelBreakpointsCalculationPart = {
-                    __type: "ByCharLevelBreakpointsCalculationPart",
-                    mLevel1Value,
-                    "{02deb550}": step
-                }
-        
-                const contextMock: CalculationContext = {
-                    championLevel,
-                    spellLevel: 1,
-                    
-                    currentStats: undefined,
-                    initStats: undefined
-                }
-        
-                const result = byCharLevelBreakpointsCalculationPart(inputMock).getString(contextMock)
-        
-                expect(result).toEqual(expectedValue)
-            })
-        })
+        expect(result).toEqual(expectedResult)
     })
     
-    describe('Complex progression', () => {
-        describe("Should return value", () => {
+    describe("Should return items", () => {
+        describe("Linear progression", () => {
             it.each([
-                [ 5, breakpointMock1_1, 1, 5 ],
-                [ 5, breakpointMock1_1, 5, 5 ],
-                [ 5, breakpointMock1_1, 12, 10 ],
-                [ 5, breakpointMock1_1, 18, 16 ],
-                [ 10, breakpointMock1_2, 1, 10 ],
-                [ 10, breakpointMock1_2, 5, 10 ],
-                [ 10, breakpointMock1_2, 12, 16 ],
-                [ 10, breakpointMock1_2, 18, 28 ],
-            ])('mLevel1Value: $mLevel1Value, step: $step, championLevel: $championLevel', (mLevel1Value, breakpoint, championLevel, expectedValue) => {
+                [ 5, 1, 1 ],
+                [ 5, 1, 10 ],
+                [ 5, 1, 18 ],
+                [ 10, 5, 1 ],
+                [ 10, 5, 12 ],
+                [ 10, 5, 18 ],
+            ])('mLevel1Value: $mLevel1Value, step: $step, championLevel: $championLevel', (mLevel1Value, step, championLevel) => {
                 const inputMock: ByCharLevelBreakpointsCalculationPart = {
                     __type: "ByCharLevelBreakpointsCalculationPart",
                     mLevel1Value,
-                    mBreakpoints: [ breakpoint ]
+                    "{02deb550}": step
                 }
-        
+                
                 const contextMock: CalculationContext = {
                     championLevel,
                     spellLevel: 1,
@@ -142,43 +89,23 @@ describe("byCharLevelBreakpointsCalculationPart", () => {
                     currentStats: undefined,
                     initStats: undefined
                 }
-        
-                const result = byCharLevelBreakpointsCalculationPart(inputMock).getValue(contextMock)
-        
-                expect(result).toEqual(expectedValue)
-            })
-        })
-        
-        describe("Should return string value", () => {
-            it.each([
-                [ 5, breakpointMock1_1, 1, "5 - 16 @level@" ],
-                [ 5, breakpointMock1_1, 18, "5 - 16 @level@" ],
-                [ 10, breakpointMock1_2, 1, "10 - 28 @level@" ],
-                [ 10, breakpointMock1_2, 18, "10 - 28 @level@" ],
-            ])('mLevel1Value: $mLevel1Value, step: $step, championLevel: $championLevel', (mLevel1Value, breakpoint, championLevel, expectedValue) => {
-                const inputMock: ByCharLevelBreakpointsCalculationPart = {
-                    __type: "ByCharLevelBreakpointsCalculationPart",
-                    mLevel1Value,
-                    mBreakpoints: [ breakpoint ]
-                }
-        
-                const contextMock: CalculationContext = {
-                    championLevel,
-                    spellLevel: 1,
-                    
-                    currentStats: undefined,
-                    initStats: undefined
-                }
-        
-                const result = byCharLevelBreakpointsCalculationPart(inputMock).getString(contextMock)
-        
-                expect(result).toEqual(expectedValue)
-            })
-        })
-    })
 
-    describe('Single additions breakpoint', () => {
-        describe("Should return value", () => {
+                const expectedResult = [
+                    {
+                        type: "LevelCalculationPart",
+                        value: mLevel1Value + step * (championLevel - 1),
+                        min: mLevel1Value,
+                        max: mLevel1Value + step * 17
+                    }
+                ]
+        
+                const result = byCharLevelBreakpointsCalculationPart(inputMock).getItems(contextMock)
+        
+                expect(result).toEqual(expectedResult)
+            })
+        })
+        
+        describe("Step progression", () => {
             it.each([
                 [ 5, breakpointMock2_1, 1, 5 ],
                 [ 5, breakpointMock2_1, 7, 5 ],
@@ -194,7 +121,7 @@ describe("byCharLevelBreakpointsCalculationPart", () => {
                     mLevel1Value,
                     mBreakpoints: [ breakpoint ]
                 }
-        
+                
                 const contextMock: CalculationContext = {
                     championLevel,
                     spellLevel: 1,
@@ -202,26 +129,39 @@ describe("byCharLevelBreakpointsCalculationPart", () => {
                     currentStats: undefined,
                     initStats: undefined
                 }
+
+                const expectedResult = [
+                    {
+                        type: "LevelCalculationPart",
+                        value: expectedValue,
+                        min: mLevel1Value,
+                        max: mLevel1Value + breakpoint["{d5fd07ed}"]
+                    }
+                ]
         
-                const result = byCharLevelBreakpointsCalculationPart(inputMock).getValue(contextMock)
+                const result = byCharLevelBreakpointsCalculationPart(inputMock).getItems(contextMock)
         
-                expect(result).toEqual(expectedValue)
+                expect(result).toEqual(expectedResult)
             })
         })
         
-        describe("Should return string value", () => {
+        describe("Complex progression", () => {
             it.each([
-                [ 5, breakpointMock2_1, 1, "5 - 6 @level@" ],
-                [ 5, breakpointMock2_1, 18, "5 - 6 @level@" ],
-                [ 10, breakpointMock2_2, 1, "10 - 15 @level@" ],
-                [ 10, breakpointMock2_2, 18, "10 - 15 @level@" ],
-            ])('mLevel1Value: $mLevel1Value, step: $step, championLevel: $championLevel', (mLevel1Value, breakpoint, championLevel, expectedValue) => {
+                [ 5, breakpointMock1_1, 1, 16, 5 ],
+                [ 5, breakpointMock1_1, 5, 16, 5 ],
+                [ 5, breakpointMock1_1, 12, 16, 10 ],
+                [ 5, breakpointMock1_1, 18, 16, 16 ],
+                [ 10, breakpointMock1_2, 1, 28, 10 ],
+                [ 10, breakpointMock1_2, 5, 28, 10 ],
+                [ 10, breakpointMock1_2, 12, 28, 16 ],
+                [ 10, breakpointMock1_2, 18, 28, 28 ],
+            ])('mLevel1Value: $mLevel1Value, step: $step, championLevel: $championLevel', (mLevel1Value, breakpoint, championLevel, maxValue, expectedValue) => {
                 const inputMock: ByCharLevelBreakpointsCalculationPart = {
                     __type: "ByCharLevelBreakpointsCalculationPart",
                     mLevel1Value,
                     mBreakpoints: [ breakpoint ]
                 }
-        
+                
                 const contextMock: CalculationContext = {
                     championLevel,
                     spellLevel: 1,
@@ -229,10 +169,19 @@ describe("byCharLevelBreakpointsCalculationPart", () => {
                     currentStats: undefined,
                     initStats: undefined
                 }
+
+                const expectedResult = [
+                    {
+                        type: "LevelCalculationPart",
+                        value: expectedValue,
+                        min: mLevel1Value,
+                        max: maxValue
+                    }
+                ]
         
-                const result = byCharLevelBreakpointsCalculationPart(inputMock).getString(contextMock)
+                const result = byCharLevelBreakpointsCalculationPart(inputMock).getItems(contextMock)
         
-                expect(result).toEqual(expectedValue)
+                expect(result).toEqual(expectedResult)
             })
         })
     })

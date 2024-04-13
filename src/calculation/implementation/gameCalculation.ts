@@ -10,12 +10,6 @@ export const gameCalculation = (spell: Spell, calculationData: GameCalculation, 
     
     return {
         type: "GameCalculation",
-        getValue: (context: CalculationContext) => {
-            return parts.reduce((acc, item) => acc + item.getValue(context), 0)
-        },
-        getString: (context: CalculationContext) => {
-            return parts.map(item => item.getString(context)).join(" + ")
-        },
         getItems: (context: CalculationContext) => {
             const items = parts.reduce((acc, subpart) => acc.concat(subpart.getItems(context)), [] as CalculationPart[])
 

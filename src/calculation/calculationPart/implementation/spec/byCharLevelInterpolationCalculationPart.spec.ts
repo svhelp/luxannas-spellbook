@@ -16,7 +16,34 @@ describe("byCharLevelInterpolationCalculationPart", () => {
         expect(result).toEqual("ByCharLevelInterpolationCalculationPart")
     })
 
-    describe("Should return value", () => {
+    it("Should use default values", () => {
+        const inputMock: ByCharLevelInterpolationCalculationPart = {
+            __type: "ByCharLevelInterpolationCalculationPart"
+        }
+
+        const contextMock: CalculationContext = {
+            championLevel: 1,
+            spellLevel: 1,
+            
+            currentStats: undefined,
+            initStats: undefined
+        }
+
+        const expectedResult = [
+            {
+                type: "LevelCalculationPart",
+                value: 0,
+                min: 0,
+                max: 0
+            }
+        ]
+        
+        const result = byCharLevelInterpolationCalculationPart(inputMock).getItems(contextMock)
+
+        expect(result).toEqual(expectedResult)
+    })
+
+    describe("Should return items", () => {
         it.each([
             [ 0, 170, 1, 0 ],
             [ 0, 170, 3, 20 ],
@@ -24,50 +51,34 @@ describe("byCharLevelInterpolationCalculationPart", () => {
             [ 100, 1800, 1, 100 ],
             [ 100, 1800, 7, 700 ],
             [ 100, 1800, 18, 1800 ],
-        ])('mStartValue: $mStartValue, mEndValue: $mEndValue, championLevel: $championLevel', (mStartValue, mEndValue, championLevel, expectedResult) => {
-            const inputMock: ByCharLevelInterpolationCalculationPart = {
-                __type: "ByCharLevelInterpolationCalculationPart",
-                mStartValue,
-                mEndValue
-            }
+        ])('mStartValue: $mStartValue, mEndValue: $mEndValue, championLevel: $championLevel',
+            (mStartValue, mEndValue, championLevel, expectedValue) => {
+                const inputMock: ByCharLevelInterpolationCalculationPart = {
+                    __type: "ByCharLevelInterpolationCalculationPart",
+                    mStartValue,
+                    mEndValue
+                }
             
-            const contextMock: CalculationContext = {
-                championLevel,
-                spellLevel: 1,
+                const contextMock: CalculationContext = {
+                    championLevel,
+                    spellLevel: 1,
+                    
+                    currentStats: undefined,
+                    initStats: undefined
+                }
                 
-                currentStats: undefined,
-                initStats: undefined
-            }
-    
-            const result = byCharLevelInterpolationCalculationPart(inputMock).getValue(contextMock)
-    
-            expect(result).toEqual(expectedResult)
-        })
-    })
-    
-    describe("Should return string value", () => {
-        it.each([
-            [ 0, 100, 1, "0 - 100 @level@" ],
-            [ 35, 500, 1, "35 - 500 @level@" ],
-            [ 35, 500, 2, "35 - 500 @level@" ],
-        ])('mStartValue: $mStartValue, mEndValue: $mEndValue, championLevel: $championLevel', (mStartValue, mEndValue, championLevel, expectedResult) => {
-            const inputMock: ByCharLevelInterpolationCalculationPart = {
-                __type: "ByCharLevelInterpolationCalculationPart",
-                mStartValue,
-                mEndValue
-            }
-            
-            const contextMock: CalculationContext = {
-                championLevel,
-                spellLevel: 1,
-                
-                currentStats: undefined,
-                initStats: undefined
-            }
-    
-            const result = byCharLevelInterpolationCalculationPart(inputMock).getString(contextMock)
-    
-            expect(result).toEqual(expectedResult)
+                const expectedResult = [
+                    {
+                        type: "LevelCalculationPart",
+                        value: expectedValue,
+                        min: mStartValue,
+                        max: mEndValue
+                    }
+                ]
+        
+                const result = byCharLevelInterpolationCalculationPart(inputMock).getItems(contextMock)
+        
+                expect(result).toEqual(expectedResult)
         })
     })
 })

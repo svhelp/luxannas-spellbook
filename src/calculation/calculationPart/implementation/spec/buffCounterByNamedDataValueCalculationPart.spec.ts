@@ -5,6 +5,7 @@ import { buffCounterByNamedDataValueCalculationPart } from "../buffCounterByName
 import { spellMock } from "./constants";
 import { getDataValue } from "../utils";
 import { CalculationContext } from "domain/CalculationContext";
+import { dataValuesMock } from "./mock";
 
 describe("buffCounterByNamedDataValueCalculationPart", () => {
     it("Should return calculation part name", () => {
@@ -31,39 +32,48 @@ describe("buffCounterByNamedDataValueCalculationPart", () => {
         expect(getDataValue).toBeCalledWith(spellMock, inputMock.mDataValue)
     })
 
-    describe("Should return value", () => {
+    describe("Should prioritize mIconKey over mBuffName", () => {
         it.each([
-            [ 'DataValueMock1', 1, 0 ],
-            [ 'DataValueMock1', 2, 0 ],
-            [ 'DataValueMock2', 2, 0 ],
-        ])('mDataValue: $mDataValue, spellLevel: $spellLevel', (mDataValue, spellLevel, expectedResult) => {
+            [ 'BuffNameMock1', 'icon1' ],
+            [ 'BuffNameMock2', undefined ],
+            [ undefined, 'icon3' ],
+        ])('mBuffName: $mBuffName, mIconKey: $mIconKey', (mBuffName, mIconKey) => {
             const inputMock: BuffCounterByNamedDataValueCalculationPart = {
                 __type: "BuffCounterByNamedDataValueCalculationPart",
-                mDataValue,
-                mBuffName: 'BuffNameMock'
+                mDataValue: "DataValueMock1",
+                mBuffName,
+                mIconKey
             }
-    
+
             const contextMock: CalculationContext = {
                 championLevel: 1,
-                spellLevel: spellLevel,
+                spellLevel: 1,
                 
                 currentStats: undefined,
                 initStats: undefined
             }
             
-            const result = buffCounterByNamedDataValueCalculationPart(inputMock, spellMock).getValue(contextMock)
+            const expectedResult = [
+                {
+                    type: "BuffCalculationPart",
+                    coefficient: dataValuesMock["DataValueMock1"][1],
+                    buff: mIconKey ?? mBuffName
+                }
+            ]
+    
+            const result = buffCounterByNamedDataValueCalculationPart(inputMock, spellMock).getItems(contextMock)
     
             expect(result).toEqual(expectedResult)
         })
     })
-    
-    describe("Should return string value", () => {
+
+    describe("Should return items", () => {
         it.each([
-            [ 'DataValueMock3', 1, 'BuffNameMock1', 'icon1', "1% @icon1@" ],
-            [ 'DataValueMock3', 2, 'BuffNameMock2', undefined, "5% @BuffNameMock2@" ],
-            [ 'DataValueMock1', 2, 'BuffNameMock3', 'icon3', "200% @icon3@" ],
+            [ 'DataValueMock3', 1, 'BuffNameMock1', 'icon1' ],
+            [ 'DataValueMock3', 2, 'BuffNameMock2', undefined ],
+            [ 'DataValueMock1', 2, 'BuffNameMock3', 'icon3' ],
         ])('mDataValue: $mDataValue, spellLevel: $spellLevel, mBuffName: $mBuffName, mIconKey: $mIconKey',
-            (mDataValue, spellLevel, mBuffName, mIconKey, expectedResult) => {
+            (mDataValue, spellLevel, mBuffName, mIconKey) => {
                 const inputMock: BuffCounterByNamedDataValueCalculationPart = {
                     __type: "BuffCounterByNamedDataValueCalculationPart",
                     mDataValue,
@@ -78,10 +88,18 @@ describe("buffCounterByNamedDataValueCalculationPart", () => {
                     currentStats: undefined,
                     initStats: undefined
                 }
+            
+                const expectedResult = [
+                    {
+                        type: "BuffCalculationPart",
+                        coefficient: dataValuesMock[mDataValue][spellLevel],
+                        buff: mIconKey ?? mBuffName
+                    }
+                ]
         
-                const result = buffCounterByNamedDataValueCalculationPart(inputMock, spellMock).getString(contextMock)
+                const result = buffCounterByNamedDataValueCalculationPart(inputMock, spellMock).getItems(contextMock)
         
                 expect(result).toEqual(expectedResult)
-            })
+        })
     })
 })

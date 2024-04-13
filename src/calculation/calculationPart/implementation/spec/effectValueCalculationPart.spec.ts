@@ -1,4 +1,3 @@
-import "./mock"
 import { describe, expect, it } from "@jest/globals";
 import { effectValueCalculationPart } from "../effectValueCalculationPart";
 import { EffectValueCalculationPart } from "domain/jsonSchema/FormulaPartItem";
@@ -12,6 +11,13 @@ const defaultContextMock: CalculationContext = {
     currentStats: undefined,
     initStats: undefined
 }
+
+const expectedDefaultResult = [
+    {
+        type: "PlainCalculationPart",
+        value: 0
+    }
+]
 
 describe("effectValueCalculationPart", () => {
     it("Should return calculation part name", () => {
@@ -31,9 +37,9 @@ describe("effectValueCalculationPart", () => {
             mEffectIndex: 5
         }
 
-        const result = effectValueCalculationPart(inputMock, spellMock).getValue(defaultContextMock)
+        const result = effectValueCalculationPart(inputMock, spellMock).getItems(defaultContextMock)
 
-        expect(result).toEqual(0)
+        expect(result).toEqual(expectedDefaultResult)
     })
 
     it("Should use default value if 'mEffectAmount' has no values", () => {
@@ -42,58 +48,40 @@ describe("effectValueCalculationPart", () => {
             mEffectIndex: 4
         }
 
-        const result = effectValueCalculationPart(inputMock, spellMock).getValue(defaultContextMock)
+        const result = effectValueCalculationPart(inputMock, spellMock).getItems(defaultContextMock)
 
-        expect(result).toEqual(0)
+        expect(result).toEqual(expectedDefaultResult)
     })
 
-    describe("Should return value", () => {
+    describe("Should return items", () => {
         it.each([
-            [ 1, 2, 2 ],
-            [ 2, 4, 10 ],
-            [ 3, 2, .05 ],
-        ])('effectIndex: $effectIndex, skillLevel: $skillLevel', (effectIndex, skillLevel, expectedValue) => {
+            [ 1, 2 ],
+            [ 2, 4 ],
+            [ 3, 2 ],
+        ])('mEffectIndex: $mEffectIndex, spellLevel: $spellLevel', (mEffectIndex, spellLevel) => {
             const inputMock: EffectValueCalculationPart = {
                 __type: "EffectValueCalculationPart",
-                mEffectIndex: effectIndex
+                mEffectIndex
             }
-
+    
             const contextMock: CalculationContext = {
                 championLevel: 1,
-                spellLevel: skillLevel,
+                spellLevel: spellLevel,
                 
                 currentStats: undefined,
                 initStats: undefined
             }
+        
+            const expectedResult = [
+                {
+                    type: "PlainCalculationPart",
+                    value: spellMock.mEffectAmount[mEffectIndex - 1].value[spellLevel]
+                }
+            ]
     
-            const result = effectValueCalculationPart(inputMock, spellMock).getValue(contextMock)
+            const result = effectValueCalculationPart(inputMock, spellMock).getItems(contextMock)
     
-            expect(result).toEqual(expectedValue)
-        })
-    })
-    
-    describe("Should return string value", () => {
-        it.each([
-            [ 1, 2, "200%" ],
-            [ 2, 4, "10" ],
-            [ 3, 2, "5%" ],
-        ])('effectIndex: $effectIndex, skillLevel: $skillLevel', (effectIndex, skillLevel, expectedValue) => {
-            const inputMock: EffectValueCalculationPart = {
-                __type: "EffectValueCalculationPart",
-                mEffectIndex: effectIndex
-            }
-
-            const contextMock: CalculationContext = {
-                championLevel: 1,
-                spellLevel: skillLevel,
-                
-                currentStats: undefined,
-                initStats: undefined
-            }
-    
-            const result = effectValueCalculationPart(inputMock, spellMock).getString(contextMock)
-    
-            expect(result).toEqual(expectedValue)
+            expect(result).toEqual(expectedResult)
         })
     })
 })

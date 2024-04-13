@@ -1,12 +1,9 @@
-import "./mock";
 import { describe, expect, it } from "@jest/globals";
 import { StatByCoefficientCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { statByCoefficientCalculationPart } from "../statByCoefficientCalculationPart";
-import { currentStatsMock, initStatsMock } from "./constants";
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula";
-import { CalculationContext } from "domain/CalculationContext";
 import { ChampionStat } from "domain/jsonSchema/ChampionStat";
-import { getStat } from "../utils";
+import { ChampionStatName } from "../utils/ChampionStatName";
 
 describe("statByCoefficientCalculationPart", () => {
     it("Should return calculation part name", () => {
@@ -20,93 +17,48 @@ describe("statByCoefficientCalculationPart", () => {
         expect(result).toEqual("StatByCoefficientCalculationPart")
     })
     
-    it("getStat should be called with input data", () => {
+    it("Should use default values", () => {
         const inputMock: StatByCoefficientCalculationPart = {
-            __type: "StatByCoefficientCalculationPart",
-            mCoefficient: 0.5,
-            mStat: ChampionStat.AbilityHaste,
-            mStatFormula: ChampionStatFormula.Bonus
+            __type: "StatByCoefficientCalculationPart"
         }
 
-        const contextMock: CalculationContext = {
-            championLevel: 1,
-            spellLevel: 1,
-            
-            currentStats: currentStatsMock,
-            initStats: initStatsMock
-        }
+        const expectedResult = [
+            {
+                type: "StatCalculationPart",
+                coefficient: 1,
+                formula: ChampionStatFormula.Total,
+                statName: ChampionStatName[ChampionStat.AbilityPower]
+            }
+        ]
+        
+        const result = statByCoefficientCalculationPart(inputMock).getItems(undefined)
 
-        statByCoefficientCalculationPart(inputMock).getValue(contextMock)
-
-        expect(getStat).toBeCalledWith(contextMock, "abilityHaste", ChampionStatFormula.Bonus)
-    })
-    
-    it("Should use AP as default stat", () => {
-        const inputMock: StatByCoefficientCalculationPart = {
-            __type: "StatByCoefficientCalculationPart",
-            mCoefficient: 0.5,
-        }
-
-        const contextMock: CalculationContext = {
-            championLevel: 1,
-            spellLevel: 1,
-            
-            currentStats: currentStatsMock,
-            initStats: initStatsMock
-        }
-
-        statByCoefficientCalculationPart(inputMock).getValue(contextMock)
-
-        expect(getStat).toBeCalledWith(contextMock, "abilityPower", ChampionStatFormula.Total)
+        expect(result).toEqual(expectedResult)
     })
 
-    describe("Should return value", () => {
+    describe("Should return items", () => {
         it.each([
-            [ 0.25, undefined, 50 ],
-            [ 0.5, ChampionStat.AbilityPower, 100 ],
-            [ 0.5, ChampionStat.MaxHealth, 300 ],
-        ])('mCoefficient: $mCoefficient, mStat: $mStat', (mCoefficient, mStat, expectedResult) => {
+            [ 0.01, ChampionStat.AbilityHaste, ChampionStatFormula.Base ],
+            [ 0.5, ChampionStat.Armor, ChampionStatFormula.Total ],
+            [ 2, ChampionStat.AttackSpeed, ChampionStatFormula.Bonus ],
+        ])('mCoefficient: $mCoefficient, mStat: $mStat, mStatFormula: $mStatFormula', (mCoefficient, mStat, mStatFormula) => {
             const inputMock: StatByCoefficientCalculationPart = {
                 __type: "StatByCoefficientCalculationPart",
                 mCoefficient,
-                mStat
+                mStat,
+                mStatFormula
             }
             
-            const contextMock: CalculationContext = {
-                championLevel: 1,
-                spellLevel: 1,
-                
-                currentStats: currentStatsMock,
-                initStats: initStatsMock
-            }
+            const expectedResult = [
+                {
+                    type: "StatCalculationPart",
+                    coefficient: mCoefficient,
+                    formula: mStatFormula,
+                    statName: ChampionStatName[mStat]
+                }
+            ]
     
-            const result = statByCoefficientCalculationPart(inputMock).getValue(contextMock)
-    
-            expect(result).toEqual(expectedResult)
-        })
-    })
-    
-    describe("Should return string value", () => {
-        it.each([
-            [ 0.25, undefined, "25% @total@ @abilityPower@" ],
-            [ 0.5, ChampionStat.AbilityPower, "50% @total@ @abilityPower@" ],
-            [ 0.5, ChampionStat.MaxHealth, "50% @total@ @maxHealth@" ],
-        ])('mCoefficient: $mCoefficient, mStat: $mStat', (mCoefficient, mStat, expectedResult) => {
-            const inputMock: StatByCoefficientCalculationPart = {
-                __type: "StatByCoefficientCalculationPart",
-                mCoefficient,
-                mStat
-            }
-            
-            const contextMock: CalculationContext = {
-                championLevel: 1,
-                spellLevel: 1,
-                
-                currentStats: currentStatsMock,
-                initStats: initStatsMock
-            }
-    
-            const result = statByCoefficientCalculationPart(inputMock).getString(contextMock)
+            const result = statByCoefficientCalculationPart(inputMock).getItems(undefined)
     
             expect(result).toEqual(expectedResult)
         })

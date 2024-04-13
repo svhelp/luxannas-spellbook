@@ -13,23 +13,13 @@ describe("gameplayCalculationPart", () => {
         expect(result).toEqual("GameplayCalculationPart")
     })
 
-    it("Should return default value", () => {
+    it("Should return empty items", () => {
         const inputMock: CooldownMultiplierCalculationPart = {
             __type: "CooldownMultiplierCalculationPart",
         }
 
-        const result = gameplayCalculationPart(inputMock).getValue(undefined)
+        const result = gameplayCalculationPart(inputMock).getItems(undefined)
 
-        expect(result).toEqual(1)
-    })
-    
-    it("Should return empty string value", () => {
-        const inputMock: CooldownMultiplierCalculationPart = {
-            __type: "CooldownMultiplierCalculationPart",
-        }
-
-        const result = gameplayCalculationPart(inputMock).getString(undefined)
-
-        expect(result).toEqual("")
+        expect(result).toEqual([])
     })
 })

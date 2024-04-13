@@ -36,8 +36,6 @@ export const byCharLevelBreakpointsCalculationPart = (inputData: ByCharLevelBrea
 
     return {
         type: "ByCharLevelBreakpointsCalculationPart",
-        getValue: (context: CalculationContext) => getValue(context.championLevel),
-        getString: (context: CalculationContext) => `${initValue} - ${getValue(18)} @level@`,
         getItems: (context: CalculationContext) => [
             {
                 type: "LevelCalculationPart",

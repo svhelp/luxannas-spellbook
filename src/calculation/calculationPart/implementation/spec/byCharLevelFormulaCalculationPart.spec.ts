@@ -17,23 +17,21 @@ describe("byCharLevelFormulaCalculationPart", () => {
 
         expect(result).toEqual("ByCharLevelFormulaCalculationPart")
     })
-
-    describe("Should return value", () => {
+    
+    describe("Should return items", () => {
         it.each([
             [ valuesMock1, 1, 1 ],
             [ valuesMock1, 5, 5 ],
-            [ valuesMock1, 15, 15 ],
             [ valuesMock1, 18, 18 ],
             [ valuesMock2, 1, 101 ],
-            [ valuesMock2, 5, 105 ],
             [ valuesMock2, 15, 205 ],
             [ valuesMock2, 18, 208 ],
-        ])('mValues: $mValues, championLevel: $championLevel', (mValues, championLevel, expectedResult) => {
+        ])('mValues: $mValues, championLevel: $championLevel', (mValues, championLevel, expectedValue) => {
             const inputMock: ByCharLevelFormulaCalculationPart = {
                 __type: "ByCharLevelFormulaCalculationPart",
                 mValues
             }
-    
+        
             const contextMock: CalculationContext = {
                 championLevel,
                 spellLevel: 1,
@@ -42,35 +40,16 @@ describe("byCharLevelFormulaCalculationPart", () => {
                 initStats: undefined
             }
             
-            const result = byCharLevelFormulaCalculationPart(inputMock).getValue(contextMock)
+            const expectedResult = [
+                {
+                    type: "LevelCalculationPart",
+                    value: expectedValue,
+                    min: mValues[1],
+                    max: mValues[18]
+                }
+            ]
     
-            expect(result).toEqual(expectedResult)
-        })
-    })
-    
-    describe("Should return string value", () => {
-        it.each([
-            [ valuesMock1, 1, "1 - 18 @level@" ],
-            [ valuesMock1, 5, "1 - 18 @level@"],
-            [ valuesMock1, 18, "1 - 18 @level@" ],
-            [ valuesMock2, 1, "101 - 208 @level@" ],
-            [ valuesMock2, 5, "101 - 208 @level@" ],
-            [ valuesMock2, 18, "101 - 208 @level@"],
-        ])('mValues: $mValues, championLevel: $championLevel', (mValues, championLevel, expectedResult) => {
-            const inputMock: ByCharLevelFormulaCalculationPart = {
-                __type: "ByCharLevelFormulaCalculationPart",
-                mValues
-            }
-    
-            const contextMock: CalculationContext = {
-                championLevel,
-                spellLevel: 1,
-                
-                currentStats: undefined,
-                initStats: undefined
-            }
-            
-            const result = byCharLevelFormulaCalculationPart(inputMock).getString(contextMock)
+            const result = byCharLevelFormulaCalculationPart(inputMock).getItems(contextMock)
     
             expect(result).toEqual(expectedResult)
         })
