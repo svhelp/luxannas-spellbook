@@ -40,12 +40,25 @@ export const playerContext = (name: string, isLocal?: boolean) => {
     }
 
     const getSpells = () => {
-        const context = getContext(0);
+        const context = getContext(0)
+
+        console.log(`${name}\n`)
+
         for (const calculation of passive.calculations) {
-            //console.log(`${calculation.name}: ${calculation.calculation.getValue(context)} (${calculation.calculation.getString(context)})`)
+            const value = calculation.calculation.getValue(context)
+            const { value: newValue, furmula } = calculation.calculation.getItems(context)
+
+            console.log(`${calculation.name}. ${newValue} (${furmula})`)
+
+            // if (value !== newValue) {
+            //     console.log(`${name}`)
+            //     console.log(`${calculation.name}. old: ${value}, new: ${newValue}`)
+            //     console.log(calculation.calculation.getString(context))
+            //     console.log(furmula)
+            // }
         }
 
-        //console.log("\n")
+        console.log("\n")
 
         let index = 0
 
@@ -57,21 +70,19 @@ export const playerContext = (name: string, isLocal?: boolean) => {
                 const value = calculation.calculation.getValue(context)
                 const { value: newValue, furmula } = calculation.calculation.getItems(context)
 
+                console.log(`${calculation.name}. ${newValue} (${furmula})`)
+
                 //if (value !== newValue) {
-                    console.log(`${name}`)
-                    console.log(`${calculation.name}. old: ${value}, new: ${newValue}`)
-                    console.log(calculation.calculation.getString(context))
-                    console.log(furmula)
+                    // console.log(`${name}`)
+                    // console.log(`${calculation.name}. old: ${value}, new: ${newValue}`)
+                    // console.log(calculation.calculation.getString(context))
+                    // console.log(furmula)
                 //}
-
-                //console.log(`${calculation.name}:`)
-                //console.log(`${calculation.calculation.getValue(context)} (${calculation.calculation.getString(context)})`)
-
-                //console.log(calculation.calculation.getItems(context))
             }
 
             index++
-            //console.log("\n")
+
+            console.log("\n")
         }
     }
 

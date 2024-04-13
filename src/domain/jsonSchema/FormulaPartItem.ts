@@ -68,8 +68,8 @@ export type ByCharLevelFormulaCalculationPart = {
 
 export type ByCharLevelInterpolationCalculationPart = {
     __type: "ByCharLevelInterpolationCalculationPart"
-    mStartValue: number
-    mEndValue: number
+    mStartValue?: number // null for Gnar
+    mEndValue?: number //null for Rek'Sai
     '{a331f6bf}'?: number // not sure what is it
 }
 

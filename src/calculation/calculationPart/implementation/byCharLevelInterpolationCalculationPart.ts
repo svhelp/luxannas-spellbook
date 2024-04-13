@@ -4,8 +4,8 @@ import { ByCharLevelInterpolationCalculationPart } from "domain/jsonSchema/Formu
 
 export const byCharLevelInterpolationCalculationPart = (inputData: ByCharLevelInterpolationCalculationPart): CalculationPartProvider => {
 
-    const start = inputData.mStartValue
-    const end = inputData.mEndValue
+    const start = inputData.mStartValue ?? 0
+    const end = inputData.mEndValue ?? 0
 
     return {
         type: "ByCharLevelInterpolationCalculationPart",
