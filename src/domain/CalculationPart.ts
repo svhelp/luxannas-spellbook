@@ -1,9 +1,7 @@
 import { ChampionStatFormula } from "./jsonSchema/ChampionStatFormula"
 import { ChampionStats, NonCountableStats } from "./riotApiSchema/ChampionStats"
 
-export type CalculationPart = PlainCalculationPart | StatCalculationPart | BuffCalculationPart | LevelCalculationPart | ClampedCalculationPart
-
-export type SimpleCalculationPart = PlainCalculationPart | StatCalculationPart | BuffCalculationPart | LevelCalculationPart
+export type CalculationPart = PlainCalculationPart | StatCalculationPart | BuffCalculationPart | LevelCalculationPart
 
 export type PlainCalculationPart = {
     type: "PlainCalculationPart"
@@ -28,13 +26,4 @@ export type LevelCalculationPart = {
     value: number
     min: number
     max: number
-}
-
-export type ClampedCalculationPart = {
-    type: "ClampedCalculationPart"
-
-    floor: number
-    ceiling: number
-
-    subparts: SimpleCalculationPart[]
 }

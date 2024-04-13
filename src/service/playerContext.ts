@@ -45,9 +45,9 @@ export const playerContext = (name: string, isLocal?: boolean) => {
         console.log(`${name}\n`)
 
         for (const calculation of passive.calculations) {
-            const { value: newValue, furmula } = calculation.calculation.getItems(context)
+            const { value: newValue, formula } = calculation.calculation.getItems(context)
 
-            console.log(`${calculation.name}. ${newValue} (${furmula})`)
+            console.log(`${calculation.name}. ${newValue} (${formula})`)
         }
 
         console.log("\n")
@@ -59,9 +59,9 @@ export const playerContext = (name: string, isLocal?: boolean) => {
 
             for (const calculation of spell.calculations) {
 
-                const { value: newValue, furmula } = calculation.calculation.getItems(context)
+                const { value: newValue, formula } = calculation.calculation.getItems(context)
 
-                console.log(`${calculation.name}. ${newValue} (${furmula})`)
+                console.log(`${calculation.name}. ${newValue} (${formula})`)
             }
 
             index++

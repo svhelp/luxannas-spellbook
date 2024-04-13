@@ -1,7 +1,7 @@
-import { combineCalculationParts } from "../../utils/combineCalculationParts";
 import { CalculationContext } from "domain/CalculationContext";
 import { PlainCalculationPart } from "domain/CalculationPart";
 import { CalculationPartProvider } from "domain/CalculationPartProvider";
+import { calculateValueByParts } from "./utils";
 
 const defaultProductItem: PlainCalculationPart = {
     type: "PlainCalculationPart",
@@ -26,7 +26,7 @@ export const productOfSubPartsCalculationPart = (part1: CalculationPartProvider,
             return [
                 {
                     type: "PlainCalculationPart",
-                    value: combineCalculationParts(context, subItems1).value * combineCalculationParts(context, subItems2).value
+                    value: calculateValueByParts(context, subItems1) * calculateValueByParts(context, subItems2)
                 }
             ]
         }

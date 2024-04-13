@@ -17,13 +17,7 @@ const getItemToMerge = (resultArray: CalculationPart[], itemToMerge: Calculation
             x.formula === itemToMerge.formula)
     }
     
-    const existingLevelPart = resultArray.find(x => x.type === itemToMerge.type)
-
-    if (existingLevelPart) {
-        throw new Error(`Unable to merge a ${itemToMerge.type} type`)
-    }
-
-    return null
+    return resultArray.find(x => x.type === itemToMerge.type)
 }
 
 const mergeItems = <T extends CalculationPart>(itemToMergeIn: T, itemToMergeFrom: T) => {
@@ -54,7 +48,7 @@ export const mergeCalculationParts = (items: CalculationPart[]) => {
         const itemToMerge = getItemToMerge(result, item)
 
         if (!itemToMerge) {
-            result.push(item)
+            result.push({ ...item })
 
             continue
         }

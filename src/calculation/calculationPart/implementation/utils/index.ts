@@ -1,3 +1,6 @@
 export { getDataValue } from './getDataValue'
 export { getPercent } from './getPercent'
 export { getStat } from './getStat'
+export { calculateValueByParts } from './calculateValueByParts'
+export { inferFormulaByParts } from './inferFormulaByParts'
+export { mergeCalculationParts } from './mergeCalculationParts'

@@ -3,7 +3,7 @@ import { StatByCoefficientCalculationPart } from "domain/jsonSchema/FormulaPartI
 import { statByCoefficientCalculationPart } from "../statByCoefficientCalculationPart";
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula";
 import { ChampionStat } from "domain/jsonSchema/ChampionStat";
-import { ChampionStatName } from "../utils/ChampionStatName";
+import { ChampionStatName } from "../domain";
 
 describe("statByCoefficientCalculationPart", () => {
     it("Should return calculation part name", () => {

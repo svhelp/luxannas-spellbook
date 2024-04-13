@@ -2,7 +2,7 @@ import { CalculationContext } from "domain/CalculationContext";
 import { CalculationPart } from "domain/CalculationPart";
 import { CalculationPartProvider } from "domain/CalculationPartProvider";
 import { ClampBySubpartCalculationPart } from "domain/jsonSchema/FormulaPartItem";
-import { combineCalculationParts } from "../../utils/combineCalculationParts";
+import { calculateValueByParts } from "./utils";
 
 export const clampBySubpartCalculationPart = (inputData: ClampBySubpartCalculationPart, subparts: CalculationPartProvider[]): CalculationPartProvider => {
 
@@ -20,7 +20,7 @@ export const clampBySubpartCalculationPart = (inputData: ClampBySubpartCalculati
         type: "ClampBySubpartCalculationPart",
         getItems: (context: CalculationContext) => {
             const itemsToMerge = subparts.reduce((acc, subpart) => acc.concat(subpart.getItems(context)), [] as CalculationPart[])
-            const { value } = combineCalculationParts(context, itemsToMerge)
+            const value = calculateValueByParts(context, itemsToMerge)
 
             return [
                 {

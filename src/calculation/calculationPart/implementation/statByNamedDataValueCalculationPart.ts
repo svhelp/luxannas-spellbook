@@ -4,7 +4,7 @@ import { StatByNamedDataValueCalculationPart } from "domain/jsonSchema/FormulaPa
 import { ChampionStat } from "domain/jsonSchema/ChampionStat";
 import { Spell } from "domain/jsonSchema/SpellData";
 import { getDataValue } from "./utils";
-import { ChampionStatName } from "./utils/ChampionStatName";
+import { ChampionStatName } from "./domain";
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula";
 
 export const statByNamedDataValueCalculationPart = (inputData: StatByNamedDataValueCalculationPart, spellData: Spell): CalculationPartProvider => {

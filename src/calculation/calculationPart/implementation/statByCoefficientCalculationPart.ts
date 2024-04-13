@@ -1,6 +1,6 @@
 import { CalculationContext } from "domain/CalculationContext";
 import { CalculationPartProvider } from "domain/CalculationPartProvider";
-import { ChampionStatName } from "./utils/ChampionStatName";
+import { ChampionStatName } from "./domain";
 import { StatByCoefficientCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { ChampionStat } from "domain/jsonSchema/ChampionStat";
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula";

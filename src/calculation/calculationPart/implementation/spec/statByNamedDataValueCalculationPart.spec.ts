@@ -7,7 +7,7 @@ import { ChampionStat } from "domain/jsonSchema/ChampionStat";
 import { currentStatsMock, initStatsMock, spellMock } from "./constants";
 import { getDataValue } from "../utils";
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula";
-import { ChampionStatName } from "../utils/ChampionStatName";
+import { ChampionStatName } from "../domain";
 import { dataValuesMock } from "./mock";
 
 describe("statByNamedDataValueCalculationPart", () => {
