@@ -49,7 +49,7 @@ describe("byCharLevelBreakpointsCalculationPart", () => {
             spellLevel: 1,
             
             currentStats: undefined,
-            initStats: undefined
+            baseStats: undefined
         }
 
         const expectedResult = [
@@ -87,7 +87,7 @@ describe("byCharLevelBreakpointsCalculationPart", () => {
                     spellLevel: 1,
                     
                     currentStats: undefined,
-                    initStats: undefined
+                    baseStats: undefined
                 }
 
                 const expectedResult = [
@@ -127,7 +127,7 @@ describe("byCharLevelBreakpointsCalculationPart", () => {
                     spellLevel: 1,
                     
                     currentStats: undefined,
-                    initStats: undefined
+                    baseStats: undefined
                 }
 
                 const expectedResult = [
@@ -167,7 +167,7 @@ describe("byCharLevelBreakpointsCalculationPart", () => {
                     spellLevel: 1,
                     
                     currentStats: undefined,
-                    initStats: undefined
+                    baseStats: undefined
                 }
 
                 const expectedResult = [

@@ -26,7 +26,7 @@ describe("byCharLevelInterpolationCalculationPart", () => {
             spellLevel: 1,
             
             currentStats: undefined,
-            initStats: undefined
+            baseStats: undefined
         }
 
         const expectedResult = [
@@ -64,7 +64,7 @@ describe("byCharLevelInterpolationCalculationPart", () => {
                     spellLevel: 1,
                     
                     currentStats: undefined,
-                    initStats: undefined
+                    baseStats: undefined
                 }
                 
                 const expectedResult = [

@@ -13,8 +13,8 @@ export const getStat = (context: CalculationContext, statName: keyof ChampionSta
     }
 
     if (formula === ChampionStatFormula.Bonus) {
-        return context.currentStats[statName] - context.initStats[statName]
+        return context.currentStats[statName] - context.baseStats[statName]
     }
 
-    return context.initStats[statName]
+    return context.baseStats[statName]
 }

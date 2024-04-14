@@ -59,7 +59,7 @@ const contextMock: CalculationContext = {
     spellLevel: 1,
     
     currentStats: currentStatsMock,
-    initStats: initStatsMock,
+    baseStats: initStatsMock,
 }
 
 describe("getStat", () => {    

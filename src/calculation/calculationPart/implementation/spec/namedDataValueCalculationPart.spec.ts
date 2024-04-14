@@ -46,7 +46,7 @@ describe("namedDataValueCalculationPart", () => {
                 spellLevel: spellLevel,
                 
                 currentStats: undefined,
-                initStats: undefined
+                baseStats: undefined
             }
         
             const expectedResult = [

@@ -50,7 +50,7 @@ describe("buffCounterByNamedDataValueCalculationPart", () => {
                 spellLevel: 1,
                 
                 currentStats: undefined,
-                initStats: undefined
+                baseStats: undefined
             }
             
             const expectedResult = [
@@ -86,7 +86,7 @@ describe("buffCounterByNamedDataValueCalculationPart", () => {
                     spellLevel: spellLevel,
                     
                     currentStats: undefined,
-                    initStats: undefined
+                    baseStats: undefined
                 }
             
                 const expectedResult = [

@@ -4,12 +4,12 @@ export type RootChampionData = {
     mCharacterName: string
     baseHP: number
     hpPerLevel: number
-    baseStaticHPRegen: number
-    hpRegenPerLevel: number
+    baseStaticHPRegen?: number
+    hpRegenPerLevel?: number
     baseDamage: number
-    damagePerLevel: number
+    damagePerLevel?: number
     baseArmor: number
-    armorPerLevel: number
+    armorPerLevel?: number
     baseSpellBlock: number
     spellBlockPerLevel: number
     baseMoveSpeed: number
@@ -32,7 +32,7 @@ export type AbilityResource = {
     arBase?: number
     arPerLevel?: number
     arBaseStaticRegen: number
-    arRegenPerLevel: number
+    arRegenPerLevel?: number
     arIncrements: number
     arMaxSegments: number
     __type: "AbilityResourceSlotInfo"

@@ -32,7 +32,7 @@ describe("calculateValueByParts", () => {
             spellLevel: 1,
             
             currentStats: undefined,
-            initStats: undefined
+            baseStats: undefined
         }
 
         calculateValueByParts(contextMock, statPartsMock)

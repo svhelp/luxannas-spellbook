@@ -41,7 +41,7 @@ export const spellMock: Spell = {
     __type: "SpellDataResource"
 }
 
-export const initStatsMock: ChampionStats = {
+export const baseStatsMock: ChampionStats = {
     abilityHaste: 0,
     abilityPower: 200,
     cooldownReduction: 0,
@@ -85,7 +85,7 @@ export const initStatsMock: ChampionStats = {
 }
 
 export const currentStatsMock: ChampionStats = {
-    ...initStatsMock,
+    ...baseStatsMock,
     attackDamage: 200,
     maxHealth: 1600,
 }

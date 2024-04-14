@@ -5,5 +5,5 @@ export type CalculationContext = {
     spellLevel: number
     
     currentStats: ChampionStats
-    initStats: ChampionStats
+    baseStats: ChampionStats
 }

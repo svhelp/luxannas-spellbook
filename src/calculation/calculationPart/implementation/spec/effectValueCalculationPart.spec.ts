@@ -9,7 +9,7 @@ const defaultContextMock: CalculationContext = {
     spellLevel: 1,
     
     currentStats: undefined,
-    initStats: undefined
+    baseStats: undefined
 }
 
 const expectedDefaultResult = [
@@ -69,7 +69,7 @@ describe("effectValueCalculationPart", () => {
                 spellLevel: spellLevel,
                 
                 currentStats: undefined,
-                initStats: undefined
+                baseStats: undefined
             }
         
             const expectedResult = [

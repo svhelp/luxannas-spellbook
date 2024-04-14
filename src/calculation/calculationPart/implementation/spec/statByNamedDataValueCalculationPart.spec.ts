@@ -4,7 +4,7 @@ import { StatByNamedDataValueCalculationPart } from "domain/jsonSchema/FormulaPa
 import { statByNamedDataValueCalculationPart } from "../statByNamedDataValueCalculationPart";
 import { CalculationContext } from "domain/CalculationContext";
 import { ChampionStat } from "domain/jsonSchema/ChampionStat";
-import { currentStatsMock, initStatsMock, spellMock } from "./constants";
+import { currentStatsMock, baseStatsMock, spellMock } from "./constants";
 import { getDataValue } from "../utils";
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula";
 import { ChampionStatName } from "../domain";
@@ -44,7 +44,7 @@ describe("statByNamedDataValueCalculationPart", () => {
             spellLevel: 1,
             
             currentStats: currentStatsMock,
-            initStats: initStatsMock
+            baseStats: baseStatsMock
         }
 
         const expectedResult = [
@@ -79,7 +79,7 @@ describe("statByNamedDataValueCalculationPart", () => {
                 spellLevel,
                 
                 currentStats: currentStatsMock,
-                initStats: initStatsMock
+                baseStats: baseStatsMock
             }
             
             const expectedResult = [
