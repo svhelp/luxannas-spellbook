@@ -5,7 +5,7 @@ export type SpellCalculation = GameCalculation | GameCalculationModified | GameC
 export type GameCalculation = {
     mDisplayAsPercent?: boolean
     mFormulaParts: FormulaPartItem[]
-    mMultiplier?: any
+    mMultiplier?: FormulaPartItem
     mPrecision?: number
     __type: "GameCalculation"
 }
