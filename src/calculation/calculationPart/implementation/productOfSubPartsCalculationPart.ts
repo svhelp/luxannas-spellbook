@@ -3,6 +3,7 @@ import { PlainCalculationPart } from "domain/CalculationPart";
 import { CalculationPartProvider } from "domain/CalculationPartProvider";
 import { calculateValueByParts } from "./utils";
 
+// Sometimes there is a product of Gameplay parts
 const defaultProductItem: PlainCalculationPart = {
     type: "PlainCalculationPart",
     value: 1

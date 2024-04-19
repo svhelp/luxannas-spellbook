@@ -9,23 +9,19 @@ export const clampBySubpartCalculationPart = (inputData: ClampBySubpartCalculati
     const floor = inputData.mFloor
     const ceiling = inputData.mCeiling
 
-    const clampValue = (initValue: number) => {
-        const firstThresholdProcessed = floor ? Math.max(initValue, floor) : initValue
-        const secondThresholdProcessed = ceiling ? Math.min(firstThresholdProcessed, ceiling) : firstThresholdProcessed
-    
-        return secondThresholdProcessed
-    }
-
     return {
         type: "ClampBySubpartCalculationPart",
         getItems: (context: CalculationContext) => {
             const itemsToMerge = subparts.reduce((acc, subpart) => acc.concat(subpart.getItems(context)), [] as CalculationPart[])
-            const value = calculateValueByParts(context, itemsToMerge)
+            const initValue = calculateValueByParts(context, itemsToMerge)
+
+            const firstThresholdProcessed = floor ? Math.max(initValue, floor) : initValue
+            const clampedValue = ceiling ? Math.min(firstThresholdProcessed, ceiling) : firstThresholdProcessed
 
             return [
                 {
                     type: "PlainCalculationPart",
-                    value: clampValue(value)
+                    value: clampedValue
                 }
             ]
         }
