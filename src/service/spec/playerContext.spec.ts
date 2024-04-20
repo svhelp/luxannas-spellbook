@@ -12,11 +12,11 @@ jest.mock('../dataFetcher/localDataFetcher', () => ({
 
 describe("playerContext", () => {
     it("Should throw when local path is not provided", () => {
-        expect(() => playerContext(championNameMock)).toThrow("Currently only local data source is supported.")
+        expect(() => playerContext(championNameMock, [])).toThrow("Currently only local data source is supported.")
     })
     
     it("Should fetch champion data", () => {
-        playerContext(championNameMock, true)
+        playerContext(championNameMock, [], true)
 
         expect(localDataFetcher.fetchChampionData).toBeCalledWith(championNameMock)
     })

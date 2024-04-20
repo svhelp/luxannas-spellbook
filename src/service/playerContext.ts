@@ -1,11 +1,12 @@
 import { ChampionStats } from "domain/riotApiSchema/ChampionStats"
 import { localDataFetcher } from "./dataFetcher/localDataFetcher"
-import { calculationFactory } from "../calculation"
 import { CalculationContext } from "domain/CalculationContext"
-import { Spell } from "domain/jsonSchema/SpellData"
 import { initStats } from "./initStats"
+import { CalculationResult } from "domain/CalculationResult"
+import { initSpell } from "./initSpell"
+import { calculateValueByParts, inferFormulaByParts } from "../calculation/calculationPart/implementation/utils"
 
-export const playerContext = (name: string, isLocal?: boolean) => {
+export const playerContext = (name: string, testData: string[], isLocal?: boolean) => {
     if (!isLocal) {
         throw new Error("Currently only local data source is supported.")
     }
@@ -26,9 +27,9 @@ export const playerContext = (name: string, isLocal?: boolean) => {
 
     ]
 
-    const passive = initSpell(championData.passiveSpellData, name)
+    const passive = initSpell(championData.passiveSpellData, name, testData)
 
-    const spells = championData.spellsData.map(spell => initSpell(spell, name))
+    const spells = championData.spellsData.map(spell => initSpell(spell, name, testData))
 
     const getContext = (spellIndex: number): CalculationContext => {
         return {
@@ -40,15 +41,30 @@ export const playerContext = (name: string, isLocal?: boolean) => {
         }
     }
 
+    const processCalculationData = () => {
+
+    }
+
     const getSpells = () => {
         const context = getContext(0)
 
         console.log(`${name}\n`)
 
-        for (const calculation of passive.calculations) {
-            const { value: newValue, formula } = calculation.calculation.getItems(context)
+        const passiveGameCalculations = passive.calculations.filter(c => c.calculation.type === "GameCalculation")
+        const passiveGameCalculationResults: CalculationResult[] = []
 
-            console.log(`${calculation.name}. ${newValue} (${formula})`)
+        for (const calculation of passiveGameCalculations) {
+            const items = calculation.calculation.getItems(context)
+            
+            passiveGameCalculationResults.push({
+                name: calculation.name,
+                items
+            })
+
+            const value = calculateValueByParts(context, items)
+            const formula = inferFormulaByParts(context, items)
+
+            console.log(`${calculation.name}. ${value} (${formula})`)
         }
 
         console.log("\n")
@@ -58,11 +74,21 @@ export const playerContext = (name: string, isLocal?: boolean) => {
         for (const spell of spells) {
             const context = getContext(index);
 
-            for (const calculation of spell.calculations) {
+            const gameCalculations = spell.calculations.filter(c => c.calculation.type === "GameCalculation")
+            const gameCalculationResults: CalculationResult[] = []
 
-                const { value: newValue, formula } = calculation.calculation.getItems(context)
+            for (const calculation of gameCalculations) {
+                const items = calculation.calculation.getItems(context)
+                
+                gameCalculationResults.push({
+                    name: calculation.name,
+                    items
+                })
 
-                console.log(`${calculation.name}. ${newValue} (${formula})`)
+                const value = calculateValueByParts(context, items)
+                const formula = inferFormulaByParts(context, items)
+
+                console.log(`${calculation.name}. ${value} (${formula})`)
             }
 
             index++
@@ -104,37 +130,4 @@ export const playerContext = (name: string, isLocal?: boolean) => {
         setStats,
         setSpellLevels
     }
-}
-
-const initSpell = (spellData: Spell, name: string) => {
-    const spellName = spellData.mClientData.mTooltipData.mObjectName
-    const calculations = []
-
-    for (const calculationName in spellData.mSpellCalculations) {
-        const calculationData = spellData.mSpellCalculations[calculationName]
-
-        if (calculationData.__type != "GameCalculation") {
-
-            // if ("GameCalculationModified" === calculationData.__type) {
-            //     console.log(name)
-            //     console.log(spellName)
-            //     console.log(calculationName)
-            //     console.log(calculationData)
-            // }
-
-            continue
-        }
-
-        const calculation = calculationFactory(spellData, calculationData, name)
-
-        calculations.push({
-            name: calculationName,
-            calculation
-        })
-    }
-
-    return {
-        name: spellName,
-        calculations
-    };
 }

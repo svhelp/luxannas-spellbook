@@ -3,8 +3,9 @@ import { CalculationContext } from "domain/CalculationContext";
 import { CalculationPart } from "domain/CalculationPart";
 import { GameCalculation } from "domain/jsonSchema/SpellCalculation";
 import { Spell } from "domain/jsonSchema/SpellData";
-import { calculateValueByParts, inferFormulaByParts } from "../calculationPart/implementation/utils";
+import { calculateValueByParts } from "../calculationPart/implementation/utils";
 import { NumberCalculationPart } from "domain/jsonSchema/FormulaPartItem";
+import { multiplyItems } from "../calculationPart/implementation/utils/multiplyItems";
 
 const defaultMultiplier: NumberCalculationPart = {
     __type: "NumberCalculationPart",
@@ -24,16 +25,9 @@ export const gameCalculation = (spell: Spell, calculationData: GameCalculation, 
         getItems: (context: CalculationContext) => {
             const items = parts.reduce((acc, subpart) => acc.concat(subpart.getItems(context)), [] as CalculationPart[])
             const multiplierItems = multiplierPart.getItems(context)
-            
             const multiplier = multiplierItems.length === 0 ? 1 : calculateValueByParts(context, multiplierItems)
 
-            const value = calculateValueByParts(context, items) * multiplier
-            const formula = inferFormulaByParts(context, items, multiplier)
-
-            return {
-                value,
-                formula
-            }
+            return multiplyItems(items, multiplier)
         },
     };
 }
