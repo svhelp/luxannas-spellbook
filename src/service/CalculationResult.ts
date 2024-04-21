@@ -3,4 +3,5 @@ import { CalculationPart } from "calculation/calculationPart/implementation/Calc
 export type CalculationResult = {
     name: string
     items: CalculationPart[]
+    altItems?: CalculationPart[]
 }

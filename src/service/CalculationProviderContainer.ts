@@ -1,6 +1,6 @@
 import { CalculationProvider } from "calculation/GameCalculationProvider"
 
-export type CalculationProviderContainer = {
+export type CalculationProviderContainer<T extends CalculationProvider> = {
     name: string
-    calculation: CalculationProvider
+    calculation: T
 }

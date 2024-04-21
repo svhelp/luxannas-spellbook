@@ -6,6 +6,7 @@ import { CalculationResult } from "service/CalculationResult"
 import { initSpell } from "./initSpell"
 import { calculateValueByParts, inferFormulaByParts } from "../calculation/calculationPart/implementation/utils"
 import { CalculationProviderContainer } from "./CalculationProviderContainer"
+import { CalculationProvider, ConditionalGameCalculationProvider, GameCalculationProvider, ModifiedGameCalculationProvider } from "calculation/GameCalculationProvider"
 
 export const playerContext = (name: string, testData: string[], isLocal?: boolean) => {
     if (!isLocal) {
@@ -48,22 +49,52 @@ export const playerContext = (name: string, testData: string[], isLocal?: boolea
             const formula = inferFormulaByParts(context, calculation.items)
 
             console.log(`${calculation.name}. ${value} (${formula})`)
+
+            if (calculation.altItems) {
+                const altValue = calculateValueByParts(context, calculation.altItems)
+                const altFormula = inferFormulaByParts(context, calculation.altItems)
+    
+                console.log(`*ALT ${calculation.name}. ${altValue} (${altFormula})`)
+            }
         }
     }
 
-    const getSpellCalculations = (context: CalculationContext, calculations: CalculationProviderContainer[]) => {
-        const gameCalculations = calculations.filter(c => c.calculation.type === "GameCalculation")
-        const modifiedGameCalculations = calculations.filter(c => c.calculation.type === "GameCalculationModified")
-        const conditionalGameCalculations = calculations.filter(c => c.calculation.type === "GameCalculationConditional")
+    const getSpellCalculations = (context: CalculationContext, calculations: CalculationProviderContainer<CalculationProvider>[]) => {
+        const gameCalculations
+            = calculations.filter(c => c.calculation.type === "GameCalculation") as CalculationProviderContainer<GameCalculationProvider>[]
+        const modifiedGameCalculations
+            = calculations.filter(c => c.calculation.type === "GameCalculationModified") as CalculationProviderContainer<ModifiedGameCalculationProvider>[]
+        const conditionalGameCalculations
+            = calculations.filter(c => c.calculation.type === "GameCalculationConditional") as CalculationProviderContainer<ConditionalGameCalculationProvider>[]
 
         const calculationResults: CalculationResult[] = []
 
-        for (const calculation of gameCalculations) {
-            const items = calculation.calculation.getItems(context)
+        for (const calculationContainer of gameCalculations) {
+            const items = calculationContainer.calculation.getItems(context)
             
             calculationResults.push({
-                name: calculation.name,
+                name: calculationContainer.name,
                 items
+            })
+        }
+
+        for (const calculationContainer of modifiedGameCalculations) {
+            const items = calculationContainer.calculation.getItems(context, calculationResults)
+            
+            calculationResults.push({
+                name: calculationContainer.name,
+                items
+            })
+        }
+
+        for (const calculationContainer of conditionalGameCalculations) {
+            const items = calculationContainer.calculation.getItems(context, calculationResults)
+            const altItems = calculationContainer.calculation.getAltItems(context, calculationResults)
+            
+            calculationResults.push({
+                name: calculationContainer.name,
+                items,
+                altItems
             })
         }
 

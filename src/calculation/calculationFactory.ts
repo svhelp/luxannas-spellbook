@@ -12,9 +12,9 @@ export const calculationFactory = (spell: Spell, calculationData: SpellCalculati
         case "GameCalculation":
             return gameCalculation(spell, calculationData, championName)
         case "GameCalculationModified":
-            return gameCalculationModified(spell, calculationData)
+            return gameCalculationModified(spell, calculationData, championName)
         case "GameCalculationConditional":
-            return gameCalculationConditional(spell, calculationData)
+            return gameCalculationConditional(spell, calculationData, championName)
         default: {
             console.log(calculationData)
 

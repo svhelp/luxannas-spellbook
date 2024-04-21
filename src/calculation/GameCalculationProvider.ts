@@ -10,10 +10,11 @@ export interface GameCalculationProvider {
 
 export interface ModifiedGameCalculationProvider {
     type: "GameCalculationModified"
-    getItems: (context: CalculationContext) => CalculationPart[]
+    getItems: (context: CalculationContext, plainResults: { name: string, items: CalculationPart[] }[]) => CalculationPart[]
 }
 
 export interface ConditionalGameCalculationProvider {
     type: "GameCalculationConditional"
-    getItems: (context: CalculationContext) => CalculationPart[]
+    getItems: (context: CalculationContext, plainResults: { name: string, items: CalculationPart[] }[]) => CalculationPart[]
+    getAltItems: (context: CalculationContext, plainResults: { name: string, items: CalculationPart[] }[]) => CalculationPart[]
 }
