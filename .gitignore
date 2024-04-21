@@ -5,6 +5,7 @@
 /out-tsc
 /dist
 /src/test-data
+*test-data-processor.ts
 
 # Runtime data
 pids
