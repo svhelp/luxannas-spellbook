@@ -8,12 +8,8 @@ import { calculateValueByParts, inferFormulaByParts } from "../calculation/calcu
 import { CalculationProviderContainer } from "./CalculationProviderContainer"
 import { CalculationProvider, ConditionalGameCalculationProvider, GameCalculationProvider, ModifiedGameCalculationProvider } from "calculation/GameCalculationProvider"
 
-export const playerContext = (name: string, testData: string[], isLocal?: boolean) => {
-    if (!isLocal) {
-        throw new Error("Currently only local data source is supported.")
-    }
-
-    const championData = localDataFetcher.fetchChampionData(name)
+export const playerContext = (name: string, testData: string[], localPath?: string) => {
+    const championData = localDataFetcher.fetchChampionData(name, localPath)
 
     const runes = [
 

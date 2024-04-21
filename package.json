@@ -7,7 +7,7 @@
     "build": "tsc",
     "test": "jest",
     "start": "node dist/index.js",
-    "dev-server": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/index.js\""
+    "dev-server": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/test-data-processor.js\""
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
     "league",
     "spells"
   ],
-  "author": "sv_help",
+  "author": "svhelp",
   "license": "ISC",
   "devDependencies": {
     "@jest/globals": "^29.7.0",

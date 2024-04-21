@@ -16,7 +16,7 @@ describe("playerContext", () => {
     })
     
     it("Should fetch champion data", () => {
-        playerContext(championNameMock, [], true)
+        playerContext(championNameMock, [])
 
         expect(localDataFetcher.fetchChampionData).toBeCalledWith(championNameMock)
     })

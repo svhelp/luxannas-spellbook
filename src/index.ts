@@ -1,3 +1,1 @@
-import { processTestData } from './test-data-processor'
-
-processTestData()
+export { playerContext } from './service'
