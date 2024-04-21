@@ -1,0 +1,10 @@
+!/dist
+
+/src
+jest.config.js
+
+**/__mocks__
+**/test-data
+*test-data-processor*
+
+*.map

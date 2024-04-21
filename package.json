@@ -1,17 +1,19 @@
 {
   "name": "luxannas-spellbook",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A tool for League of Legends spells and items calculations.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "test": "jest",
     "start": "node dist/index.js",
+    "prepack": "tsc",
+    "prepublish": "tsc",
     "dev-server": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/test-data-processor.js\""
   },
   "repository": {
     "type": "git",
-    "url": "luxannas-spellbook"
+    "url": "https://github.com/svhelp/luxannas-spellbook.git"
   },
   "keywords": [
     "lol",
