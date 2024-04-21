@@ -2,7 +2,7 @@ import "./mock";
 import { describe, expect, it } from "@jest/globals";
 import { NamedDataValueCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { namedDataValueCalculationPart } from "../namedDataValueCalculationPart";
-import { CalculationContext } from "domain/CalculationContext";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
 import { spellMock } from "./constants";
 import { getDataValue } from "../utils";
 import { dataValuesMock } from "./mock";

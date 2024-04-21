@@ -1,10 +1,11 @@
 import { Spell } from "domain/jsonSchema/SpellData"
 import { calculationFactory } from "../calculation"
+import { CalculationProviderContainer } from "./CalculationProviderContainer"
 
 export const initSpell = (spellData: Spell, name: string, testData: string[]) => {
     const spellName = spellData.mClientData.mTooltipData.mObjectName
 
-    const calculations = []
+    const calculations: CalculationProviderContainer[] = []
 
     for (const calculationName in spellData.mSpellCalculations) {
         const calculationData = spellData.mSpellCalculations[calculationName]

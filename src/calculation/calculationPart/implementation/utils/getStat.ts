@@ -1,4 +1,4 @@
-import { CalculationContext } from "domain/CalculationContext";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula";
 import { ChampionStats, NonCountableStats } from "domain/riotApiSchema/ChampionStats";
 

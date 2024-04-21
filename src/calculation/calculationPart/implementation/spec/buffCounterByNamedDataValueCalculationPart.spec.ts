@@ -4,7 +4,7 @@ import { BuffCounterByNamedDataValueCalculationPart } from "domain/jsonSchema/Fo
 import { buffCounterByNamedDataValueCalculationPart } from "../buffCounterByNamedDataValueCalculationPart";
 import { spellMock } from "./constants";
 import { getDataValue } from "../utils";
-import { CalculationContext } from "domain/CalculationContext";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
 import { dataValuesMock } from "./mock";
 
 describe("buffCounterByNamedDataValueCalculationPart", () => {

@@ -1,4 +1,4 @@
-import { ChampionStats } from "./riotApiSchema/ChampionStats"
+import { ChampionStats } from "domain/riotApiSchema/ChampionStats"
 
 export type CalculationContext = {
     championLevel: number

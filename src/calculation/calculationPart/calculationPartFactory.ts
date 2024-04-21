@@ -1,4 +1,4 @@
-import { CalculationPartProvider } from "domain/CalculationPartProvider";
+import { CalculationPartProvider } from "calculation/calculationPart/CalculationPartProvider";
 import { FormulaPartItem } from "domain/jsonSchema/FormulaPartItem";
 import { abilityResourceByCoefficientCalculationPart } from "./implementation/abilityResourceByCoefficientCalculationPart";
 import { buffCounterByCoefficientCalculationPart } from "./implementation/buffCounterByCoefficientCalculationPart";

@@ -3,7 +3,7 @@ import { describe, it, expect } from "@jest/globals";
 import { calculateValueByParts } from "../calculateValueByParts";
 import { buffPartsMock, complexPartsArrayMock, levelPartsMock, plainPartsMock, resourceStatPartMock, statPartsMock } from "./constants";
 import { mergeCalculationParts } from '../mergeCalculationParts';
-import { CalculationContext } from 'domain/CalculationContext';
+import { CalculationContext } from 'calculation/calculationPart/implementation/CalculationContext';
 import { getStat } from '../getStat';
 import { ChampionStatFormula } from 'domain/jsonSchema/ChampionStatFormula';
 

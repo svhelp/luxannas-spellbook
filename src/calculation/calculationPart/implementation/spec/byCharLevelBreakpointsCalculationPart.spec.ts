@@ -1,7 +1,7 @@
 import { describe, expect, it } from "@jest/globals";
 import { Breakpoint, ByCharLevelBreakpointsCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { byCharLevelBreakpointsCalculationPart } from "../byCharLevelBreakpointsCalculationPart";
-import { CalculationContext } from "domain/CalculationContext";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
 
 const breakpointMock1_1: Breakpoint = {
     __type: 'Breakpoint',

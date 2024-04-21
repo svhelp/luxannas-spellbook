@@ -1,6 +1,6 @@
-import { CalculationContext } from "domain/CalculationContext";
-import { PlainCalculationPart } from "domain/CalculationPart";
-import { CalculationPartProvider } from "domain/CalculationPartProvider";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
+import { PlainCalculationPart } from "calculation/calculationPart/implementation/CalculationPart";
+import { CalculationPartProvider } from "calculation/calculationPart/CalculationPartProvider";
 import { calculateValueByParts } from "./utils";
 
 // Sometimes there is a product of Gameplay parts

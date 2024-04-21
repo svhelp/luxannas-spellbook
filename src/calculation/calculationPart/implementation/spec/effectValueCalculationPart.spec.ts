@@ -1,7 +1,7 @@
 import { describe, expect, it } from "@jest/globals";
 import { effectValueCalculationPart } from "../effectValueCalculationPart";
 import { EffectValueCalculationPart } from "domain/jsonSchema/FormulaPartItem";
-import { CalculationContext } from "domain/CalculationContext";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
 import { spellMock } from "./constants";
 
 const defaultContextMock: CalculationContext = {

@@ -1,7 +1,7 @@
 import { jest } from "@jest/globals";
 import { ChampionStats } from "domain/riotApiSchema/ChampionStats";
 import { baseStatsMock } from "./constants";
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPart } from "calculation/calculationPart/implementation/CalculationPart";
 
 export const dataValuesMock: Record<string, number[]> = {
     "DataValueMock1": [ 0, 1, 2, 3, 4, 5 ],

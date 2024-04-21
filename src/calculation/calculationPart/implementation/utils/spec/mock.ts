@@ -1,7 +1,7 @@
 import { jest } from "@jest/globals";
 import { ChampionStats } from "domain/riotApiSchema/ChampionStats";
 import { buffPartsMock, complexPartsArrayMock, levelPartsMock, mergedBuffParts, mergedComplexPartsArray, mergedPlainParts, mergedStatParts, plainPartsMock, resourceStatPartMock, statPartsMock } from "./constants";
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPart } from "calculation/calculationPart/implementation/CalculationPart";
 
 const statsMock: Record<string, number> = {
     resourceType: 0,

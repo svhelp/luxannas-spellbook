@@ -1,7 +1,7 @@
 import { describe, expect, it } from "@jest/globals";
 import { ByCharLevelInterpolationCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { byCharLevelInterpolationCalculationPart } from "../byCharLevelInterpolationCalculationPart";
-import { CalculationContext } from "domain/CalculationContext";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
 
 describe("byCharLevelInterpolationCalculationPart", () => {
     it("Should return calculation part name", () => {

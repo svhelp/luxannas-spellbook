@@ -1,18 +1,19 @@
 import { parseCalculationPart } from "../calculationPart";
-import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
+import { CalculationPart } from "calculation/calculationPart/implementation/CalculationPart";
 import { GameCalculation } from "domain/jsonSchema/SpellCalculation";
 import { Spell } from "domain/jsonSchema/SpellData";
 import { calculateValueByParts } from "../calculationPart/implementation/utils";
 import { NumberCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { multiplyItems } from "../calculationPart/implementation/utils/multiplyItems";
+import { GameCalculationProvider } from "calculation/GameCalculationProvider";
 
 const defaultMultiplier: NumberCalculationPart = {
     __type: "NumberCalculationPart",
     mNumber: 1
 }
 
-export const gameCalculation = (spell: Spell, calculationData: GameCalculation, championName: string) => {
+export const gameCalculation = (spell: Spell, calculationData: GameCalculation, championName: string): GameCalculationProvider => {
     const parts = calculationData.mFormulaParts.map(x => parseCalculationPart(spell, x, championName))
     const multiplierPart = parseCalculationPart(
         spell,

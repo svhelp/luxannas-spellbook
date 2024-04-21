@@ -1,6 +1,6 @@
 import { describe, expect, it } from "@jest/globals"
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula"
-import { CalculationContext } from "domain/CalculationContext"
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext"
 import { ResourceType } from "domain/common/ResourceType"
 import { ChampionStats } from "domain/riotApiSchema/ChampionStats"
 import { getStat } from "../getStat"

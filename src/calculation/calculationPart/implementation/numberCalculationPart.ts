@@ -1,5 +1,5 @@
-import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPartProvider } from "domain/CalculationPartProvider";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
+import { CalculationPartProvider } from "calculation/calculationPart/CalculationPartProvider";
 import { NumberCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 
 export const numberCalculationPart = (inputData: NumberCalculationPart): CalculationPartProvider => {

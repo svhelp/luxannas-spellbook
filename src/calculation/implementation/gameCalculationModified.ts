@@ -1,8 +1,9 @@
-import { CalculationContext } from "domain/CalculationContext";
+import { ModifiedGameCalculationProvider } from "calculation/GameCalculationProvider";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
 import { GameCalculationModified } from "domain/jsonSchema/SpellCalculation";
 import { Spell } from "domain/jsonSchema/SpellData";
 
-export const gameCalculationModified = (spell: Spell, calculationData: GameCalculationModified) => {
+export const gameCalculationModified = (spell: Spell, calculationData: GameCalculationModified): ModifiedGameCalculationProvider => {
     
     return {
         type: "GameCalculationModified",

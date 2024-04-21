@@ -1,5 +1,5 @@
-import { ChampionStatFormula } from "./jsonSchema/ChampionStatFormula"
-import { ChampionStats, NonCountableStats } from "./riotApiSchema/ChampionStats"
+import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula"
+import { ChampionStats, NonCountableStats } from "domain/riotApiSchema/ChampionStats"
 
 export type CalculationPart = PlainCalculationPart | StatCalculationPart | BuffCalculationPart | LevelCalculationPart
 

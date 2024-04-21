@@ -1,6 +1,6 @@
-import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPart } from "domain/CalculationPart";
-import { CalculationPartProvider } from "domain/CalculationPartProvider";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
+import { CalculationPart } from "calculation/calculationPart/implementation/CalculationPart";
+import { CalculationPartProvider } from "calculation/calculationPart/CalculationPartProvider";
 import { mergeCalculationParts } from "./utils";
 
 export const sumOfSubPartsCalculationPart = (subparts: CalculationPartProvider[]): CalculationPartProvider => {

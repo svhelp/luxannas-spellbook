@@ -1,5 +1,5 @@
-import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPartProvider } from "domain/CalculationPartProvider";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
+import { CalculationPartProvider } from "calculation/calculationPart/CalculationPartProvider";
 import { AbilityResourceByCoefficientCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula";
 

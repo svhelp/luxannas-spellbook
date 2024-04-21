@@ -1,5 +1,5 @@
-import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPartProvider } from "domain/CalculationPartProvider";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
+import { CalculationPartProvider } from "calculation/calculationPart/CalculationPartProvider";
 import { EffectValueCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { Spell } from "domain/jsonSchema/SpellData";
 

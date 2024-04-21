@@ -1,9 +1,9 @@
 import './mock'
 import { describe, expect, it, jest } from "@jest/globals";
 import { productOfSubPartsCalculationPart } from "../productOfSubPartsCalculationPart";
-import { CalculationPart } from 'domain/CalculationPart';
-import { CalculationPartProvider } from 'domain/CalculationPartProvider';
-import { CalculationContext } from 'domain/CalculationContext';
+import { CalculationPart } from 'calculation/calculationPart/implementation/CalculationPart';
+import { CalculationPartProvider } from 'calculation/calculationPart/CalculationPartProvider';
+import { CalculationContext } from 'calculation/calculationPart/implementation/CalculationContext';
 import { baseStatsMock, currentStatsMock } from './constants';
 import { calculateValueByParts } from '../utils';
 

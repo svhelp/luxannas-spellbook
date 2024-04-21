@@ -2,7 +2,7 @@ import "./mock";
 import { describe, expect, it } from "@jest/globals";
 import { StatByNamedDataValueCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { statByNamedDataValueCalculationPart } from "../statByNamedDataValueCalculationPart";
-import { CalculationContext } from "domain/CalculationContext";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
 import { ChampionStat } from "domain/jsonSchema/ChampionStat";
 import { currentStatsMock, baseStatsMock, spellMock } from "./constants";
 import { getDataValue } from "../utils";

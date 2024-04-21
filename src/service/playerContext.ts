@@ -1,10 +1,11 @@
 import { ChampionStats } from "domain/riotApiSchema/ChampionStats"
 import { localDataFetcher } from "./dataFetcher/localDataFetcher"
-import { CalculationContext } from "domain/CalculationContext"
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext"
 import { initStats } from "./initStats"
-import { CalculationResult } from "domain/CalculationResult"
+import { CalculationResult } from "service/CalculationResult"
 import { initSpell } from "./initSpell"
 import { calculateValueByParts, inferFormulaByParts } from "../calculation/calculationPart/implementation/utils"
+import { CalculationProviderContainer } from "./CalculationProviderContainer"
 
 export const playerContext = (name: string, testData: string[], isLocal?: boolean) => {
     if (!isLocal) {
@@ -41,58 +42,52 @@ export const playerContext = (name: string, testData: string[], isLocal?: boolea
         }
     }
 
-    const processCalculationData = () => {
-
-    }
-
-    const getSpells = () => {
-        const context = getContext(0)
-
-        console.log(`${name}\n`)
-
-        const passiveGameCalculations = passive.calculations.filter(c => c.calculation.type === "GameCalculation")
-        const passiveGameCalculationResults: CalculationResult[] = []
-
-        for (const calculation of passiveGameCalculations) {
-            const items = calculation.calculation.getItems(context)
-            
-            passiveGameCalculationResults.push({
-                name: calculation.name,
-                items
-            })
-
-            const value = calculateValueByParts(context, items)
-            const formula = inferFormulaByParts(context, items)
+    const printCalculationData = (context: CalculationContext, calculations: CalculationResult[]) => {
+        for (const calculation of calculations) {
+            const value = calculateValueByParts(context, calculation.items)
+            const formula = inferFormulaByParts(context, calculation.items)
 
             console.log(`${calculation.name}. ${value} (${formula})`)
         }
+    }
 
+    const getSpellCalculations = (context: CalculationContext, calculations: CalculationProviderContainer[]) => {
+        const gameCalculations = calculations.filter(c => c.calculation.type === "GameCalculation")
+        const modifiedGameCalculations = calculations.filter(c => c.calculation.type === "GameCalculationModified")
+        const conditionalGameCalculations = calculations.filter(c => c.calculation.type === "GameCalculationConditional")
+
+        const calculationResults: CalculationResult[] = []
+
+        for (const calculation of gameCalculations) {
+            const items = calculation.calculation.getItems(context)
+            
+            calculationResults.push({
+                name: calculation.name,
+                items
+            })
+        }
+
+        return calculationResults
+    }
+
+    const getSpells = () => {
+        console.log(`${name}\n`)
+
+        const context = getContext(0)
+        const passiveCalculationResults = getSpellCalculations(context, passive.calculations)
+
+        printCalculationData(context, passiveCalculationResults)
         console.log("\n")
 
         let index = 0
 
         for (const spell of spells) {
             const context = getContext(index);
-
-            const gameCalculations = spell.calculations.filter(c => c.calculation.type === "GameCalculation")
-            const gameCalculationResults: CalculationResult[] = []
-
-            for (const calculation of gameCalculations) {
-                const items = calculation.calculation.getItems(context)
-                
-                gameCalculationResults.push({
-                    name: calculation.name,
-                    items
-                })
-
-                const value = calculateValueByParts(context, items)
-                const formula = inferFormulaByParts(context, items)
-
-                console.log(`${calculation.name}. ${value} (${formula})`)
-            }
+            const calculationResults = getSpellCalculations(context, spell.calculations)
 
             index++
 
+            printCalculationData(context, calculationResults)
             console.log("\n")
         }
     }

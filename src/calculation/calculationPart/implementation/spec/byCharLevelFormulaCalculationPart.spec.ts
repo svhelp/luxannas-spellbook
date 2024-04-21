@@ -1,7 +1,7 @@
 import { describe, expect, it } from "@jest/globals";
 import { ByCharLevelFormulaCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { byCharLevelFormulaCalculationPart } from "../byCharLevelFormulaCalculationPart";
-import { CalculationContext } from "domain/CalculationContext";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
 
 const valuesMock1 = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 ]
 const valuesMock2 = [ 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 200, 201, 202, 203, 204, 205, 206, 207, 208 ]

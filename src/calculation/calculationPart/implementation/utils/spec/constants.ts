@@ -1,4 +1,4 @@
-import { CalculationPart } from "domain/CalculationPart"
+import { CalculationPart } from "calculation/calculationPart/implementation/CalculationPart"
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula"
 
 export const plainPartsMock: CalculationPart[] = [

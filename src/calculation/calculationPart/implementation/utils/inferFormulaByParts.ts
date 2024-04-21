@@ -1,5 +1,5 @@
-import { CalculationContext } from "domain/CalculationContext";
-import { BuffCalculationPart, CalculationPart, LevelCalculationPart, PlainCalculationPart, StatCalculationPart } from "domain/CalculationPart";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
+import { BuffCalculationPart, CalculationPart, LevelCalculationPart, PlainCalculationPart, StatCalculationPart } from "calculation/calculationPart/implementation/CalculationPart";
 import { mergeCalculationParts } from "./mergeCalculationParts";
 import { ResourceTypeName, ChampionStatFormulaName } from "../domain";
 import { getStat } from "./getStat";

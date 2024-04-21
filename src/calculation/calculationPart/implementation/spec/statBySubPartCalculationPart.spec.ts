@@ -2,13 +2,13 @@ import './mock'
 import { describe, expect, it, jest } from "@jest/globals";
 import { statBySubPartCalculationPart } from "../statBySubPartCalculationPart";
 import { StatBySubPartCalculationPart } from "domain/jsonSchema/FormulaPartItem";
-import { CalculationPartProvider } from "domain/CalculationPartProvider";
-import { CalculationContext } from "domain/CalculationContext";
+import { CalculationPartProvider } from "calculation/calculationPart/CalculationPartProvider";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
 import { baseStatsMock, currentStatsMock } from "./constants";
 import { ChampionStatFormula } from "domain/jsonSchema/ChampionStatFormula";
 import { ChampionStatName } from "../domain";
 import { ChampionStat } from "domain/jsonSchema/ChampionStat";
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPart } from "calculation/calculationPart/implementation/CalculationPart";
 import { calculateValueByParts } from "../utils";
 
 

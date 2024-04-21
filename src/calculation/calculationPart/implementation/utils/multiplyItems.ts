@@ -1,4 +1,4 @@
-import { CalculationPart } from "domain/CalculationPart";
+import { CalculationPart } from "calculation/calculationPart/implementation/CalculationPart";
 import { mergeCalculationParts } from "./mergeCalculationParts";
 
 export const multiplyItems = (items: CalculationPart[], multiplier?: number) => {

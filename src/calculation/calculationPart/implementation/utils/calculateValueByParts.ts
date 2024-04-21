@@ -1,5 +1,5 @@
-import { CalculationContext } from "domain/CalculationContext";
-import { CalculationPart, LevelCalculationPart, PlainCalculationPart, StatCalculationPart } from "domain/CalculationPart";
+import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
+import { CalculationPart, LevelCalculationPart, PlainCalculationPart, StatCalculationPart } from "calculation/calculationPart/implementation/CalculationPart";
 import { getStat } from "./getStat";
 import { mergeCalculationParts } from "./mergeCalculationParts";
 

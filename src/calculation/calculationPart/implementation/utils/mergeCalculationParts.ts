@@ -1,4 +1,4 @@
-import { CalculationPart } from "domain/CalculationPart"
+import { CalculationPart } from "calculation/calculationPart/implementation/CalculationPart"
 
 const getItemToMerge = (resultArray: CalculationPart[], itemToMerge: CalculationPart) => {
 
