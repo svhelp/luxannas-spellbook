@@ -1,23 +1,15 @@
-import { describe, expect, it, jest } from "@jest/globals";
+import "./mock"
+import { describe, expect, it } from "@jest/globals";
 import { localDataFetcher } from "../dataFetcher/localDataFetcher";
 import { playerContext } from "../playerContext";
 
 const championNameMock = "Diana"
 
-jest.mock('../dataFetcher/localDataFetcher', () => ({
-    localDataFetcher: {
-        fetchChampionData: jest.fn()
-    }
-}));
-
-describe("playerContext", () => {
-    it("Should throw when local path is not provided", () => {
-        expect(() => playerContext(championNameMock, [])).toThrow("Currently only local data source is supported.")
-    })
-    
+describe("playerContext", () => {    
     it("Should fetch champion data", () => {
-        playerContext(championNameMock, [])
+        const pathMock = "Path mock"
+        playerContext(championNameMock, [], pathMock)
 
-        expect(localDataFetcher.fetchChampionData).toBeCalledWith(championNameMock)
+        expect(localDataFetcher.fetchChampionData).toBeCalledWith(championNameMock, pathMock)
     })
 })
