@@ -15,29 +15,29 @@ jest.mock('../getStat', () => ({
 jest.mock('../mergeCalculationParts', () => ({
     mergeCalculationParts: jest.fn().mockImplementation((items: CalculationPart[]) => {
         if (items === plainPartsMock) {
-            return mergedPlainParts
+            return mergedPlainParts.map(x => ({ ...x }))
         }
     
         if (items === buffPartsMock) {
-            return mergedBuffParts
+            return mergedBuffParts.map(x => ({ ...x }))
         }
     
         if (items === statPartsMock) {
-            return mergedStatParts
+            return mergedStatParts.map(x => ({ ...x }))
         }
         
         if (items === levelPartsMock) {
-            return levelPartsMock
+            return levelPartsMock.map(x => ({ ...x }))
         }
         
         if (items === complexPartsArrayMock) {
-            return mergedComplexPartsArray
+            return mergedComplexPartsArray.map(x => ({ ...x }))
         }
     
         if (items === resourceStatPartMock) {
-            return resourceStatPartMock
+            return resourceStatPartMock.map(x => ({ ...x }))
         }
     
-        throw new Error()
+        return items
     })
 }))

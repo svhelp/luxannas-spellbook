@@ -1,7 +1,7 @@
 import './mock'
 import { describe, it, expect } from "@jest/globals";
 import { calculateValueByParts } from "../calculateValueByParts";
-import { buffPartsMock, complexPartsArrayMock, levelPartsMock, plainPartsMock, resourceStatPartMock, statPartsMock } from "./constants";
+import { buffPartsMock, complexPartsArrayMock, levelPartsMock, plainPartsMock, statPartsMock } from "./constants";
 import { mergeCalculationParts } from '../mergeCalculationParts';
 import { CalculationContext } from 'calculation/calculationPart/implementation/CalculationContext';
 import { getStat } from '../getStat';
@@ -51,12 +51,12 @@ describe("calculateValueByParts", () => {
     it("Should calculate level parts", () => {
         const result = calculateValueByParts(undefined, levelPartsMock)
 
-        expect(result).toEqual(1)
+        expect(result).toEqual(10)
     })
 
     it("Should calculate complex parts", () => {
         const result = calculateValueByParts(undefined, complexPartsArrayMock)
 
-        expect(result).toEqual(191)
+        expect(result).toEqual(200)
     })
 })

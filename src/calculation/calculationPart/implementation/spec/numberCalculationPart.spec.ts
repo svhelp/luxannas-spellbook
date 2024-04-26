@@ -14,6 +14,23 @@ describe("numberCalculationPart", () => {
         expect(result).toEqual("NumberCalculationPart")
     })
 
+    it("Should use default value (Ksante Q)", () => {
+        const inputMock: NumberCalculationPart = {
+            __type: "NumberCalculationPart",
+        }
+
+        const expectedResult = [
+            {
+                type: "PlainCalculationPart",
+                value: 1
+            }
+        ]
+
+        const result = numberCalculationPart(inputMock).getItems(undefined)
+
+        expect(result).toEqual(expectedResult)
+    })
+
     describe("Should return items", () => {
         it.each([
             [ 0.01 ],

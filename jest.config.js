@@ -5,5 +5,10 @@ module.exports = {
   testPathIgnorePatterns: [
     "/node_modules/",
     "/dist/"
+  ],
+  coveragePathIgnorePatterns: [
+    "index.ts",
+    "mock.ts",
+    "constants.ts"
   ]
 };

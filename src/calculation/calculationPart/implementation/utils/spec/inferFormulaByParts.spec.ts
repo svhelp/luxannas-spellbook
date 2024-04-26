@@ -38,12 +38,12 @@ describe("inferFormulaByParts", () => {
     it("Should infer level formula", () => {
         const result = inferFormulaByParts(undefined, levelPartsMock)
 
-        expect(result).toEqual("0 - 10 @level@")
+        expect(result).toEqual("5 - 20 @level@")
     })
 
     it("Should infer complex formula", () => {
         const result = inferFormulaByParts(undefined, complexPartsArrayMock)
 
-        expect(result).toEqual("60 + 0 - 10 @level@ + 200% @base@ @armor@ + 100% @base@ @abilityPower@ + 100% @bonus@ @armor@ + 2000% @buff1@ + 3000% @buff2@")
+        expect(result).toEqual("60 + 5 - 20 @level@ + 200% @base@ @armor@ + 100% @base@ @abilityPower@ + 100% @bonus@ @armor@ + 2000% @buff1@ + 3000% @buff2@")
     })
 })
