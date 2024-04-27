@@ -3,9 +3,8 @@ import { CalculationContext } from "calculation/calculationPart/implementation/C
 import { CalculationPart } from "calculation/calculationPart/implementation/CalculationPart";
 import { GameCalculation } from "domain/jsonSchema/SpellCalculation";
 import { Spell } from "domain/jsonSchema/SpellData";
-import { calculateValueByParts } from "../calculationPart/implementation/utils";
+import { calculateValueByParts, multiplyItems } from "../calculationPart/implementation/utils";
 import { NumberCalculationPart } from "domain/jsonSchema/FormulaPartItem";
-import { multiplyItems } from "../calculationPart/implementation/utils/multiplyItems";
 import { GameCalculationProvider } from "calculation/GameCalculationProvider";
 
 const defaultMultiplier: NumberCalculationPart = {

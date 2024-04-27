@@ -2,8 +2,7 @@ import { ModifiedGameCalculationProvider } from "calculation/GameCalculationProv
 import { parseCalculationPart } from "../calculationPart";
 import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
 import { CalculationPart } from "calculation/calculationPart/implementation/CalculationPart";
-import { calculateValueByParts } from "../calculationPart/implementation/utils";
-import { multiplyItems } from "../calculationPart/implementation/utils/multiplyItems";
+import { calculateValueByParts, multiplyItems } from "../calculationPart/implementation/utils";
 import { NumberCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { GameCalculationModified } from "domain/jsonSchema/SpellCalculation";
 import { Spell } from "domain/jsonSchema/SpellData";
