@@ -22,27 +22,19 @@ function __setMockFiles(newMockFiles) {
 
 // A custom version of `readdirSync` that reads from the special mocked out
 // file list set via __setMockFiles
-function readdirSync(directoryPath) {
-  return Object.keys(mockFiles[directoryPath]) || [];
-}
-
-function existsSync(file) {
+function readFile(file, encoding, callback) {
   const dirname = path.dirname(file);
   const fileName = path.basename(file);
 
-  return Object.keys(mockFiles).includes(dirname) && Object.keys(mockFiles[dirname]).includes(fileName);
-}
+  const fileExists = Object.keys(mockFiles).includes(dirname) && Object.keys(mockFiles[dirname]).includes(fileName)
 
-function readFileSync(file, encoding) {
-  const dirname = path.dirname(file);
-  const fileName = path.basename(file);
+  const data = fileExists && mockFiles[dirname][fileName]
+  const error = !fileExists && {}
 
-  return mockFiles[dirname][fileName];
+  callback(error, data)
 }
 
 fs.__setMockFiles = __setMockFiles;
-fs.existsSync = existsSync;
-fs.readdirSync = readdirSync;
-fs.readFileSync = readFileSync;
+fs.readFile = readFile;
 
 module.exports = fs;

@@ -1,5 +1,6 @@
 import { ChampionData } from "domain/ChampionData";
 
 export interface DataFetcher {
-    fetchChampionData: (name: string, path?: string) => ChampionData
+    type: string
+    fetchChampionData: (name: string) => Promise<ChampionData>
 }

@@ -1,5 +1,4 @@
 import { ChampionStats } from "domain/riotApiSchema/ChampionStats"
-import { localDataFetcher } from "./dataFetcher/localDataFetcher"
 import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext"
 import { initStats } from "./initStats"
 import { CalculationResult } from "service/CalculationResult"
@@ -7,9 +6,12 @@ import { initSpell } from "./initSpell"
 import { calculateValueByParts, inferFormulaByParts } from "../calculation/calculationPart/implementation/utils"
 import { CalculationProviderContainer } from "./CalculationProviderContainer"
 import { CalculationProvider, ConditionalGameCalculationProvider, GameCalculationProvider, ModifiedGameCalculationProvider } from "calculation/GameCalculationProvider"
+import { PlayerContextConfig } from "./PlayerContextConfig"
+import { dataFetcherFactory } from "./dataFetcher/dataFetcherFactory"
 
-export const playerContext = (name: string, testData: string[], localPath?: string) => {
-    const championData = localDataFetcher.fetchChampionData(name, localPath)
+export const playerContext = async (config: PlayerContextConfig, testData: string[]) => {
+    const dataFetcher = dataFetcherFactory(config)
+    const championData = await dataFetcher.fetchChampionData(config.championName)
 
     const runes = [
 
@@ -25,9 +27,9 @@ export const playerContext = (name: string, testData: string[], localPath?: stri
 
     ]
 
-    const passive = initSpell(championData.passiveSpellData, name, testData)
+    const passive = initSpell(championData.passiveSpellData, config.championName, testData)
 
-    const spells = championData.spellsData.map(spell => initSpell(spell, name, testData))
+    const spells = championData.spellsData.map(spell => initSpell(spell, config.championName, testData))
 
     const getContext = (spellIndex: number): CalculationContext => {
         return {
@@ -98,7 +100,7 @@ export const playerContext = (name: string, testData: string[], localPath?: stri
     }
 
     const getSpells = () => {
-        console.log(`${name}\n`)
+        console.log(`${config.championName}\n`)
 
         const context = getContext(0)
         const passiveCalculationResults = getSpellCalculations(context, passive.calculations)
@@ -144,7 +146,7 @@ export const playerContext = (name: string, testData: string[], localPath?: stri
     }
 
     return {
-        getName: () => name,
+        getName: () => config.championName,
         getStats: () => currentStats,
         getSpells,
 

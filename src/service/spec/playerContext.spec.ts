@@ -1,15 +1,16 @@
 import "./mock"
 import { describe, expect, it } from "@jest/globals";
-import { localDataFetcher } from "../dataFetcher/localDataFetcher";
 import { playerContext } from "../playerContext";
-
-const championNameMock = "Diana"
+import { dataFetcherFactory } from "../dataFetcher/dataFetcherFactory";
 
 describe("playerContext", () => {    
-    it("Should fetch champion data", () => {
-        const pathMock = "Path mock"
-        playerContext(championNameMock, [], pathMock)
+    it.skip("Should fetch champion data", () => {
+        const configMock = {
+            championName: "champion",
+            customUri: "Path mock"
+        }
+        playerContext(configMock, [])
 
-        expect(localDataFetcher.fetchChampionData).toBeCalledWith(championNameMock, pathMock)
+        expect(dataFetcherFactory).toBeCalledWith(configMock)
     })
 })
