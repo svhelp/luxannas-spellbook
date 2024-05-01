@@ -1,7 +1,7 @@
 import "./mock"
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
 import { localDataFetcher } from "../localDataFetcher";
-import { parseChampionData } from "../../parsers/parseChampionData";
+import { parseChampionData } from "../../../parsers";
 import { mfContentMock, dianaContentMock, corruptedJsonMock, parsingResultMock } from "./constants";
 
 const fileSystemMock = {

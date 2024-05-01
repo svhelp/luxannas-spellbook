@@ -3,7 +3,7 @@ import { setupServer } from 'msw/node'
 import { afterAll, beforeAll, describe, expect, it } from "@jest/globals";
 import { webDataFetcher } from "../webDataFetcher";
 import { handlers } from "./handlers";
-import { parseChampionData } from "../../parsers/parseChampionData";
+import { parseChampionData } from "../../../parsers";
 import { dianaContentMock, mfContentMock, parsingResultMock } from "./constants";
 
 const server = setupServer(...handlers)

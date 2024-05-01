@@ -7,7 +7,7 @@ import { calculateValueByParts, inferFormulaByParts } from "../calculation/calcu
 import { CalculationProviderContainer } from "./CalculationProviderContainer"
 import { CalculationProvider, ConditionalGameCalculationProvider, GameCalculationProvider, ModifiedGameCalculationProvider } from "calculation/GameCalculationProvider"
 import { PlayerContextConfig } from "./PlayerContextConfig"
-import { dataFetcherFactory } from "./dataFetcher/dataFetcherFactory"
+import { dataFetcherFactory } from "../dataFetcher/dataFetcherFactory"
 
 export const playerContext = async (config: PlayerContextConfig, testData: string[]) => {
     const dataFetcher = dataFetcherFactory(config)

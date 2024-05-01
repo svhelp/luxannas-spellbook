@@ -1,7 +1,7 @@
 import https from 'https'
 
 import { DataFetcher } from "./DataFetcher"
-import { parseChampionData } from '../parsers/parseChampionData'
+import { parseChampionData } from '../../parsers'
 import { DataFetcherConfig } from '../DataFetcherConfig'
 
 const defaultBaseUrl = 'https://raw.communitydragon.org/latest/game/data/characters'

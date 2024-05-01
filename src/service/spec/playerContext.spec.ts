@@ -1,7 +1,7 @@
 import "./mock"
 import { describe, expect, it } from "@jest/globals";
 import { playerContext } from "../playerContext";
-import { dataFetcherFactory } from "../dataFetcher/dataFetcherFactory";
+import { dataFetcherFactory } from "../../dataFetcher/dataFetcherFactory";
 
 describe("playerContext", () => {    
     it.skip("Should fetch champion data", () => {

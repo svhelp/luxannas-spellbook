@@ -1,7 +1,7 @@
 import fs from 'fs'
 
 import { DataFetcher } from "./DataFetcher"
-import { parseChampionData } from '../parsers/parseChampionData'
+import { parseChampionData } from '../../parsers'
 import { DataFetcherConfig } from '../DataFetcherConfig'
 
 const defaultBasePath = 'src/test-data/champions'

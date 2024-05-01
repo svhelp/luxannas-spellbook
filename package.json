@@ -1,6 +1,6 @@
 {
   "name": "luxannas-spellbook",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A tool for League of Legends spells and items calculations.",
   "main": "dist/index.js",
   "scripts": {
