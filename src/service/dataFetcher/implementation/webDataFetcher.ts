@@ -4,7 +4,7 @@ import { DataFetcher } from "./DataFetcher"
 import { parseChampionData } from '../parsers/parseChampionData'
 import { DataFetcherConfig } from '../DataFetcherConfig'
 
-const defaultBaseUrl = 'https://raw.communitydragon.org/latest/game/data/characters/'
+const defaultBaseUrl = 'https://raw.communitydragon.org/latest/game/data/characters'
 
 export const webDataFetcher = (config: DataFetcherConfig): DataFetcher => {
     const baseUrl = config.customUri ?? defaultBaseUrl
@@ -20,14 +20,14 @@ export const webDataFetcher = (config: DataFetcherConfig): DataFetcher => {
                     res.setEncoding('utf8');
                     
                     let responseBody = '';
-        
+
                     res.on('data', (chunk) => {
                         responseBody += chunk;
                     });
         
                     res.on('end', () => {
                         if (res.statusCode !== 200) {
-                            reject("Error loading champion data");
+                            reject("Error loading champion data.");
                             return
                         }
 
@@ -41,14 +41,11 @@ export const webDataFetcher = (config: DataFetcherConfig): DataFetcher => {
         
                         resolve(parseChampionData(fileObject))
                     });
-
                 })
 
                 request.on('error', (err) => {
-                    reject(err);
+                    reject("Unexpected network error while loading champion data.");
                 });
-        
-                request.end();
             })
         }
     }

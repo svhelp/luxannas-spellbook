@@ -8,6 +8,7 @@ module.exports = {
   ],
   coveragePathIgnorePatterns: [
     "index.ts",
+    "handlers.ts",
     "mock.ts",
     "constants.ts"
   ]

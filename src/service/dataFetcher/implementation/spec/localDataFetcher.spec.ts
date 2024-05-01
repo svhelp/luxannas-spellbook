@@ -1,24 +1,16 @@
+import "./mock"
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
 import { localDataFetcher } from "../localDataFetcher";
 import { parseChampionData } from "../../parsers/parseChampionData";
-
-const dianaContentMock = { data: 'Diana data' }
-const mfContentMock = { data: 'MF data' }
+import { mfContentMock, dianaContentMock, corruptedJsonMock, parsingResultMock } from "./constants";
 
 const fileSystemMock = {
     'src/test-data-custom/champions/missfortune/missfortune.bin.json': JSON.stringify(mfContentMock),
     'src/test-data/champions/diana/diana.bin.json': JSON.stringify(dianaContentMock),
-    'src/test-data/champions/fiora/aatrox.bin.json': '{}',
-    'src/test-data/champions/morgana/morgana.bin.json': '{ Wrong content }',
+    'src/test-data/champions/morgana/morgana.bin.json': corruptedJsonMock,
 };
 
-const parsingResultMock = {}
-
 jest.mock('fs')
-
-jest.mock('../../parsers/parseChampionData', () => ({
-    parseChampionData: jest.fn().mockImplementation(() => parsingResultMock)
-}));
 
 beforeEach(() => {
     require('fs').__setMockFiles(fileSystemMock)
