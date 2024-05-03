@@ -7,6 +7,7 @@ jest.config.js
 tsconfig.json
 
 **/__mocks__
+**/spec
 **/test-data
 *test-data-processor*
 

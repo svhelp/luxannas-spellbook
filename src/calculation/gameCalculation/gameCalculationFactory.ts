@@ -5,7 +5,7 @@ import { gameCalculationModified } from "./implementation/gameCalculationModifie
 import { gameCalculationConditional } from "./implementation/gameCalculationConditional";
 import { CalculationProvider } from "./GameCalculationProvider";
 
-export const calculationFactory = (spell: Spell, calculationData: SpellCalculation, championName: string): CalculationProvider => {
+export const gameCalculationFactory = (spell: Spell, calculationData: SpellCalculation, championName: string): CalculationProvider => {
     const calculationType = calculationData.__type
 
     switch(calculationType) {

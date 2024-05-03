@@ -2,7 +2,6 @@ import "./mock"
 import { describe, expect, it } from "@jest/globals";
 import { GameCalculation } from "domain/jsonSchema/SpellCalculation";
 import { gameCalculation } from "../gameCalculation";
-import { parseCalculationPart } from "../../calculationPart";
 import {
     partItemsMock,
     multiplierDataMock,
@@ -18,7 +17,8 @@ import {
     namedDataValueCalculationItemMock,
     nonCountableMultiplierDataMock
 } from "./constants";
-import { calculateValueByParts, multiplyItems } from "../../calculationPart/implementation/utils";
+import { parseCalculationPart } from "calculation/calculationPart";
+import { calculateValueByParts, multiplyItems } from "calculation/calculationPart/implementation/utils";
 
 
 describe("gameCalculation", () => {

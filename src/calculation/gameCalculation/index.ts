@@ -1,0 +1,1 @@
+export { gameCalculationFactory } from './gameCalculationFactory'

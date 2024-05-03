@@ -1,21 +1,15 @@
 import { ChampionStats } from "domain/riotApiSchema/ChampionStats"
 import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext"
 import { initStats } from "./initStats"
-import { CalculationResult } from "service/CalculationResult"
 import { initSpell } from "./initSpell"
-import { calculateValueByParts, inferFormulaByParts } from "../calculation/calculationPart/implementation/utils"
-import { CalculationProviderContainer } from "./CalculationProviderContainer"
-import { CalculationProvider, ConditionalGameCalculationProvider, GameCalculationProvider, ModifiedGameCalculationProvider } from "calculation/GameCalculationProvider"
 import { PlayerContextConfig } from "./PlayerContextConfig"
 import { dataFetcherFactory } from "../dataFetcher/dataFetcherFactory"
+import { CalculationDTO } from "../calculation/spellCalculator/CalculationDTO"
+import { calculateSpellValues } from "calculation/spellCalculator"
 
-export const playerContext = async (config: PlayerContextConfig, testData: string[]) => {
+export const playerContext = async (config: PlayerContextConfig, testData?: string[]) => {
     const dataFetcher = dataFetcherFactory(config)
     const championData = await dataFetcher.fetchChampionData(config.championName)
-
-    const runes = [
-
-    ]
 
     let level = 1
     let spellLevels = [ 0, 0, 0, 0, 0 ]
@@ -23,102 +17,38 @@ export const playerContext = async (config: PlayerContextConfig, testData: strin
     let baseStats = initStats(championData)
     let currentStats = initStats(championData)
 
-    let items = [
-
-    ]
+    const runes = [], items = []
 
     const passive = initSpell(championData.passiveSpellData, config.championName, testData)
-
     const spells = championData.spellsData.map(spell => initSpell(spell, config.championName, testData))
 
-    const getContext = (spellIndex: number): CalculationContext => {
-        return {
-            championLevel: level,
-            spellLevel: spellLevels[spellIndex],
-            
-            currentStats,
-            baseStats,
-        }
-    }
+    const getContext = (spellIndex: number): CalculationContext => ({
+        championLevel: level,
+        spellLevel: spellLevels[spellIndex],
+        
+        currentStats,
+        baseStats,
+    })
 
-    const printCalculationData = (context: CalculationContext, calculations: CalculationResult[]) => {
-        for (const calculation of calculations) {
-            const value = calculateValueByParts(context, calculation.items)
-            const formula = inferFormulaByParts(context, calculation.items)
-
-            console.log(`${calculation.name}. ${value} (${formula})`)
-
-            if (calculation.altItems) {
-                const altValue = calculateValueByParts(context, calculation.altItems)
-                const altFormula = inferFormulaByParts(context, calculation.altItems)
-    
-                console.log(`*ALT ${calculation.name}. ${altValue} (${altFormula})`)
-            }
-        }
-    }
-
-    const getSpellCalculations = (context: CalculationContext, calculations: CalculationProviderContainer<CalculationProvider>[]) => {
-        const gameCalculations
-            = calculations.filter(c => c.calculation.type === "GameCalculation") as CalculationProviderContainer<GameCalculationProvider>[]
-        const modifiedGameCalculations
-            = calculations.filter(c => c.calculation.type === "GameCalculationModified") as CalculationProviderContainer<ModifiedGameCalculationProvider>[]
-        const conditionalGameCalculations
-            = calculations.filter(c => c.calculation.type === "GameCalculationConditional") as CalculationProviderContainer<ConditionalGameCalculationProvider>[]
-
-        const calculationResults: CalculationResult[] = []
-
-        for (const calculationContainer of gameCalculations) {
-            const items = calculationContainer.calculation.getItems(context)
-            
-            calculationResults.push({
-                name: calculationContainer.name,
-                items
-            })
-        }
-
-        for (const calculationContainer of modifiedGameCalculations) {
-            const items = calculationContainer.calculation.getItems(context, calculationResults)
-            
-            calculationResults.push({
-                name: calculationContainer.name,
-                items
-            })
-        }
-
-        for (const calculationContainer of conditionalGameCalculations) {
-            const items = calculationContainer.calculation.getItems(context, calculationResults)
-            const altItems = calculationContainer.calculation.getAltItems(context, calculationResults)
-            
-            calculationResults.push({
-                name: calculationContainer.name,
-                items,
-                altItems
-            })
-        }
-
-        return calculationResults
+    const getPassiveSpell = () => {
+        const context = getContext(0)
+        return calculateSpellValues(context, passive.calculations)
     }
 
     const getSpells = () => {
-        console.log(`${config.championName}\n`)
-
-        const context = getContext(0)
-        const passiveCalculationResults = getSpellCalculations(context, passive.calculations)
-
-        printCalculationData(context, passiveCalculationResults)
-        console.log("\n")
-
+        const result: Record<string, CalculationDTO[]> = {}
         let index = 0
 
         for (const spell of spells) {
             const context = getContext(index);
-            const calculationResults = getSpellCalculations(context, spell.calculations)
+            const calculationResults = calculateSpellValues(context, spell.calculations)
 
             index++
 
-            printCalculationData(context, calculationResults)
-            console.log("\n")
+            result[spell.name] = calculationResults
         }
+
+        return result
     }
 
     const setStats = (data: Partial<ChampionStats>) => {
@@ -148,6 +78,7 @@ export const playerContext = async (config: PlayerContextConfig, testData: strin
     return {
         getName: () => config.championName,
         getStats: () => currentStats,
+        getPassiveSpell,
         getSpells,
 
         setLevel,

@@ -3,8 +3,8 @@ import { describe, expect, it } from "@jest/globals";
 import { GameCalculationModified } from "domain/jsonSchema/SpellCalculation";
 import { gameCalculationModified } from "../gameCalculationModified";
 import { contextMock, defaultMultiplierDataMock, multipliedPartItemsMock, multiplierDataMock, multiplierItemMock, multiplierPartMock, namedDataValueCalculationItemMock, nonCountableMultiplierDataMock, numberCalculationItemMock, plainResultsMock, spellMock } from "./constants";
-import { parseCalculationPart } from "../../calculationPart";
-import { calculateValueByParts, multiplyItems } from "../../calculationPart/implementation/utils";
+import { parseCalculationPart } from "calculation/calculationPart";
+import { calculateValueByParts, multiplyItems } from "calculation/calculationPart/implementation/utils";
 
 describe("gameCalculationModified", () => {
     it("Should return calculation type", () => {

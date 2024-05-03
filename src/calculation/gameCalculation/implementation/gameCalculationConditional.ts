@@ -1,8 +1,8 @@
-import { ConditionalGameCalculationProvider } from "calculation/GameCalculationProvider";
 import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
 import { CalculationPart } from "calculation/calculationPart/implementation/CalculationPart";
 import { GameCalculationConditional } from "domain/jsonSchema/SpellCalculation";
 import { Spell } from "domain/jsonSchema/SpellData";
+import { ConditionalGameCalculationProvider } from "../GameCalculationProvider";
 
 const extractItems = (plainResults: { name: string, items: CalculationPart[] }[], name: string) => {
     const calculationData = plainResults.find(r => r.name === name)

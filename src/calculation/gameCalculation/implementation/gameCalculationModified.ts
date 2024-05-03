@@ -1,11 +1,11 @@
-import { ModifiedGameCalculationProvider } from "calculation/GameCalculationProvider";
-import { parseCalculationPart } from "../calculationPart";
 import { CalculationContext } from "calculation/calculationPart/implementation/CalculationContext";
 import { CalculationPart } from "calculation/calculationPart/implementation/CalculationPart";
-import { calculateValueByParts, multiplyItems } from "../calculationPart/implementation/utils";
 import { NumberCalculationPart } from "domain/jsonSchema/FormulaPartItem";
 import { GameCalculationModified } from "domain/jsonSchema/SpellCalculation";
 import { Spell } from "domain/jsonSchema/SpellData";
+import { ModifiedGameCalculationProvider } from "../GameCalculationProvider";
+import { parseCalculationPart } from "calculation/calculationPart";
+import { calculateValueByParts, multiplyItems } from "calculation/calculationPart/implementation/utils";
 
 const defaultMultiplier: NumberCalculationPart = {
     __type: "NumberCalculationPart",

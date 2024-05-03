@@ -1,9 +1,9 @@
 import { Spell } from "domain/jsonSchema/SpellData"
-import { calculationFactory } from "../calculation"
-import { CalculationProviderContainer } from "./CalculationProviderContainer"
-import { CalculationProvider } from "calculation/GameCalculationProvider"
+import { CalculationProviderContainer } from "../calculation/spellCalculator/CalculationProviderContainer"
+import { CalculationProvider } from "calculation/gameCalculation/GameCalculationProvider"
+import { gameCalculationFactory } from "calculation/gameCalculation"
 
-export const initSpell = (spellData: Spell, name: string, testData: string[]) => {
+export const initSpell = (spellData: Spell, name: string, testData?: string[]) => {
     const spellName = spellData.mClientData.mTooltipData.mObjectName
 
     const calculations: CalculationProviderContainer<CalculationProvider>[] = []
@@ -29,7 +29,7 @@ export const initSpell = (spellData: Spell, name: string, testData: string[]) =>
         //     }
         // }
 
-        const calculation = calculationFactory(spellData, calculationData, name)
+        const calculation = gameCalculationFactory(spellData, calculationData, name)
 
         calculations.push({
             name: calculationName,

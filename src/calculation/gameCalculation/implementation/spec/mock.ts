@@ -13,7 +13,7 @@ import {
     nonCountableMultiplierPartMock
 } from "./constants";
 
-jest.mock('../../calculationPart', () => ({
+jest.mock('calculation/calculationPart', () => ({
     parseCalculationPart: jest.fn().mockImplementation((spellData, partData) => {
         if (partData === numberCalculationPartDataMock) {
             return numberCalculationPartMock
@@ -37,7 +37,7 @@ jest.mock('../../calculationPart', () => ({
     })
 }))
 
-jest.mock('../../calculationPart/implementation/utils', () => ({
+jest.mock('calculation/calculationPart/implementation/utils', () => ({
     calculateValueByParts: jest.fn().mockImplementation(() => 5),
     multiplyItems: jest.fn().mockImplementation((items, multiplier) => {
         if (multiplier === 5) {

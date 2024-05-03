@@ -1,5 +1,5 @@
 import { describe, expect, jest, it } from "@jest/globals";
-import { calculationFactory } from "../calculationFactory";
+import { gameCalculationFactory } from "../gameCalculationFactory";
 import { gameCalculation } from "../implementation/gameCalculation";
 import { gameCalculationConditional } from "../implementation/gameCalculationConditional";
 import { gameCalculationModified } from "../implementation/gameCalculationModified";
@@ -20,7 +20,7 @@ describe("calculationFactory", () => {
                 __type: calculationType,
             }
 
-            calculationFactory(undefined, calculationMock as any, "")
+            gameCalculationFactory(undefined, calculationMock as any, "")
 
             expect(expectedInitializer).toHaveBeenCalled()
         })
@@ -31,6 +31,6 @@ describe("calculationFactory", () => {
             __type: "WrongCalculationMockType"
         } as const
 
-        expect(() => calculationFactory(undefined, wrongCalculationMock as any, "")).toThrow("Unknown calculation type: WrongCalculationMockType")
+        expect(() => gameCalculationFactory(undefined, wrongCalculationMock as any, "")).toThrow("Unknown calculation type: WrongCalculationMockType")
     })
 })
