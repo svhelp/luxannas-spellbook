@@ -3,6 +3,9 @@
 > [!CAUTION]
 > The library is currently **WIP**.
 
+![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/svhelp/39462aafd77c5fcbe24320b6bf4648c3/raw/report_badge.json)
+![badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/svhelp/fa88c797e8e669a37852cfa474bd4c1b/raw/coverage_badge.json)
+
 An *ALPHA* version of the library calculating League of Legends spells and items properties.
 
 The library is designed to resolve variables that may be found across League of Legends localization entries from both Data Dragon and Community Dragon (e.g. *wdamage* in `<physicalDamage>{{ wdamage }} physical damage</physicalDamage>`)
