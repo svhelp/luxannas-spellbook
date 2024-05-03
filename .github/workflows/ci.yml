@@ -1,14 +1,36 @@
 name: 'Testing-CI'
 on:
+    pull_request:
     push:
         branches:
             - master
             - main
+permissions:
+    contents: read
+    actions: read
+    checks: write
 jobs:
-    coverage:
+    build:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
-            - uses: ArtiomTr/jest-coverage-report-action@v2
+
+            - name: Install packages
+              run: npm ci
+
+            - name: Run tests
+              run: |
+                npx jest --ci --coverage --coverageReporters json-summary --reporters=default --reporters=jest-junit
+
+            - name: Jest Coverage Comment
+              uses: MishaKav/jest-coverage-comment@main
               with:
-                  test-script: npm test
+                coverage-summary-path: ./coverage/coverage-summary.json
+
+            - name: Test Report
+              uses: dorny/test-reporter@v1
+              if: success() || failure()
+              with:
+                name: JEST Tests
+                path: ./coverage/junit.xml
+                reporter: jest-junit
