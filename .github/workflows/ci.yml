@@ -35,6 +35,11 @@ jobs:
                 name: JEST Tests
                 path: ./coverage/junit.xml
                 reporter: jest-junit
+
+            - run:   echo "$OUTPUTS"
+              shell: bash
+              env:
+                OUTPUTS: ${{ toJSON(steps.testReport.outputs) }}
                 
             - name: Create a coverage badge
               uses: schneegans/dynamic-badges-action@v1.7.0
@@ -53,5 +58,5 @@ jobs:
                 gistID: 39462aafd77c5fcbe24320b6bf4648c3
                 filename: report_badge.json
                 label: Tests
-                message: ${{ steps.testReport.passed }}% passed, ${{ steps.testReport.failed }}% failed
-                color: ${{ steps.testReport.conclusion == 'success' && 'green' || 'red' }}
+                message: ${{ steps.testReport.passed }} passed, ${{ steps.testReport.failed }} failed
+                color: ${{ steps.testReport.conclusion == 'success' && 'hsl(120, 100%, 40%)' || 'hsl(0, 100%, 40%)' }}
