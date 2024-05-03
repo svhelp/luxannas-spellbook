@@ -37,21 +37,21 @@ jobs:
                 reporter: jest-junit
                 
             - name: Create a coverage badge
-                uses: schneegans/dynamic-badges-action@v1.7.0
-                with:
-                  auth: ${{ secrets.GIST_SECRET }}
-                  gistID: fa88c797e8e669a37852cfa474bd4c1b
-                  filename: coverage_badge.json
-                  label: Coverage
-                  message: ${{ steps.coverageComment.outputs.coverage }}%
-                  color: ${{ steps.coverageComment.outputs.color }}
+              uses: schneegans/dynamic-badges-action@v1.7.0
+              with:
+                auth: ${{ secrets.GIST_SECRET }}
+                gistID: fa88c797e8e669a37852cfa474bd4c1b
+                filename: coverage_badge.json
+                label: Coverage
+                message: ${{ steps.coverageComment.outputs.coverage }}%
+                color: ${{ steps.coverageComment.outputs.color }}
 
             - name: Create a report badge
-                uses: schneegans/dynamic-badges-action@v1.7.0
-                with:
-                  auth: ${{ secrets.GIST_SECRET }}
-                  gistID: 39462aafd77c5fcbe24320b6bf4648c3
-                  filename: report_badge.json
-                  label: Tests
-                  message: ${{ steps.testReport.passed }}% passed, ${{ steps.testReport.failed }}% failed
-                  color: ${{ steps.testReport.conclusion == 'success' && 'green' || 'red' }}
+              uses: schneegans/dynamic-badges-action@v1.7.0
+              with:
+                auth: ${{ secrets.GIST_SECRET }}
+                gistID: 39462aafd77c5fcbe24320b6bf4648c3
+                filename: report_badge.json
+                label: Tests
+                message: ${{ steps.testReport.passed }}% passed, ${{ steps.testReport.failed }}% failed
+                color: ${{ steps.testReport.conclusion == 'success' && 'green' || 'red' }}
